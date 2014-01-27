@@ -1,0 +1,196 @@
+<?php
+
+use Nette\Forms\Form;
+
+
+/**
+ * Sign in/out presenters.
+ */
+class UcetPresenter extends BasePresenter
+{
+
+  /** @persistent */
+  public $backlink = '';
+
+  /** @var Uzivatel @inject */
+  public $uzivatele;
+
+
+  /**
+   * Sign-in form factory.
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentPrihlaseniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+    
+    $form->addText('login', 'Jméno:')
+      ->setRequired('Prosím zadejte vaše uživatelské jméno.');
+
+    $form->addPassword('heslo', 'Heslo:')
+      ->setRequired('Prosím zadejte vaše heslo.');
+
+    $form->addSubmit('send', 'Přihlásit');
+
+    $form->onSuccess[] = $this->prihlaseniFormSucceeded;
+
+    return Bs3Form::transform($form);
+  }
+
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentUzivatelForm()
+  {
+    $form = new Nette\Application\UI\Form;
+    $form->addText('login', 'Uživatelské jméno')
+      ->setRequired('Prosím zadejte vaše uživatelské jméno.')
+      ->addRule(Form::MIN_LENGTH, 'Jméno musí mít alespoň %d znaky', 3)
+      ->addRule(Form::MAX_LENGTH, 'Jméno musí mít maximálně %d znaků', 100);
+
+
+    $form->addPassword('heslo', 'Heslo:')
+      ->setRequired('Prosím zadejte vaše heslo.')
+      ->addRule(Form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaky', 4)
+      ->addRule(Form::MAX_LENGTH, 'Heslo musí mít maximálně %d znaků', 100);
+
+    $form->addPassword('hesloKontrola', 'Heslo pro kontrolu:')
+      ->setRequired('Zadejte prosím heslo ještě jednou pro kontrolu')
+      ->addRule(Form::EQUAL, 'Hesla se neshodují', $form['heslo']);
+
+    $form->addText('email', 'E-mail:')
+      ->setRequired('Prosím zadejte váš e-mail.')
+      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu');
+
+    $form->addSubmit('send', 'Dokončení registrace');
+
+    $form->onSuccess[] = $this->uzivatelFormSucceeded;
+    return Bs3Form::transform($form);
+  }
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentDobijeniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addText('castka', 'Částka (Kč):')
+      ->setRequired('Prosím zadejte částku, kterou chcete nabít.')
+      ->addRule(Form::INTEGER, 'Částka musí být číslo')
+      ->addRule(Form::RANGE, 'Částka musí být od %d do %d Kč', array(1, 1000))
+      ->setType('number');
+
+    $form->addSubmit('send', 'Nabít kredit');
+
+    $form->onSuccess[] = $this->dobijeniFormSucceeded;
+
+    return Bs3Form::transform($form);
+  }
+
+
+  public function prihlaseniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+
+    try {
+      $this->getUser()->login($values->login, $values->heslo);
+      $this->uzivatele->casPoslPrihlaseni($this->getUser()->getId());
+      $this->restoreRequest($this->backlink);
+      if($this->getUser()->isInRole('admin')) {
+        $this->redirect('Admin:');
+      }
+      else {
+        $this->redirect('Ucet:informace');
+      }
+    } catch (Nette\Security\AuthenticationException $e) {
+      $form->addError($e->getMessage());
+    }
+  }
+
+
+  public function uzivatelFormSucceeded($form)
+  {
+    $values = $form->getValues();
+
+    if($this->user->isLoggedIn()) {
+      unset($values['login']);
+      unset($values['hesloKontrola']);
+
+      try {
+        $this->uzivatele->update($this->user->id, $values);
+        $this->flashMessage('Údaje byly uloženy.', 'success');
+        $this->redirect('Ucet:informace');
+      } catch (\Exception $e) {
+        $form->addError($e->getMessage());
+      }
+    }
+    else {
+      try {
+        $this->getUser()->getAuthenticator()->registerUser($values->login, $values->heslo, $values->email);
+        $this->flashMessage('Registrace byla úspěšná.', 'success');
+        $this->getUser()->login($values->login, $values->heslo);
+        $this->redirect('Ucet:informace');
+      } catch (Nette\Security\AuthenticationException $e) {
+        $form->addError($e->getMessage());
+      }
+    }
+  }
+
+  public function dobijeniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+
+    try {
+      $row = $this->uzivatele->pridatPozadavekNaNabiti($this->user->id, $values->castka);
+      $this->redirect('Ucet:kreditDobiti');
+
+    } catch (Nette\Security\AuthenticationException $e) {
+      $form->addError($e->getMessage());
+    }
+  }
+
+  public function actionOdhlaseni()
+  {
+    $this->getUser()->logout(TRUE);
+    $this->flashMessage('Odhlášení bylo úspěšné.', 'success');
+    $this->redirect('prihlaseni');
+  }
+
+  public function renderInformace()
+  {
+    if (!$this->user->isLoggedIn()) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('prihlaseni');
+    }
+
+    $this->template->uzivatel = $this->uzivatele->findById($this->user->id);
+    $this->template->sumaNakupu = $this->uzivatele->sumaNakupu($this->user->id);
+  }
+
+  public function renderZmenaUdaju()
+  {
+    $arr = $this->uzivatele->findById($this->user->id)->toArray();
+    $this['uzivatelForm']->getComponent('login')->setAttribute("readonly", "true");
+    $this['uzivatelForm']->getComponent('send')->caption = "Uložit";
+    $this['uzivatelForm']->setDefaults($arr);
+  }
+
+  public function renderKredit()
+  {
+    $this->template->historie = $this->uzivatele->historieDobijeni($this->user->id);
+    $this->template->cisloUctu = $this->context->parameters['midi']['cisloUctu'];
+  }
+
+  public function renderKreditDobiti()
+  {
+    $this->template->transakce = $this->uzivatele->posledniDobiti($this->user->id);
+    $this->template->cisloUctu = $this->context->parameters['midi']['cisloUctu'];
+  }
+
+  public function renderNakupy()
+  {
+    $this->template->nakupy = $this->uzivatele->zakoupeneSkladby($this->user->id);
+  }
+}

@@ -1,0 +1,91 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+	<meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{block title|striptags}MIDI Premier - výroba a prodej MIDI a KARAOKE{/block}</title>
+
+  <link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	{block head}{/block}
+</head>
+
+<body>
+
+  <div id="header" class="navbar navbar-default" role="navigation" >
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand">MIDI Premier</a>
+      </div> <!-- /.navbar-header -->
+    </div>
+  </div> <!-- /#header -->
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="navig">
+          <li><a n:href="Homepage:">Úvod</a></li>
+          <!-- <li><a n:href="Homepage:sluzbyAVyrobky">Služby a výrobky</a></li> -->
+          <li><a n:href="Skladba:default">Seznam skladeb</a></li>
+          <li><a n:href="Homepage:jakNakupovat">Jak nakupovat</a></li>
+          <li><a n:href="Homepage:cenik">Ceník</a></li>
+          <li><a n:href="Homepage:kontakt">Kontakt</a></li>
+          <!-- <li><a n:href="Homepage:odkazy">Odkazy</a></li> -->
+          <li><a n:href="Homepage:karaokeNaDvd">Karaoke na DVD</a></li>
+          {if $user->loggedIn}
+              <li><a n:href="Ucet:odhlaseni">Odhlásit</a> uživatele {$user->getIdentity()->data['login']}</li>
+              <li>Vaše konto
+                <ul>
+                 <li><a n:href="Ucet:informace">Informace o zákazníkovi</a> - přehled informací o zákazníkovi, změna e-mailu a přístupových údajů</li>
+                 <li><a n:href="Ucet:kredit">Dobíjení kreditu</a> - navýšení kreditu, historie dobíjení kreditu</li>
+                 <li><a n:href="Ucet:nakupy">Zakoupené skladby</a> - přehled zakoupených skladeb, možnost jejich opětovného stažení</li>
+                </ul>
+              </li>
+              {if $user->isInRole('admin')}
+              <li>Administrace
+                <ul>
+                 <li><a n:href="Admin:">Přehled</a></li>
+                 <li><a n:href="Admin:stahovani">Stahování</a></li>
+                 <li><a n:href="Skladba:default, admin">Skladby</a></li>
+                 <li><a n:href="Admin:zakaznici">Zákazníci</a></li>
+                </ul>
+              </li>
+              {/if}
+          {else}
+              <li><a n:href="Ucet:prihlaseni">Přihlásit</a></li>
+              <li><a n:href="Ucet:registrace">Registrace</a></li>
+          {/if}
+        </ul>
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+        {include content}
+      </div>
+    </div>
+  </div><!-- /.container -->
+
+	{block scripts}
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="{$basePath}/js/netteForms.js"></script>
+  <script src="{$basePath}/js/bootstrap.min.js"></script>
+	<script src="{$basePath}/js/main.js"></script>
+	{/block}
+</body>
+</html>

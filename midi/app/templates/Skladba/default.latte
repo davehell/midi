@@ -1,0 +1,43 @@
+
+{block content}
+
+<h1 n:block=title>Katalog skladeb</h1>
+
+{if $adminMode}
+  <p>
+    <a n:href="Skladba:pridat" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nová skladba</a>
+  </p>
+{/if}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>název</th>
+      <th>interpret</th>
+      <th>cena</th>
+      <th>poznámka</th>
+      <th>verze</th>
+      <th>žánr</th>
+      {if $adminMode}
+      <th>přidáno</th>
+      <th>stažení</th>
+      {/if}
+    </tr>
+  </thead>
+  <tbody>
+    <tr n:foreach="$skladby as $skladba">
+      <td>
+        <a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a>
+      </td>
+      <td>{$skladba->autor}</td>
+      <td>{$skladba->cena}&nbsp;Kč</td>
+      <td>{$skladba->poznamka}</td>
+      <td>{$skladba->verze}</td>
+      <td>{$skladba->zanr->nazev}</td>
+      {if $adminMode}
+      <td>{$skladba->datum_pridani|date:'%d.%m.%Y'}</td>
+      <td>{$skladba->pocet_stazeni}</td>
+      {/if}
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,28 @@
+{block content}
+<h1 n:block=title>Zakoupené skladby</h1>
+
+
+{if $nakupy->count()}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>datum</th>
+      <th>název</th>
+      <th>interpret</th>
+      <th>cena</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr n:foreach="$nakupy as $nakup">
+      <td><a n:href="Skladba:detail $nakup->skladba->id">{$nakup->skladba->nazev}</a></td>
+      <td>{$nakup->skladba->autor}</td>
+      <td>{$nakup->cena}&nbsp;Kč</td>
+      <td>{$nakup->datum|date:'%d.%m.%Y'}</td>
+    </tr>
+  </tbody>
+</table>
+{else}
+    <p>
+      Nemáte zakoupené žádné skladby.
+    </p>
+{/if}

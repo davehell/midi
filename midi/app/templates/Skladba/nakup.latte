@@ -1,0 +1,17 @@
+
+{block content}
+
+<p>
+ Nákup skladby byl úspěšně dokončen.
+</p>
+
+<p>
+  Z Vašeho účtu byla odečtena částka <strong>{$skladba->cena}&nbsp;Kč</strong>.
+</p>
+<p>
+  Na emailovou adresu bylo zasláno potvrzení o nákupu a odkaz na stažení zakoupené skladby.
+</p>
+
+<p>
+  Nyní si můžete skladbu uložit: <a n:href="Skladba:detail, $skladba->id">Stáhnutí skladby</a>
+</p>

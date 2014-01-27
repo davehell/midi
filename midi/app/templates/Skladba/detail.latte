@@ -1,0 +1,55 @@
+
+{block content}
+
+<p><a n:href="Skladba:default">← zpět na výpis skladeb</a></p>
+
+<h1 n:block="title">Detail skladby {$skladba->nazev}</h1>
+
+<dl class="dl-horizontal">
+  <dt>Název</dt>
+  <dd>{$skladba->nazev}</dd>
+  <dt>Interpret</dt>
+  <dd>{$skladba->autor}</dd>
+  <dt>Verze</dt>
+  <dd>{$skladba->verze}</dd>
+  {if !$maZakoupeno}
+  <dt>Cena</dt>
+  <dd>{$skladba->cena}&nbsp;Kč</dd>
+  {/if}
+  <dt>Žánr</dt>
+  <dd>{$skladba->zanr->nazev}</dd>
+  <dt>Poznámka</dt>
+  <dd>{$skladba->poznamka}</dd>
+  <dt>Dostupné formáty</dt>
+  <dd>
+    <ul n:inner-foreach="$formaty as $format">
+      <li>{$format->format} {$format->formatId}</li>
+    </ul>
+  </dd>
+</dl>
+
+
+{if $maZakoupeno}
+  <p>
+    Tuto skladbu už máte zakoupenou.
+  </p>
+  <p>
+    Skladbu si můžete uložit: <a class="btn btn-primary" n:href="Skladba:download, $skladba->id">Stáhnutí skladby</a>
+  </p>
+{else}
+  <p>
+    Cena skladby je včetně poplatků pro OSA.
+  </p>
+  {if $user->loggedIn}
+    <a class="btn btn-primary" n:href="Skladba:nakup, $skladba->id">Koupit skladbu</a>
+  {else}
+    <p>
+      Zakoupení a stažení skladby je možné pouze po <a n:href="Skladba:nakup, $skladba->id">přihlášení</a>.
+    </p>
+  {/if}
+{/if}
+
+{if $user->isInRole('admin')}
+  <h2>Editace skladby</h2>
+  {control skladbaForm }
+{/if}

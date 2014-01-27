@@ -1,0 +1,29 @@
+
+{block content}
+
+<h1 n:block=title>Stahování</h1>
+
+{if $nakupy->count()}
+<a n:href=Admin:stahovaniDownload class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> uložit soubor</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>název</th>
+      <th>interpret</th>
+      <th>stažení</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr n:foreach="$nakupy as $nakup">
+      <td>{$nakup->skladba->nazev}</td>
+      <td>{$nakup->skladba->autor}</td>
+      <td>{$nakup->pocet}</td>
+    </tr>
+  </tbody>
+</table>
+{else}
+    <p>
+      V zadném období nebyly staženy žádné skladby.
+    </p>
+{/if}

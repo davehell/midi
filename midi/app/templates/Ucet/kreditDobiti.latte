@@ -1,0 +1,37 @@
+{block content}
+<h1 n:block=title>Dobíjení kreditu</h1>
+
+<p class="alert alert-success">
+ Váš požadavek na dobití kreditu byl přijat.
+</p>
+
+<h2>
+ Shrnutí transakce:
+</h2>
+<dl class="dl-horizontal">
+  <dt>uživatelské jméno:</dt>
+  <dd>{$user->getIdentity()->data['login']}</dd>
+  <dt>požadavek přijat:</dt>
+  <dd>{$transakce->datum|date:'%d.%m.%Y'}</dd>
+  <dt>částka:</dt>
+  <dd>{$transakce->castka}&nbsp;Kč</dd>
+  <dt>číslo účtu:</dt>
+  <dd>{$cisloUctu}</dd>
+  <dt>variabilní symbol:</dt>
+  <dd>{$transakce->vs}</dd>
+</dl>
+ 
+
+<p>
+ Peníze je možné zasílat dvěma způsoby:
+</p>
+
+<ul>
+  <li>Bankovním převodem</li>
+  <li>Poštovní poukázkou - adresa je uvedena v <a n:href=Homepage:kontakt>kontaktech</a></li>
+</ul>
+
+<p>
+Kredit Vám bude navýšen po obdržení platby. O této skutečnosti budete informováni
+e-mailem. Po připsání kreditu na Váš účet již můžete stahovat skladby.
+</p>
