@@ -1,0 +1,101 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.HideOutput=0
+Compilator.LogType=0
+DefaultDir=D:\wamp\www\midiweb
+DefaultCPIndex=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+midiweb
+	+app
+		-component
+			midi\app\component\Bs3Form.php
+		-config
+			midi\app\config\config.local.neon
+			midi\app\config\config.neon
+		-model
+			midi\app\model\Authenticator.php
+			midi\app\model\Skladba.php
+			midi\app\model\UserManager.php
+			midi\app\model\Uzivatel.php
+		+presenters
+			midi\app\presenters\AdminPresenter.php
+			midi\app\presenters\BasePresenter.php
+			midi\app\presenters\ErrorPresenter.php
+			midi\app\presenters\HomepagePresenter.php
+			midi\app\presenters\SkladbaPresenter.php
+			midi\app\presenters\UcetPresenter.php
+		+templates
+			-Admin
+				midi\app\templates\Admin\default.latte
+				midi\app\templates\Admin\stahovani.latte
+				midi\app\templates\Admin\zakaznici.latte
+				midi\app\templates\Admin\zakaznikDetail.latte
+			-components
+				midi\app\templates\components\form.latte
+			-Error
+				midi\app\templates\Error\403.latte
+				midi\app\templates\Error\404.latte
+				midi\app\templates\Error\405.latte
+				midi\app\templates\Error\410.latte
+				midi\app\templates\Error\4xx.latte
+				midi\app\templates\Error\500.latte
+			-Homepage
+				midi\app\templates\Homepage\cenik.latte
+				midi\app\templates\Homepage\default.latte
+				midi\app\templates\Homepage\jakNakupovat.latte
+				midi\app\templates\Homepage\karaokeNaDvd.latte
+				midi\app\templates\Homepage\kontakt.latte
+				midi\app\templates\Homepage\odkazy.latte
+				midi\app\templates\Homepage\sluzbyAVyrobky.latte
+			-Skladba
+				midi\app\templates\Skladba\default.latte
+				midi\app\templates\Skladba\detail.latte
+				midi\app\templates\Skladba\nakup.latte
+				midi\app\templates\Skladba\pridat.latte
+			-Ucet
+				midi\app\templates\Ucet\informace.latte
+				midi\app\templates\Ucet\kredit.latte
+				midi\app\templates\Ucet\kreditDobiti.latte
+				midi\app\templates\Ucet\nakupy.latte
+				midi\app\templates\Ucet\prihlaseni.latte
+				midi\app\templates\Ucet\registrace.latte
+				midi\app\templates\Ucet\zmenaUdaju.latte
+			midi\app\templates\@layout.latte
+		midi\app\.htaccess
+		midi\app\bootstrap.php
+	-www
+		-css
+			subdomeny\midi2\css\bootstrap.css
+			subdomeny\midi2\css\bootstrap.min.css
+			subdomeny\midi2\css\bootstrap-theme.css
+			subdomeny\midi2\css\bootstrap-theme.min.css
+			subdomeny\midi2\css\screen.css
+		-fonts
+			subdomeny\midi2\fonts\glyphicons-halflings-regular.eot
+			subdomeny\midi2\fonts\glyphicons-halflings-regular.svg
+			subdomeny\midi2\fonts\glyphicons-halflings-regular.ttf
+			subdomeny\midi2\fonts\glyphicons-halflings-regular.woff
+		-js
+			subdomeny\midi2\js\bootstrap.js
+			subdomeny\midi2\js\bootstrap.min.js
+			subdomeny\midi2\js\main.js
+			subdomeny\midi2\js\netteForms.js
+		subdomeny\midi2\.htaccess
+		subdomeny\midi2\.maintenance.php
+		subdomeny\midi2\favicon.ico
+		subdomeny\midi2\index.php
+[Open project files]
+0=midi\app\templates\@layout.latte
+[Selected Project Files]
+Main=
+Selected=midi\app\templates\@layout.latte
+[midi\app\templates\@layout.latte]
+TopLine=1
+Caret=4,7
