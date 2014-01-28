@@ -187,19 +187,21 @@ class SkladbaPresenter extends BasePresenter
 
 	public function actionDownload($id)
 	{
-    if (!$this->user->isLoggedIn()) {
-      $this->flashMessage('Pro stažení skladby se musíte přihlásit.');
-      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
-    }
-
     $soubor = $this->skladby->nazevSouboru($id);
     if (!$soubor) {
       $this->error('Požadovaná skladba neexistuje.');
     }
 
-    if(!$this->uzivatele->maZakoupeno($this->user->id, $soubor->skladba_id)){
-      $this->flashMessage('Tuto skladbu nemáte zakoupenou.', 'danger');
-      $this->redirect('Skladba:detail', $soubor->skladba_id);
+    if(!$soubor->format->demo) {
+      if (!$this->user->isLoggedIn()) {
+        $this->flashMessage('Pro stažení skladby se musíte přihlásit.');
+        $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+      }
+
+      if(!$this->uzivatele->maZakoupeno($this->user->id, $soubor->skladba_id)){
+        $this->flashMessage('Tuto skladbu nemáte zakoupenou.', 'danger');
+        $this->redirect('Skladba:detail', $soubor->skladba_id);
+      }
     }
 
     $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));

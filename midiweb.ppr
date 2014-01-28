@@ -14,13 +14,12 @@ Extensions=*.*
 [Project tree]
 midiweb
 	+app
-		-component
+		+component
 			midi\app\component\Bs3Form.php
 		-config
 			midi\app\config\config.local.neon
 			midi\app\config\config.neon
 		+model
-			midi\app\model\Authenticator.php
 			midi\app\model\Skladba.php
 			midi\app\model\UserManager.php
 			midi\app\model\Uzivatel.php
@@ -32,7 +31,7 @@ midiweb
 			midi\app\presenters\SkladbaPresenter.php
 			midi\app\presenters\UcetPresenter.php
 		+templates
-			-Admin
+			+Admin
 				midi\app\templates\Admin\default.latte
 				midi\app\templates\Admin\stahovani.latte
 				midi\app\templates\Admin\zakaznici.latte
@@ -46,7 +45,7 @@ midiweb
 				midi\app\templates\Error\410.latte
 				midi\app\templates\Error\4xx.latte
 				midi\app\templates\Error\500.latte
-			-Homepage
+			+Homepage
 				midi\app\templates\Homepage\cenik.latte
 				midi\app\templates\Homepage\default.latte
 				midi\app\templates\Homepage\jakNakupovat.latte
@@ -54,12 +53,12 @@ midiweb
 				midi\app\templates\Homepage\kontakt.latte
 				midi\app\templates\Homepage\odkazy.latte
 				midi\app\templates\Homepage\sluzbyAVyrobky.latte
-			-Skladba
+			+Skladba
 				midi\app\templates\Skladba\default.latte
 				midi\app\templates\Skladba\detail.latte
 				midi\app\templates\Skladba\nakup.latte
 				midi\app\templates\Skladba\pridat.latte
-			-Ucet
+			+Ucet
 				midi\app\templates\Ucet\informace.latte
 				midi\app\templates\Ucet\kredit.latte
 				midi\app\templates\Ucet\kreditDobiti.latte
@@ -70,7 +69,7 @@ midiweb
 			midi\app\templates\@layout.latte
 		midi\app\.htaccess
 		midi\app\bootstrap.php
-	-www
+	+www
 		-css
 			subdomeny\midi2\css\bootstrap.css
 			subdomeny\midi2\css\bootstrap.min.css
@@ -82,7 +81,7 @@ midiweb
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.svg
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.ttf
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.woff
-		-js
+		+js
 			subdomeny\midi2\js\bootstrap.js
 			subdomeny\midi2\js\bootstrap.min.js
 			subdomeny\midi2\js\main.js
@@ -93,17 +92,21 @@ midiweb
 		subdomeny\midi2\index.php
 [Open project files]
 0=midi\app\templates\@layout.latte
-1=midi\app\presenters\SkladbaPresenter.php
-2=midi\app\model\UserManager.php
+1=midi\app\templates\Homepage\default.latte
+2=midi\app\presenters\SkladbaPresenter.php
+3=midi\app\model\Skladba.php
 [Selected Project Files]
 Main=
 Selected=midi\app\presenters\SkladbaPresenter.php
 [midi\app\templates\@layout.latte]
+TopLine=38
+Caret=1,52
+[midi\app\templates\Homepage\default.latte]
 TopLine=1
-Caret=1,8
+Caret=1,25
 [midi\app\presenters\SkladbaPresenter.php]
-TopLine=62
-Caret=1,101
-[midi\app\model\UserManager.php]
-TopLine=1
-Caret=2,4
+TopLine=158
+Caret=46,168
+[midi\app\model\Skladba.php]
+TopLine=45
+Caret=30,92
