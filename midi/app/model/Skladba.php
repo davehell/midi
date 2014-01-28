@@ -51,6 +51,23 @@ class Skladba extends Nette\Object
     return $this->database->table('nakup')->select('*, count(*) AS pocet')->group('skladba_id');
 	}
 
+	/** @return Nette\Database\Table\Selection */
+	public function oblibene()
+	{
+    return $this->prehledStahovani()->order('pocet DESC')->limit(10);
+	}
+
+	/** @return Nette\Database\Table\Selection */
+	public function novinky()
+	{
+    return $this->findAll()->order('datum_pridani DESC')->limit(10);
+	}
+
+	public function pocetSkladeb()
+	{
+    return $this->database->table('skladba')->count();
+	}
+
 	public function update($skladbaId, $values)
 	{
 		$this->database->table('skladba')->wherePrimary($skladbaId)->update($values);

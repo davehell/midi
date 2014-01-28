@@ -6,11 +6,12 @@
 {if $nakupy->count()}
 <a n:href=Admin:stahovaniDownload class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> uložit soubor</a>
 
-<table class="table table-striped">
+<table class="table table-striped table-hover table-condensed">
   <thead>
     <tr>
       <th>název</th>
       <th>interpret</th>
+      <th>cena</th>
       <th>stažení</th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
     <tr n:foreach="$nakupy as $nakup">
       <td>{$nakup->skladba->nazev}</td>
       <td>{$nakup->skladba->autor}</td>
+      <td>{$nakup->skladba->cena}</td>
       <td>{$nakup->pocet}</td>
     </tr>
   </tbody>

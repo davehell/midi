@@ -1,6 +1,31 @@
 
 {block content}
 
-<h1 n:block="title">Výroba a prodej MIDI a KARAOKE</h1>
+<div class="jumbotron">
+  <h1 n:block="title">MIDI a KARAOKE</h1>
+  <p>{$pocet} skladeb</p>
+  <p>cena 30 - 50 Kč</p>
+  <p><a n:href="Skladba:default" class="btn btn-primary btn-lg" role="button">Katalog skladeb</a></p>
+</div>
 
-<h2>Vítejte na stránkách midi.premiermusic.cz</h2>
+<div class="col-md-4">
+<h2>Formáty</h2>
+<ul>
+  <li>Karaoke na DVD</li>
+  <li n:foreach="$formaty as $format">{$format}</li>
+</ul>
+</div>
+
+<div class="col-md-4">
+<h2>Novinky</h2>
+<ul n:inner-foreach="$novinky as $skladba">
+  <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>
+</ul>
+</div>
+
+<div class="col-md-4">
+<h2>Oblíbené</h2>
+<ul n:inner-foreach="$oblibene as $skladba">
+  <li><a n:href="Skladba:detail $skladba->skladba->id">{$skladba->skladba->nazev}</a></li>
+</ul>
+</div>

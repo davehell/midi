@@ -142,9 +142,9 @@ class AdminPresenter extends BasePresenter
 	{
     $nakupy = $this->skladby->prehledStahovani();
     $eol = "\r\n";
-    $content = 'název;interpret;počet stažení' . $eol;
+    $content = 'název;interpret;cena;počet stažení' . $eol;
     foreach ($nakupy as $nakup) {
-        $content .= $nakup->skladba->nazev . ';' . $nakup->skladba->autor . ';' . $nakup->pocet . $eol;
+        $content .= $nakup->skladba->nazev . ';' . $nakup->skladba->autor . ';' . $nakup->skladba->cena . ';' . $nakup->pocet . $eol;
     }
 
     $httpResponse = $this->presenter->getHttpResponse();
