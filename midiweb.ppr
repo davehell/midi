@@ -19,7 +19,7 @@ midiweb
 		-config
 			midi\app\config\config.local.neon
 			midi\app\config\config.neon
-		-model
+		+model
 			midi\app\model\Authenticator.php
 			midi\app\model\Skladba.php
 			midi\app\model\UserManager.php
@@ -93,9 +93,17 @@ midiweb
 		subdomeny\midi2\index.php
 [Open project files]
 0=midi\app\templates\@layout.latte
+1=midi\app\presenters\SkladbaPresenter.php
+2=midi\app\model\UserManager.php
 [Selected Project Files]
 Main=
-Selected=midi\app\templates\@layout.latte
+Selected=midi\app\presenters\SkladbaPresenter.php
 [midi\app\templates\@layout.latte]
 TopLine=1
-Caret=4,7
+Caret=1,8
+[midi\app\presenters\SkladbaPresenter.php]
+TopLine=62
+Caret=1,101
+[midi\app\model\UserManager.php]
+TopLine=1
+Caret=2,4

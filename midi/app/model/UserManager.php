@@ -39,11 +39,11 @@ class UserManager extends Nette\Object implements Security\IAuthenticator
 		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
 
 		if (!$row) {
-			throw new Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+			throw new Security\AuthenticationException('Nesprávné uživatelské jméno nebo heslo.', self::IDENTITY_NOT_FOUND);
 		}
 
 		if ($row->heslo !== $this->generateHash($password, $row->heslo)) {
-			throw new Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
+			throw new Security\AuthenticationException('Nesprávné uživatelské jméno nebo heslo.', self::INVALID_CREDENTIAL);
 		}
 
 		$arr = $row->toArray();
