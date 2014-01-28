@@ -111,8 +111,8 @@ class SkladbaPresenter extends BasePresenter
       if($soubor && $soubor->isOk) {
         $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
         $formatId = $idFormatu[pathinfo($soubor->getTemporaryFile(), PATHINFO_BASENAME)];
-        $filename = $skladbaId . '-' . $formatId . '-' . Strings::webalize($values['nazev']) . '.' . $ext;
-        $soubor->move($destDir . '/' . $filename);
+        $filename = Strings::webalize($values['nazev']) . '.' . $ext;
+        $soubor->move($destDir . '/skladba-' . $skladbaId . '-' . $formatId);
         $soubory[] = array('skladba_id' => $skladbaId, 'format_id' => $formatId, 'nazev' => $filename);
       }
     }
@@ -125,7 +125,6 @@ class SkladbaPresenter extends BasePresenter
       }
     }
 
-    
     $this->redirect('Skladba:detail', $skladbaId);
   }
 
@@ -142,7 +141,7 @@ class SkladbaPresenter extends BasePresenter
       $this->error('Požadovaná skladba neexistuje.');
     }
     $this->template->skladba = $skladba;
-    $this->template->formaty = $this->skladby->formatySkladby($id);
+    $this->template->soubory = $this->skladby->formatySkladby($id);
     $this->template->maZakoupeno = $this->uzivatele->maZakoupeno($this->user->id, $id);
 
     if($this->user->isInRole('admin')) {
@@ -154,12 +153,8 @@ class SkladbaPresenter extends BasePresenter
 	public function actionNakup($id)
 	{
     if (!$this->user->isLoggedIn()) {
-      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->flashMessage('Pro nákup skladby se musíte přihlásit.');
       $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
-    }
-
-    if($this->uzivatele->maZakoupeno($this->user->id, $id)){
-      $this->redirect('Skladba:detail', $id);
     }
 
     $skladba = $this->skladby->findById($id);
@@ -168,10 +163,15 @@ class SkladbaPresenter extends BasePresenter
     }
     $this->template->skladba = $skladba;
 
+    //zakaznik uz nakoupeno ma - nebude tedy kupovat znovu
+    if($this->uzivatele->maZakoupeno($this->user->id, $id)){
+      $this->redirect('Skladba:detail', $id);
+    }
+
     try {
       $this->uzivatele->koupitSkladbu($this->user->id, $skladba);
     } catch (\Exception $e) {
-      $this->flashMessage($e->getMessage(), 'warning');
+      $this->flashMessage($e->getMessage(), 'danger');
       $this->redirect('Skladba:detail', $id);
     }
 	}
@@ -187,6 +187,21 @@ class SkladbaPresenter extends BasePresenter
 
 	public function actionDownload($id)
 	{
-    $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data/skladba.mid'));
+    if (!$this->user->isLoggedIn()) {
+      $this->flashMessage('Pro stažení skladby se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
+    $soubor = $this->skladby->nazevSouboru($id);
+    if (!$soubor) {
+      $this->error('Požadovaná skladba neexistuje.');
+    }
+
+    if(!$this->uzivatele->maZakoupeno($this->user->id, $soubor->skladba_id)){
+      $this->flashMessage('Tuto skladbu nemáte zakoupenou.', 'danger');
+      $this->redirect('Skladba:detail', $soubor->skladba_id);
+    }
+
+    $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
 	}
 }

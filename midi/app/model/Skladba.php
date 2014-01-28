@@ -68,8 +68,12 @@ class Skladba extends Nette\Object
 	{
     foreach ($soubory as $soubor) {
       $this->database->table('soubor')->where('skladba_id', $soubor['skladba_id'])->where('format_id', $soubor['format_id'])->delete();
-      if(file_exists($adresar . '/' . $soubor['nazev'])) unlink($adresar . '/' . $soubor['nazev']);
     }
     return $this->database->table('soubor')->insert($soubory);
+	}
+
+	public function nazevSouboru($id)
+	{
+    return $this->database->table('soubor')->get($id);
 	}
 }

@@ -1,8 +1,6 @@
 
 {block content}
 
-<p><a n:href="Skladba:default">← zpět na výpis skladeb</a></p>
-
 <h1 n:block="title">Detail skladby {$skladba->nazev}</h1>
 
 <dl class="dl-horizontal">
@@ -22,9 +20,9 @@
   <dd>{$skladba->poznamka}</dd>
   <dt>Ukázky</dt>
   <dd>
-    <ul n:inner-foreach="$formaty as $format">
-      {if $format->format->demo}
-        <li>{$format->format->nazev}</li>
+    <ul n:inner-foreach="$soubory as $soubor">
+      {if $soubor->format->demo}
+        <li>{$soubor->format->nazev}</li>
       {/if}
     </ul>
   </dd>
@@ -32,12 +30,22 @@
 
 
 {if $maZakoupeno}
-  <p>
-    Tuto skladbu už máte zakoupenou.
+  <p class="alert alert-info">
+    Tuto skladbu máte zakoupenou. Můžete si ji stáhnout.
   </p>
-  <p>
-    Skladbu si můžete uložit: <a class="btn btn-primary" n:href="Skladba:download, $skladba->id">Stáhnutí skladby</a>
-  </p>
+  {if $soubory->count()}
+  <form class="form-inline" role="form" id="stazeniSkladby">
+    <div class="form-group">
+      <label class="" for="format">Formát:</label>
+      <select n:inner-foreach="$soubory as $soubor" class="form-control" id="format">
+        {if !$soubor->format->demo}
+          <option value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
+        {/if}
+      </select>
+    </div>
+    <button id="stahnout" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout</button>
+  </form>
+  {/if}
 {else}
   <p>
     Cena skladby je včetně poplatků pro OSA.
@@ -46,7 +54,7 @@
     <a class="btn btn-primary" n:href="Skladba:nakup, $skladba->id">Koupit skladbu</a>
   {else}
     <p>
-      Zakoupení a stažení skladby je možné pouze po <a n:href="Skladba:nakup, $skladba->id">přihlášení</a>.
+      Zakoupení a stažení skladby je možné pouze po <a n:href="Ucet:prihlaseni">přihlášení</a>.
     </p>
   {/if}
 {/if}
