@@ -29,7 +29,7 @@ class Skladba extends Nette\Object
 	/** @return Nette\Database\Table\Selection */
 	public function formatySkladby($id)
 	{
-		return $this->database->table('soubor')->where('skladba_id', $id)->select('soubor.*, format.nazev AS format, format.id AS formatId');
+		return $this->database->table('soubor')->where('skladba_id', $id);
 	}
 
   /** @return array */
@@ -57,9 +57,19 @@ class Skladba extends Nette\Object
 	}
 
   /** @return Nette\Database\Table\ActiveRow */
-	public function insert($values)
+	public function insert($skladba)
 	{
-    $values['datum_pridani'] = new Nette\Database\SqlLiteral('NOW()');
-    return $this->database->table('skladba')->insert($values);
+    $skladba['datum_pridani'] = new Nette\Database\SqlLiteral('NOW()');
+    return $this->database->table('skladba')->insert($skladba);
+	}
+
+  /** @return Nette\Database\Table\ActiveRow */
+	public function ulozitSoubory($soubory, $adresar)
+	{
+    foreach ($soubory as $soubor) {
+      $this->database->table('soubor')->where('skladba_id', $soubor['skladba_id'])->where('format_id', $soubor['format_id'])->delete();
+      if(file_exists($adresar . '/' . $soubor['nazev'])) unlink($adresar . '/' . $soubor['nazev']);
+    }
+    return $this->database->table('soubor')->insert($soubory);
 	}
 }

@@ -1,7 +1,8 @@
 <?php
 
 use Nette\Application\Responses\FileResponse,
-    Nette\Forms\Form;
+    Nette\Forms\Form,
+    Nette\Utils\Strings;
 
 /**
  * Skladba presenter.
@@ -47,9 +48,6 @@ class SkladbaPresenter extends BasePresenter
       ->setRequired('Prosím zadejte verzi.')
       ->setPrompt('Zvolte verzi');
 
-    $form->addUpload('format1', 'text');
-    $form->addUpload('format2', 'mid');
-/*
     $form->addGroup('Ukázky');
     foreach($this->skladby->seznamFormatu('demo') as $formatId => $formatNazev) {
       $form->addUpload('format' . $formatId, $formatNazev);
@@ -59,7 +57,8 @@ class SkladbaPresenter extends BasePresenter
     foreach($this->skladby->seznamFormatu('plna') as $formatId => $formatNazev) {
       $form->addUpload('format' . $formatId, $formatNazev);
     }
-*/
+
+    $form->addGroup('Uložení')->setOption('container', 'fieldset id=ulozeni');
     $form->addSubmit('send', 'Uložit');
 
     $form->onSuccess[] = $this->skladbaFormSucceeded;
@@ -73,30 +72,61 @@ class SkladbaPresenter extends BasePresenter
   {
     $values = $form->getValues();
     $skladbaId = $this->getParameter('id');
-    $soubory = $this->context->getService('httpRequest')->getFiles();
+    $uploads = $this->context->getService('httpRequest')->getFiles();
+    $idFormatu = array(); //název uploadovaného tmp souboru => id formatu, kte kteremu soubor patri
 
     //odstraneni upload polozek z pole s informacemi pro ulozeni
+    //vytvoreni pole $idFormatuy
     foreach($values as $key => $val) {
-      if($val instanceof Nette\Http\FileUpload) unset($values[$key]);
-    }
-
-    foreach ($soubory as $soubor) {
-      if($soubor && $soubor->isOk) {
-        $soubor->move($this->context->parameters['appDir'] . '/../data/' . $soubor->getSanitizedName());
+      if($val instanceof Nette\Http\FileUpload && Strings::startsWith($key, 'format')) {
+        $tmpFile = pathinfo($val->getTemporaryFile(), PATHINFO_BASENAME );
+        $idFormatu[$tmpFile] = substr($key, 6); //odstraneni retezce "format" - zustane pouze id
+        unset($values[$key]);
       }
     }
 
-    if($skladbaId) {
-      $this->skladby->update($skladbaId, $values);
-      $this->flashMessage('Údaje byly uloženy.', 'success');
-      //$this->redirect('Skladba:detail', $skladbaId);
+
+    if($skladbaId) { //editace
+      try {
+        $this->skladby->update($skladbaId, $values);
+      } catch (\Exception $e) {
+        $this->flashMessage('Skladbu se nepodařilo uložit.', 'danger');
+      }
     }
-    else {
-      
-      //$skladba = $this->skladby->insert($values);
-      //$this->flashMessage('Skladba byla přidána.', 'success');
-      //$this->redirect('Skladba:detail', $skladba->id);
+    else { //nova skladba
+      try {
+        $skladba = $this->skladby->insert($values);
+        $skladbaId = $skladba->id;
+      } catch (\Exception $e) {
+        $this->flashMessage('Skladbu se nepodařilo uložit.', 'danger');
+      }
     }
+
+    $this->flashMessage('Skladba byla uložena.', 'success');
+
+    //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
+    $destDir = $this->context->parameters['appDir'] . '/../data';
+    $soubory = array();
+    foreach ($uploads as $soubor) {
+      if($soubor && $soubor->isOk) {
+        $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
+        $formatId = $idFormatu[pathinfo($soubor->getTemporaryFile(), PATHINFO_BASENAME)];
+        $filename = $skladbaId . '-' . $formatId . '-' . Strings::webalize($values['nazev']) . '.' . $ext;
+        $soubor->move($destDir . '/' . $filename);
+        $soubory[] = array('skladba_id' => $skladbaId, 'format_id' => $formatId, 'nazev' => $filename);
+      }
+    }
+
+    if(count($soubory)) {
+      try {
+        $this->skladby->ulozitSoubory($soubory, $destDir);
+      } catch (\Exception $e) {
+        $this->flashMessage('Soubory se nepodařilo nahrát.', 'danger');
+      }
+    }
+
+    
+    $this->redirect('Skladba:detail', $skladbaId);
   }
 
 	public function renderDefault($mode = null)

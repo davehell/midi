@@ -20,10 +20,12 @@
   <dd>{$skladba->zanr->nazev}</dd>
   <dt>Poznámka</dt>
   <dd>{$skladba->poznamka}</dd>
-  <dt>Dostupné formáty</dt>
+  <dt>Ukázky</dt>
   <dd>
     <ul n:inner-foreach="$formaty as $format">
-      <li>{$format->format} {$format->formatId}</li>
+      {if $format->format->demo}
+        <li>{$format->format->nazev}</li>
+      {/if}
     </ul>
   </dd>
 </dl>
@@ -51,5 +53,7 @@
 
 {if $user->isInRole('admin')}
   <h2>Editace skladby</h2>
+  <div id="editaceSkladby">
   {control skladbaForm }
+  </div>
 {/if}
