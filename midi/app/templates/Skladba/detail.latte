@@ -3,48 +3,59 @@
 
 <h1 n:block="title">Detail skladby {$skladba->nazev}</h1>
 
-<dl class="dl-horizontal">
-  <dt>Název</dt>
-  <dd>{$skladba->nazev}</dd>
-  <dt>Interpret</dt>
-  <dd>{$skladba->autor}</dd>
-  <dt>Verze</dt>
-  <dd>{$skladba->verze}</dd>
-  {if !$maZakoupeno}
-  <dt>Cena</dt>
-  <dd>{$skladba->cena}&nbsp;Kč</dd>
-  {/if}
-  <dt>Žánr</dt>
-  <dd>{$skladba->zanr->nazev}</dd>
-  <dt>Poznámka</dt>
-  <dd>{$skladba->poznamka}</dd>
-  <dt>Ukázky</dt>
-  <dd>
-    <ul n:inner-foreach="$soubory as $soubor">
-      {if $soubor->format->demo}
-        <li>{$soubor->format->nazev}</li>
+<div class="row">
+  <div class="col-md-6">
+    <dl class="dl-horizontal">
+      <dt>Název</dt>
+      <dd>{$skladba->nazev}</dd>
+      <dt>Interpret</dt>
+      <dd>{$skladba->autor}</dd>
+      <dt>Verze</dt>
+      <dd>{$skladba->verze}</dd>
+      <dt>Žánr</dt>
+      <dd>{$skladba->zanr->nazev}</dd>
+      <dt>Poznámka</dt>
+      <dd>{$skladba->poznamka}</dd>
+      {if !$maZakoupeno}
+      <dt>Cena</dt>
+      <dd>{$skladba->cena}&nbsp;Kč</dd>
       {/if}
-    </ul>
-  </dd>
-</dl>
+    </dl>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="" for="format">Ukázky ke stažení:</label>
+      <select class="form-control" id="formatDema">
+        <option value="">Zvolte formát</option>
+        <option n:foreach="$soubory as $soubor" n:if="$soubor->format->demo" value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
+      </select>
+    </div>
+    <button id="stahnoutDemo" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout ukázku</button>
+  </div>
+</div>
+
+
 
 
 {if $maZakoupeno}
   <p class="alert alert-info">
-    Tuto skladbu máte zakoupenou. Můžete si ji stáhnout.
+    <span class="glyphicon glyphicon-hand-right"></span> Tuto skladbu máte zakoupenou. Můžete si stáhnout její plnou verzi.
   </p>
   {if $soubory->count()}
-  <form class="form-inline" role="form" id="stazeniSkladby">
-    <div class="form-group">
-      <label class="" for="format">Formát:</label>
-      <select n:inner-foreach="$soubory as $soubor" class="form-control" id="format">
-        {if !$soubor->format->demo}
-          <option value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
-        {/if}
-      </select>
+  <div class="row">
+    <div class="col-md-6">
+    <form class="form-inline1" id="stazeniSkladby">
+      <div class="form-group">
+        <label class="" for="format">Plná verze:</label>
+        <select n:inner-foreach="$soubory as $soubor" class="form-control" id="format">
+          <option value="">Zvolte formát</option>
+          <option n:foreach="$soubory as $soubor" n:if="!$soubor->format->demo" value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
+        </select>
+      </div>
+      <button id="stahnout" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout plnou verzi</button>
+    </form>
     </div>
-    <button id="stahnout" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout</button>
-  </form>
+  </div>
   {/if}
 {else}
   <p>
