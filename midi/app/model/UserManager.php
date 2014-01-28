@@ -65,23 +65,4 @@ class UserManager extends Nette\Object implements Security\IAuthenticator
 		return crypt($password, $salt);
 	}
 
-
-	/**
-	 * Adds new user.
-	 * @param  string
-	 * @param  string
-	 * @param  string
-	 * @return void
-	 */
-	public function registerUser($username, $password, $email)
-	{
-    $salt = Strings::random(20);
-		$this->database->table(self::TABLE_NAME)->insert(array(
-			self::COLUMN_NAME => $username,
-      self::COLUMN_SALT => $salt,
-			self::COLUMN_PASSWORD => self::generateHash($password, $salt),
-      'email' => $email,
-      'datum_registrace' => new Nette\Database\SqlLiteral('NOW()')
-		));
-	}
 }

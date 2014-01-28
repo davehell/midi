@@ -169,4 +169,23 @@ class Uzivatel extends Nette\Object
 	{
 		return $this->database->table('dobijeni')->where('vyrizeno', null);
 	}
+
+	/**
+	 * Adds new user.
+	 * @param  string
+	 * @param  string
+	 * @param  string
+	 * @return void
+	 */
+	public function registrace($username, $password, $email)
+	{
+    $salt = Strings::random(20);
+		$this->database->table('uzivatel')->insert(array(
+			'login' => $username,
+      'salt' => $salt,
+			'heslo' => UserManager::generateHash($password, $salt),
+      'email' => $email,
+      'datum_registrace' => new Nette\Database\SqlLiteral('NOW()')
+		));
+	}
 }

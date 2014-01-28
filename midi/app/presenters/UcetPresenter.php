@@ -113,29 +113,29 @@ class UcetPresenter extends BasePresenter
   public function uzivatelFormSucceeded($form)
   {
     $values = $form->getValues();
+    $uzivId = $this->getParameter('id');
 
-    if($this->user->isLoggedIn()) {
+    if($uzivId) {
       unset($values['login']);
       unset($values['hesloKontrola']);
 
-      try {
-        $this->uzivatele->update($this->user->id, $values);
-        $this->flashMessage('Údaje byly uloženy.', 'success');
-        $this->redirect('Ucet:informace');
-      } catch (\Exception $e) {
-        $form->addError($e->getMessage());
-      }
+      $this->uzivatele->update($uzivId, $values);
+      $this->flashMessage('Údaje byly uloženy.', 'success');
+      $this->redirect('Ucet:informace');
     }
     else {
       try {
-        $this->getUser()->getAuthenticator()->registerUser($values->login, $values->heslo, $values->email);
-        $this->flashMessage('Registrace byla úspěšná.', 'success');
+        $this->uzivatele->registrace($values->login, $values->heslo, $values->email);
         $this->getUser()->login($values->login, $values->heslo);
-        $this->redirect('Ucet:informace');
-      } catch (Nette\Security\AuthenticationException $e) {
-        $form->addError($e->getMessage());
+        $this->uzivatele->casPoslPrihlaseni($this->getUser()->getId());
+      } catch (\Exception $e) {
+        $form->addError("Zvolte jiné uživatelské jméno");
+        $this->flashMessage('Registrace nebyla dokončena.', 'danger');
       }
-    }
+
+      $this->flashMessage('Registrace byla úspěšná.', 'success');
+      $this->redirect('Ucet:informace');
+    }//else
   }
 
   public function dobijeniFormSucceeded($form)
@@ -162,15 +162,25 @@ class UcetPresenter extends BasePresenter
   {
     if (!$this->user->isLoggedIn()) {
       $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
-      $this->redirect('prihlaseni');
+      $this->redirect('Ucet:prihlaseni');
     }
 
     $this->template->uzivatel = $this->uzivatele->findById($this->user->id);
     $this->template->sumaNakupu = $this->uzivatele->sumaNakupu($this->user->id);
   }
 
-  public function renderZmenaUdaju()
+  public function renderZmenaUdaju($id)
   {
+    if (!$this->user->isLoggedIn()) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
+    //uzivatel muze menit pouze sve udaje
+    if($id != $this->user->id) {
+      $this->redirect('Ucet:zmenaUdaju', $this->user->id);
+    }
+
     $arr = $this->uzivatele->findById($this->user->id)->toArray();
     $this['uzivatelForm']->getComponent('login')->setAttribute("readonly", "true");
     $this['uzivatelForm']->getComponent('send')->caption = "Uložit";

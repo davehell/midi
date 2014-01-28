@@ -16,11 +16,10 @@ midiweb
 	+app
 		-component
 			midi\app\component\Bs3Form.php
-		-config
+		+config
 			midi\app\config\config.local.neon
 			midi\app\config\config.neon
-		-model
-			midi\app\model\Authenticator.php
+		+model
 			midi\app\model\Skladba.php
 			midi\app\model\UserManager.php
 			midi\app\model\Uzivatel.php
@@ -32,7 +31,7 @@ midiweb
 			midi\app\presenters\SkladbaPresenter.php
 			midi\app\presenters\UcetPresenter.php
 		+templates
-			-Admin
+			+Admin
 				midi\app\templates\Admin\default.latte
 				midi\app\templates\Admin\stahovani.latte
 				midi\app\templates\Admin\zakaznici.latte
@@ -54,12 +53,12 @@ midiweb
 				midi\app\templates\Homepage\kontakt.latte
 				midi\app\templates\Homepage\odkazy.latte
 				midi\app\templates\Homepage\sluzbyAVyrobky.latte
-			-Skladba
+			+Skladba
 				midi\app\templates\Skladba\default.latte
 				midi\app\templates\Skladba\detail.latte
 				midi\app\templates\Skladba\nakup.latte
-				midi\app\templates\Skladba\pridat.latte
-			-Ucet
+				midi\app\templates\Skladba\download.latte
+			+Ucet
 				midi\app\templates\Ucet\informace.latte
 				midi\app\templates\Ucet\kredit.latte
 				midi\app\templates\Ucet\kreditDobiti.latte
@@ -70,19 +69,19 @@ midiweb
 			midi\app\templates\@layout.latte
 		midi\app\.htaccess
 		midi\app\bootstrap.php
-	-www
-		-css
+	+www
+		+css
 			subdomeny\midi2\css\bootstrap.css
 			subdomeny\midi2\css\bootstrap.min.css
 			subdomeny\midi2\css\bootstrap-theme.css
 			subdomeny\midi2\css\bootstrap-theme.min.css
 			subdomeny\midi2\css\screen.css
-		-fonts
+		+fonts
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.eot
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.svg
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.ttf
 			subdomeny\midi2\fonts\glyphicons-halflings-regular.woff
-		-js
+		+js
 			subdomeny\midi2\js\bootstrap.js
 			subdomeny\midi2\js\bootstrap.min.js
 			subdomeny\midi2\js\main.js
@@ -93,9 +92,49 @@ midiweb
 		subdomeny\midi2\index.php
 [Open project files]
 0=midi\app\templates\@layout.latte
+1=midi\app\presenters\SkladbaPresenter.php
+2=midi\app\templates\Skladba\download.latte
+3=midi\app\templates\Skladba\detail.latte
+4=subdomeny\midi2\css\screen.css
+5=midi\app\model\Skladba.php
+6=midi\app\config\config.neon
+7=midi\app\model\UserManager.php
+8=midi\app\presenters\UcetPresenter.php
+9=midi\app\model\Uzivatel.php
+10=midi\app\templates\Ucet\informace.latte
 [Selected Project Files]
 Main=
-Selected=midi\app\templates\@layout.latte
+Selected=midi\app\presenters\UcetPresenter.php
 [midi\app\templates\@layout.latte]
+TopLine=46
+Caret=34,88
+[midi\app\presenters\SkladbaPresenter.php]
+TopLine=70
+Caret=19,98
+[midi\app\templates\Skladba\download.latte]
 TopLine=1
-Caret=4,7
+Caret=1,4
+[midi\app\templates\Skladba\detail.latte]
+TopLine=20
+Caret=79,57
+[subdomeny\midi2\css\screen.css]
+TopLine=1
+Caret=1,1
+[midi\app\model\Skladba.php]
+TopLine=16
+Caret=4,72
+[midi\app\config\config.neon]
+TopLine=1
+Caret=11,10
+[midi\app\model\UserManager.php]
+TopLine=23
+Caret=1,67
+[midi\app\presenters\UcetPresenter.php]
+TopLine=111
+Caret=1,138
+[midi\app\model\Uzivatel.php]
+TopLine=17
+Caret=24,40
+[midi\app\templates\Ucet\informace.latte]
+TopLine=1
+Caret=33,17
