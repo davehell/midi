@@ -1,3 +1,20 @@
+{block scripts}
+  <script src="{$basePath}/js/datepicker.js"></script>
+
+  <script>
+    //stazeni skladby po kliknuti na tlacitko #stahnout
+    $('button#stahnout').click(function() {
+      var url = $('#format').val();
+      if(url) window.location = url;
+    });
+
+    //stazeni ukazky skladby po kliknuti na tlacitko #stahnoutDemo
+    $('button#stahnoutDemo').click(function() {
+      var url = $('#formatDema').val();
+      if(url) window.location = url;
+    });
+  </script>
+{/block}
 
 {block content}
 

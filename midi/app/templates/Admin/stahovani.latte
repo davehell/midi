@@ -1,3 +1,17 @@
+{block scripts}
+  <script src="{$basePath}/js/datepicker.js"></script>
+
+  <script>
+    var obdobiOd = $('#frm-obdobiForm-zacatek').datepicker({ format: 'dd.mm.yyyy' }).on('changeDate', function(ev) {
+      obdobiOd.hide();
+    }).data('datepicker');
+
+    var obdobiDo = $('#frm-obdobiForm-konec').datepicker({ format: 'dd.mm.yyyy' }).on('changeDate', function(ev) {
+      obdobiDo.hide();
+    }).data('datepicker');
+  </script>
+{/block}
+
 
 {block content}
 
