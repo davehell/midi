@@ -4,7 +4,7 @@
 <h1 n:block=title>Zákazníci</h1>
 
 
-<table class="table table-striped table-hover table-condensed">
+<table class="table table-striped table-hover ">
   <thead>
     <tr>
       <th>&nbsp;</th>
@@ -19,7 +19,7 @@
   <tbody>
     <tr n:foreach="$zakaznici as $zakaznik">
       <td>
-        <a n:href="Admin:zakaznikDetail $zakaznik->id" class="btn btn-default btn-sm" title="Detail zákazníka"><span class="glyphicon glyphicon-search"></span></a>
+        <a n:href="Admin:zakaznikDetail $zakaznik->id" class="btn btn-primary btn-xs" title="Detail zákazníka"><span class="glyphicon glyphicon-search"></span></a>
       </td>
       <td>{$zakaznik->login}</td>
       <td>{$zakaznik->email}</td>

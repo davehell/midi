@@ -35,17 +35,26 @@
         </button>
         <a href="/" class="navbar-brand">MIDI Premier</a>
       </div> <!-- /.navbar-header -->
+
+      <div class="collapse navbar-collapse bs-navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a n:href="Skladba:default">KATALOG SKLADEB</a></li>
+          <li><a n:href="Homepage:jakNakupovat">JAK NAKUPOVAT</a></li>
+          <li><a n:href="Homepage:cenik">CENÍK</a></li>
+          <li><a n:href="Homepage:kontakt">KONTAKT</a></li>
+        </ul>
+      </div> <!-- /.navbar-collapse -->
     </div>
   </div> <!-- /#header -->
 
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-3">
         <ul class="navig">
           <li><a n:href="Homepage:">Úvod</a></li>
           <!-- <li><a n:href="Homepage:sluzbyAVyrobky">Služby a výrobky</a></li> -->
-          <li><a n:href="Skladba:default">Seznam skladeb</a></li>
+          <li><a n:href="Skladba:default">Katalog skladeb</a></li>
           <li><a n:href="Homepage:jakNakupovat">Jak nakupovat</a></li>
           <li><a n:href="Homepage:cenik">Ceník</a></li>
           <li><a n:href="Homepage:kontakt">Kontakt</a></li>
@@ -55,9 +64,9 @@
               <li><a n:href="Ucet:odhlaseni">Odhlásit</a> uživatele {$user->getIdentity()->data['login']}</li>
               <li>Vaše konto
                 <ul>
-                 <li><a n:href="Ucet:informace">Informace o zákazníkovi</a> - přehled informací o zákazníkovi, změna e-mailu a přístupových údajů</li>
-                 <li><a n:href="Ucet:kredit">Dobíjení kreditu</a> - navýšení kreditu, historie dobíjení kreditu</li>
-                 <li><a n:href="Ucet:nakupy">Zakoupené skladby</a> - přehled zakoupených skladeb, možnost jejich opětovného stažení</li>
+                 <li><a n:href="Ucet:informace">Informace o zákazníkovi</a> <!-- - přehled informací o zákazníkovi, změna e-mailu a přístupových údajů --></li>
+                 <li><a n:href="Ucet:kredit">Dobíjení kreditu</a> <!-- - navýšení kreditu, historie dobíjení kreditu --></li>
+                 <li><a n:href="Ucet:nakupy">Zakoupené skladby</a> <!-- - přehled zakoupených skladeb, možnost jejich opětovného stažení --></li>
                 </ul>
               </li>
               {if $user->isInRole('admin')}
@@ -75,8 +84,11 @@
               <li><a n:href="Ucet:registrace">Registrace</a></li>
           {/if}
         </ul>
-        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
-        {include content}
+        </div>
+        <div class="col-md-9">
+          <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+          {include content}
+        </div>
       </div>
     </div>
   </div><!-- /.container -->
