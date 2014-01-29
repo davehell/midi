@@ -46,9 +46,12 @@ class Skladba extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function prehledStahovani()
+	public function prehledStahovani($od, $do)
 	{
-    return $this->database->table('nakup')->select('*, count(*) AS pocet')->group('skladba_id');
+    if(!$od || !$do) return null;
+//     if(!$od) $od = date('Y-m-d');
+//     if(!$do) $do = date('Y-m-d');
+    return $this->database->table('nakup')->select('skladba_id, cena, count(*) AS pocet')->where('datum >= ?', $od)->where('datum <= ?', $do)->group('skladba_id');
 	}
 
 	/** @return Nette\Database\Table\Selection */

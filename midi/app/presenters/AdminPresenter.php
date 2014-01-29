@@ -46,6 +46,26 @@ class AdminPresenter extends BasePresenter
     return Bs3Form::transform($form);
   }
 
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentObdobiForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addText('zacatek', 'Datum od:')
+      ->setRequired('Prosím zadejte počáteční datum.');
+
+    $form->addText('konec', 'Datum do:')
+      ->setRequired('Prosím zadejte koncové datum.');
+
+    $form->addSubmit('send', 'zobrazit');
+
+    $form->onSuccess[] = $this->obdobiFormSucceeded;
+
+    return Bs3Form::transform($form);
+  }
+
   public function kreditFormSucceeded($form)
   {
     $values = $form->getValues();
@@ -61,9 +81,14 @@ class AdminPresenter extends BasePresenter
       $this->redirect('Admin:zakaznikDetail', $uziv->id);
 
     } catch (\Exception $e) {
-      //$form->addError($e->getMessage());
       $this->flashMessage($e->getMessage(), 'danger');
     }
+  }
+
+  public function obdobiFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $this->redirect('Admin:stahovani', $values['zacatek'], $values['konec']);
   }
 
 	public function renderDefault()
@@ -133,14 +158,23 @@ class AdminPresenter extends BasePresenter
     $this['kreditForm']->setDefaults(array('uzivId' => $id));
 	}
 
-	public function renderStahovani()
+	public function renderStahovani($zacatek, $konec)
 	{
-    $this->template->nakupy = $this->skladby->prehledStahovani();
+    $this->template->nakupy = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec));
+    $this->template->zacatek = $zacatek;
+    $this->template->konec = $konec;
 	}
 
-	public function actionStahovaniDownload()
+	private function dmyToYmd($text)
 	{
-    $nakupy = $this->skladby->prehledStahovani();
+    $arr = explode('.', $text);
+    if(count($arr) != 3) return '';
+    return $arr[2] . '-' . $arr[1] . '-' . $arr[0];
+	}
+
+	public function actionStahovaniDownload($zacatek, $konec)
+	{
+    $nakupy = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec));
     $eol = "\r\n";
     $content = 'název;interpret;cena;počet stažení' . $eol;
     foreach ($nakupy as $nakup) {
