@@ -56,7 +56,9 @@ class Skladba extends Nette\Object
 	/** @return Nette\Database\Table\Selection */
 	public function oblibene()
 	{
-    return $this->prehledStahovani()->order('pocet DESC')->limit(10);
+    $od = '2007-01-01';
+    $do = date('Y-m-d');
+    return $this->prehledStahovani($od, $do)->order('pocet DESC')->limit(10);
 	}
 
 	/** @return Nette\Database\Table\Selection */
