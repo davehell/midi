@@ -16,6 +16,29 @@ class SkladbaPresenter extends BasePresenter
 	/** @var Uzivatel @inject*/
 	public $uzivatele;
 
+  public function createComponentDatagrid()
+  {
+    $grid = new Nextras\Datagrid\Datagrid;
+    $grid->addColumn('id');
+    $grid->addColumn('nazev')->enableSort();
+    $grid->addColumn('autor')->enableSort();
+    $grid->addColumn('cena');
+    $grid->addColumn('poznamka');
+    $grid->addColumn('verze');
+    $grid->addColumn('zanr');
+
+    $grid->setDataSourceCallback($this->getData);
+
+    //$grid->addCellsTemplate(__DIR__ . '/../../vendor/Nextras/Datagrid/bootstrap-style/@bootstrap3.datagrid.latte');
+    //$grid->addCellsTemplate(__DIR__ . '/../../vendor/Nextras/Datagrid/bootstrap-style/@bootstrap3.extended-pagination.datagrid.latte');
+    return $grid;
+  }
+
+  public function getData($filter, $order)
+  {
+    return $this->skladby->findAll();
+  }
+
   /**
    * @return Nette\Application\UI\Form
    */
@@ -139,6 +162,8 @@ class SkladbaPresenter extends BasePresenter
 
     $this->template->skladby = $this->skladby->findAll($paginator->getLength(), $paginator->getOffset());
     $this->template->adminMode = $this->user->isInRole('admin') && $mode;
+
+    dump(__DIR__ );
 	}
 
   public function renderDetail($id)
