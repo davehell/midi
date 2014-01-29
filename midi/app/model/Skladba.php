@@ -14,9 +14,10 @@ class Skladba extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function findAll()
+	public function findAll($limit = null, $offset = null)
 	{
-		return $this->database->table('skladba');
+		$skladby = $this->database->table('skladba')->limit($limit, $offset);
+    return $skladby;
 	}
 
 	/** @return Nette\Database\Table\ActiveRow */
@@ -49,8 +50,6 @@ class Skladba extends Nette\Object
 	public function prehledStahovani($od, $do)
 	{
     if(!$od || !$do) return null;
-//     if(!$od) $od = date('Y-m-d');
-//     if(!$do) $do = date('Y-m-d');
     return $this->database->table('nakup')->select('skladba_id, cena, count(*) AS pocet')->where('datum >= ?', $od)->where('datum <= ?', $do)->group('skladba_id');
 	}
 
@@ -95,5 +94,11 @@ class Skladba extends Nette\Object
 	public function nazevSouboru($id)
 	{
     return $this->database->table('soubor')->get($id);
+	}
+
+  /** @return array */
+	public function nazvySkladeb()
+	{
+    return $this->database->table('skladba')->fetchPairs('id', 'nazev');
 	}
 }

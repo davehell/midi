@@ -18,3 +18,4 @@ var obdobiOd = $('#frm-obdobiForm-zacatek').datepicker({format: 'dd.mm.yyyy'}).o
 var obdobiDo = $('#frm-obdobiForm-konec').datepicker({format: 'dd.mm.yyyy'}).on('changeDate', function(ev) {
   obdobiDo.hide();
 }).data('datepicker');
+

@@ -9,6 +9,25 @@
   </p>
 {/if}
 
+{control vp}
+
+<div id="hledaniSkladeb">
+<input class="typeahead tt-query" type="text" placeholder="název skladby" autocomplete="off" spellcheck="false" dir="auto">
+</div>
+
+<script>
+$('.typeahead').typeahead({
+  prefetch: {
+      url: {link Skladba:json},
+      ttl: 100
+  }
+});
+
+$('.typeahead').on('typeahead:selected', function (object, datum) {
+    console.log(datum);
+});
+</script>
+
 <table class="table table-striped table-condensed table-hover">
   <thead>
     <tr>

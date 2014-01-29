@@ -1,6 +1,7 @@
 <?php
 
 use Nette\Application\Responses\FileResponse,
+    Nette\Application\Responses\JsonResponse,
     Nette\Forms\Form,
     Nette\Utils\Strings;
 
@@ -130,7 +131,13 @@ class SkladbaPresenter extends BasePresenter
 
 	public function renderDefault($mode = null)
 	{
-    $this->template->skladby = $this->skladby->findAll();
+    $pocetSkladeb = $this->skladby->pocetSkladeb();
+    $vp = new VisualPaginator($this, 'vp');
+    $paginator = $vp->getPaginator();
+    $paginator->itemsPerPage = 2;
+    $paginator->itemCount = $pocetSkladeb;
+
+    $this->template->skladby = $this->skladby->findAll($paginator->getLength(), $paginator->getOffset());
     $this->template->adminMode = $this->user->isInRole('admin') && $mode;
 	}
 
@@ -205,5 +212,11 @@ class SkladbaPresenter extends BasePresenter
     }
 
     $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
+	}
+
+	public function actionJson()
+	{
+    $arr = $this->skladby->nazvySkladeb();
+    $this->presenter->sendResponse(new JsonResponse($arr));
 	}
 }
