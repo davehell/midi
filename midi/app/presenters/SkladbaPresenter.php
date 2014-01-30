@@ -127,6 +127,7 @@ class SkladbaPresenter extends BasePresenter
     }
 
     $this->skladby->exportNazvuSkladeb($this->context->parameters['wwwDir'] . '/skladby.json');
+    $this->skladby->exportAutoru($this->context->parameters['wwwDir'] . '/autori.json');
 
     $this->redirect('Skladba:detail', $skladbaId);
   }

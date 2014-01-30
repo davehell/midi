@@ -99,15 +99,29 @@ class Skladba extends Nette\Object
   /** @return null */
 	public function exportNazvuSkladeb($soubor)
 	{
-    $skladby = $this->database->table('skladba')->fetchPairs('id', 'nazev');
+    $skladby = $this->database->table('skladba')->select('id,nazev')->order('nazev');
     $eol = "\r\n";
     $handle = fopen('safe://' . $soubor, 'w');
     fwrite($handle, '[' . $eol);
-    foreach ($skladby as $id => $nazev) {
-      // {"id":"1","value":"typeahead.js"}
-      fwrite($handle, '{"id":' . $id . ',"value":"' . $nazev . '"},' . $eol);
+    foreach ($skladby as $skladba) {
+      fwrite($handle, '{"id":' . $skladba->id . ',"value":"' . $skladba->nazev . '"},' . $eol);
     }
     fwrite($handle, '{}' . $eol);
+    fwrite($handle, ']' . $eol);
+    fclose($handle);
+	}
+
+  /** @return null */
+	public function exportAutoru($soubor)
+	{
+    $skladby = $this->database->table('skladba')->select('DISTINCT autor')->order('autor');
+    $eol = "\r\n";
+    $handle = fopen('safe://' . $soubor, 'w');
+    fwrite($handle, '[' . $eol);
+    foreach ($skladby as $skladba) {
+      fwrite($handle, '"' . $skladba->autor . '",' . $eol);
+    }
+    fwrite($handle, '""' . $eol);
     fwrite($handle, ']' . $eol);
     fclose($handle);
 	}
