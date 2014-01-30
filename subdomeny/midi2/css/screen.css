@@ -18,8 +18,28 @@
   background-image: none;
 }
 #header {
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
 }
+
+#header2 {
+  background-color: #EFEFEF;
+  margin-top: -20px;
+}
+
+#header2 h1{
+  margin-top: 5px;
+}
+
+.navbar {
+  min-height: 20px;
+}
+
+.navbar-nav>li>a {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+
 .jumbotron {
   text-align: center;
   background-color: lightgrey;
