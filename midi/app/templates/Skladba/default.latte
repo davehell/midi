@@ -4,8 +4,8 @@
   <script>
     $('.typeahead').typeahead({
       prefetch: {
-          url: {link Skladba:json},
-          ttl: 100
+        url:  '{$basePath|noescape}/skladby.json',
+        ttl: 100
       }
     });
 
@@ -18,7 +18,7 @@
 {block content}
 
 <h1 n:block=title>Katalog skladeb</h1>
-
+ 
 {if $adminMode}
   <p>
     <a n:href="Skladba:pridat" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nová skladba</a>

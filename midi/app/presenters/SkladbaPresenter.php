@@ -126,6 +126,8 @@ class SkladbaPresenter extends BasePresenter
       }
     }
 
+    $this->skladby->exportNazvuSkladeb($this->context->parameters['wwwDir'] . '/skladby.json');
+
     $this->redirect('Skladba:detail', $skladbaId);
   }
 
@@ -212,11 +214,5 @@ class SkladbaPresenter extends BasePresenter
     }
 
     $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
-	}
-
-	public function actionJson()
-	{
-    $arr = $this->skladby->nazvySkladeb();
-    $this->presenter->sendResponse(new JsonResponse($arr));
 	}
 }

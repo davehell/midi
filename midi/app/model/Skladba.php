@@ -98,9 +98,19 @@ class Skladba extends Nette\Object
     return $this->database->table('soubor')->get($id);
 	}
 
-  /** @return array */
-	public function nazvySkladeb()
+  /** @return null */
+	public function exportNazvuSkladeb($soubor)
 	{
-    return $this->database->table('skladba')->fetchPairs('id', 'nazev');
+    $skladby = $this->database->table('skladba')->fetchPairs('id', 'nazev');
+    $eol = "\r\n";
+    $handle = fopen('safe://' . $soubor, 'w');
+    fwrite($handle, '{' . $eol);
+    foreach ($skladby as $id => $nazev) {
+      // "id" : "nazev skladby"
+      fwrite($handle, '"' . $id . '":"' . $nazev . '",' . $eol);
+    }
+    fwrite($handle, '"":""' . $eol);
+    fwrite($handle, '}' . $eol);
+    fclose($handle);
 	}
 }
