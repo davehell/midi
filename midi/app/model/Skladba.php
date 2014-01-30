@@ -104,13 +104,13 @@ class Skladba extends Nette\Object
     $skladby = $this->database->table('skladba')->fetchPairs('id', 'nazev');
     $eol = "\r\n";
     $handle = fopen('safe://' . $soubor, 'w');
-    fwrite($handle, '{' . $eol);
+    fwrite($handle, '[' . $eol);
     foreach ($skladby as $id => $nazev) {
-      // "id" : "nazev skladby"
-      fwrite($handle, '"' . $id . '":"' . $nazev . '",' . $eol);
+      // {"id":"1","value":"typeahead.js"}
+      fwrite($handle, '{"id":' . $id . ',"value":"' . $nazev . '"},' . $eol);
     }
-    fwrite($handle, '"":""' . $eol);
-    fwrite($handle, '}' . $eol);
+    fwrite($handle, '{}' . $eol);
+    fwrite($handle, ']' . $eol);
     fclose($handle);
 	}
 }
