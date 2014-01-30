@@ -136,10 +136,10 @@ class SkladbaPresenter extends BasePresenter
     $pocetSkladeb = $this->skladby->pocetSkladeb();
     $vp = new VisualPaginator($this, 'vp');
     $paginator = $vp->getPaginator();
-    $paginator->itemsPerPage = 2;
+    $paginator->itemsPerPage = 50;
     $paginator->itemCount = $pocetSkladeb;
 
-    $this->template->skladby = $this->skladby->findAll($paginator->getLength(), $paginator->getOffset());
+    $this->template->skladby = $this->skladby->findAll($paginator->getLength(), $paginator->getOffset())->order('nazev');
     $this->template->adminMode = $this->user->isInRole('admin') && $mode;
 	}
 
