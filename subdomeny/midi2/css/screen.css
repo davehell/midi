@@ -1,4 +1,22 @@
 #ulozeni legend {display: none;}
+#carousel-wrapper {
+  background-color: lightgrey;
+  margin-bottom: 20px;
+}
+.carousel {
+  text-align: center;
+  background-color: lightgrey;
+  
+}
+.carousel .item {
+  height: 200px;
+}
+.carousel .carousel-caption {
+  color: black;
+}
+.carousel .carousel-control {
+  background-image: none;
+}
 #header {
   margin-bottom: 0;
 }
