@@ -19,6 +19,12 @@ class SkladbaPresenter extends BasePresenter
   public $zanr;
   /** @persistent */
   public $verze;
+  /** @persistent */
+  public $radit = 'nazev';
+  /** @persistent */
+  public $asc = '1';
+  /** @persistent */
+  public $mode;
 
 	/** @var Skladba @inject*/
 	public $skladby;
@@ -181,20 +187,25 @@ class SkladbaPresenter extends BasePresenter
 
 	public function renderDefault($mode = null)
   {
-    $filtry['nazev'] =  $this->getParameter('nazev');
-    $filtry['autor'] =  $this->getParameter('autor');
-    $filtry['zanr']  =  $this->getParameter('zanr');
-    $filtry['verze'] =  $this->getParameter('verze');
+    $filtry['nazev'] = $this->getParameter('nazev');
+    $filtry['autor'] = $this->getParameter('autor');
+    $filtry['zanr']  = $this->getParameter('zanr');
+    $filtry['verze'] = $this->getParameter('verze');
     $this['hledaniForm']->setDefaults($filtry);
+    $razeni['sloupec'] = $this->getParameter('radit');
+    $razeni['smer'] = $this->getParameter('asc') ? 'ASC' : 'DESC';
 
-    $pocetSkladeb = $this->skladby->pocetSkladeb($filtry);
+
+    $pocetSkladeb = $this->skladby->pocetSkladeb($filtry, $razeni);
     $vp = new VisualPaginator($this, 'vp');
     $paginator = $vp->getPaginator();
     $paginator->itemsPerPage = 50;
     $paginator->itemCount = $pocetSkladeb;
 
-    $this->template->skladby = $this->skladby->findAll($filtry, $paginator->getLength(), $paginator->getOffset());
+    $this->template->skladby = $this->skladby->findAll($filtry, $razeni, $paginator->getLength(), $paginator->getOffset());
     $this->template->adminMode = $this->user->isInRole('admin') && $mode;
+    $this->template->razeniSloupec = $razeni['sloupec'];
+    $this->template->razeniAsc = $this->getParameter('asc');
 	}
 
   public function renderDetail($id)

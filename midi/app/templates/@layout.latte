@@ -29,7 +29,7 @@
     <div class="container"><div class="row">
       <ul class="nav navbar-nav">
         <li><a n:href="Homepage:">Domů</a></li>
-        <li><a n:href="Skladba:">Katalog skladeb</a></li>
+        <li><a n:href="Skladba:default radit=>null, asc=>null, nazev=>null, autor=>null, zanr=>null, verze=>null">Katalog skladeb</a></li>
         {if $user->loggedIn}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Můj účet <b class="caret"></b></a>
@@ -55,6 +55,7 @@
                <li><a n:href="Admin:">Přehled</a></li>
                <li><a n:href="Admin:stahovani">Stahování</a></li>
                <li><a n:href="Skladba:default, admin">Skladby</a></li>
+               <li><a n:href="Skladba:pridat">Nová skladba</a></li>
                <li><a n:href="Admin:zakaznici">Zákazníci</a></li>
             </ul>
           </li>
