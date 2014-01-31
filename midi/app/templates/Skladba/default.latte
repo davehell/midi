@@ -6,14 +6,16 @@
       prefetch: {
         url:  '{$basePath|noescape}/skladby.json',
         ttl: 100
-      }
+      },
+      limit: 10
     });
 
     $('#hledaniAutoru .typeahead').typeahead({
       prefetch: {
         url:  '{$basePath|noescape}/autori.json',
         ttl: 100
-      }
+      },
+      limit: 10
     });
 
     $('.typeahead').on('typeahead:selected', function (object, datum) {
@@ -33,11 +35,11 @@
 {/if}
 
 <div id="hledaniSkladeb">
-<input class="typeahead tt-query" type="text" placeholder="název skladby" autocomplete="off" spellcheck="false">
+<input class="form-control typeahead tt-query" type="text" placeholder="název skladby" autocomplete="off" spellcheck="false">
 </div>
 
 <div id="hledaniAutoru">
-<input class="typeahead tt-query" type="text" placeholder="interpret" autocomplete="off" spellcheck="false">
+<input class="form-control typeahead tt-query" type="text" placeholder="interpret" autocomplete="off" spellcheck="false">
 </div>
 
 {control vp}

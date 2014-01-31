@@ -25,10 +25,11 @@
 
 <body>
 
-  <div id="header" class="navbar navbar-default" role="navigation" >
+  <div id="header" class="navbar navbar-inverse" role="navigation" >
     <div class="container"><div class="row">
       <ul class="nav navbar-nav">
         <li><a n:href="Homepage:">Domů</a></li>
+        <li><a n:href="Skladba:">Katalog skladeb</a></li>
         <li><a n:href="Ucet:informace">Můj účet</a></li>
         <li><a n:href="Homepage:jakNakupovat">Jak nakupovat</a></li>
         <li><a n:href="Homepage:kontakt">Kontakt</a></li>
@@ -56,7 +57,7 @@
         <div class="col-md-6">
           <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
-              <input id="search" type="text" class="form-control" placeholder="název skladby">
+              <input id="search" type="text" class="form-control tt-query" placeholder="název skladby">
             </div>
             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Hledat</button>
           </form>
@@ -68,9 +69,10 @@
     </div>
   </div> <!-- /#header -->
 
-  {block jumbotron}{/block}
+  
 
   <div class="container">
+  {block jumbotron}{/block}
     <div class="row">
         <div class="col-md-12">
           <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
@@ -130,7 +132,8 @@
       prefetch: {
         url:  '{$basePath|noescape}/skladby.json',
         ttl: 100
-      }
+      },
+      limit: 10
     });
   </script>
   {block scripts}{/block}
