@@ -179,8 +179,8 @@ class SkladbaPresenter extends BasePresenter
   {
     $values = $form->getValues();
     $params = array('nazev' => $values['nazev'], 'autor' => $values['autor'], 'zanr' => $values['zanr'], 'verze' => $values['verze']);
-    if(!$params['nazev']) unset($params['nazev']);
-    if(!$params['autor']) unset($params['autor']);
+    if(!$params['nazev']) $params['nazev'] = null;
+    if(!$params['autor']) $params['autor'] = null;
     $this->redirect('Skladba:default', $params);
   }
 

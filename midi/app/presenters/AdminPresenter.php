@@ -10,6 +10,15 @@ use Nette\Utils\Validators,
 class AdminPresenter extends BasePresenter
 {
 
+  /** @persistent */
+  public $login;
+  /** @persistent */
+  public $email;
+  /** @persistent */
+  public $radit = 'login';
+  /** @persistent */
+  public $asc = '1';
+
 	/** @var Skladba @inject*/
 	public $skladby;
 	/** @var Uzivatel @inject*/
@@ -66,6 +75,28 @@ class AdminPresenter extends BasePresenter
     return Bs3Form::transform($form);
   }
 
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentHledaniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addText('login', 'Login:')
+      ->addRule(Form::MAX_LENGTH, 'Login může mít maximálně %d znaků', 100);
+
+    $form->addText('email', 'Email:')
+      ->addRule(Form::MAX_LENGTH, 'Email může mít maximálně %d znaků', 100);
+
+    $form->addSubmit('send', 'Hledat');
+
+    $form->onSuccess[] = $this->hledaniFormSucceeded;
+
+    return Bs3Form::transform($form);
+  }
+
+
   public function kreditFormSucceeded($form)
   {
     $values = $form->getValues();
@@ -90,6 +121,17 @@ class AdminPresenter extends BasePresenter
     $values = $form->getValues();
     $this->redirect('Admin:stahovani', $values['zacatek'], $values['konec']);
   }
+
+
+  public function hledaniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $params = array('login' => $values['login'], 'email' => $values['email']);
+    if(!$params['login']) $params['login'] = null;
+    if(!$params['email']) $params['email'] = null;
+    $this->redirect('Admin:zakaznici', $params);
+  }
+
 
 	public function renderDefault()
 	{
@@ -142,7 +184,21 @@ class AdminPresenter extends BasePresenter
 
 	public function renderZakaznici()
 	{
-    $this->template->zakaznici = $this->uzivatele->findAllDetails();
+    $filtry['login'] = $this->getParameter('login');
+    $filtry['email'] = $this->getParameter('email');
+    $this['hledaniForm']->setDefaults($filtry);
+    $razeni['sloupec'] = $this->getParameter('radit');
+    $razeni['smer'] = $this->getParameter('asc') ? 'ASC' : 'DESC';
+
+    $pocetZakazniku = $this->uzivatele->pocetZakazniku($filtry, $razeni);
+    $vp = new VisualPaginator($this, 'vp');
+    $paginator = $vp->getPaginator();
+    $paginator->itemsPerPage = 50;
+    $paginator->itemCount = $pocetZakazniku;
+
+    $this->template->zakaznici = $this->uzivatele->findAllDetails($filtry, $razeni, $paginator->getLength(), $paginator->getOffset());
+    $this->template->razeniSloupec = $razeni['sloupec'];
+    $this->template->razeniAsc = $this->getParameter('asc');
 	}
 
 	public function renderZakaznikDetail($id)

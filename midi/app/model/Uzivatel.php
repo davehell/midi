@@ -14,9 +14,22 @@ class Uzivatel extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function findAll()
+	public function findAll($filtry = null, $razeni = null, $limit = null, $offset = null)
 	{
-		return $this->database->table('uzivatel')->select('id, login, email, posledni_prihlaseni, datum_registrace, kredit');
+		$uzivatele = $this->database->table('uzivatel')->select('id, login, email, posledni_prihlaseni, datum_registrace, kredit');
+    if($filtry['login']) {
+      $uzivatele = $uzivatele->where('login', $filtry['login']);
+    }
+    if($filtry['email']) {
+      $uzivatele = $uzivatele->where('email', $filtry['email']);
+    }
+
+    if($razeni) {
+      $uzivatele = $uzivatele->order($razeni['sloupec'] . ' ' . $razeni['smer']);
+    }
+
+    $uzivatele = $uzivatele->limit($limit, $offset);
+    return $uzivatele;
 	}
 
 	/** @return Nette\Database\Table\ActiveRow */
@@ -26,9 +39,28 @@ class Uzivatel extends Nette\Object
 	}
 
 	/** @return array */
-	public function findAllDetails()
+	public function findAllDetails($filtry = null, $razeni = null, $limit = null, $offset = null)
 	{
-    return $this->database->query('SELECT uzivatel.id AS id, login, email, posledni_prihlaseni, datum_registrace, kredit, sum(cena) AS nakoupeno FROM uzivatel LEFT JOIN nakup ON uzivatel.id = nakup.uzivatel_id GROUP BY uzivatel.id')->fetchAll();
+    $query = 'SELECT uzivatel.id AS id, login, email, posledni_prihlaseni, datum_registrace, kredit, sum(cena) AS nakoupeno FROM uzivatel LEFT JOIN nakup ON uzivatel.id = nakup.uzivatel_id ';
+
+    if($filtry['login']) {
+      $query .= ' WHERE login="' . $filtry['login'] . '" ';
+    }
+    if($filtry['email']) {
+      $query .= $filtry['login'] ? ' AND ' : ' WHERE ';
+      $query .= 'email="' . $filtry['email'] . '" ';
+    }
+
+    $query .= ' GROUP BY uzivatel.id ';
+
+    if($razeni) {
+      $query .= ' ORDER BY ' . $razeni['sloupec'] . ' ' . $razeni['smer'];
+    }
+
+    $query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+
+    $uzivatele = $this->database->query($query)->fetchAll();
+    return $uzivatele;
 	}
 
   /** @return string */
@@ -187,5 +219,10 @@ class Uzivatel extends Nette\Object
       'email' => $email,
       'datum_registrace' => new Nette\Database\SqlLiteral('NOW()')
 		));
+	}
+
+	public function pocetZakazniku($filtry = null, $razeni = null)
+	{
+    return $this->findAll($filtry)->count();
 	}
 }
