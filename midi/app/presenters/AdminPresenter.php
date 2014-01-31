@@ -15,7 +15,9 @@ class AdminPresenter extends BasePresenter
   /** @persistent */
   public $email;
   /** @persistent */
-  public $radit = 'login';
+  public $raditZ = 'login';
+  /** @persistent */
+  public $raditS = 'nazev';
   /** @persistent */
   public $asc = '1';
 
@@ -187,7 +189,7 @@ class AdminPresenter extends BasePresenter
     $filtry['login'] = $this->getParameter('login');
     $filtry['email'] = $this->getParameter('email');
     $this['hledaniForm']->setDefaults($filtry);
-    $razeni['sloupec'] = $this->getParameter('radit');
+    $razeni['sloupec'] = $this->getParameter('raditZ');
     $razeni['smer'] = $this->getParameter('asc') ? 'ASC' : 'DESC';
 
     $pocetZakazniku = $this->uzivatele->pocetZakazniku($filtry, $razeni);
@@ -214,11 +216,25 @@ class AdminPresenter extends BasePresenter
     $this['kreditForm']->setDefaults(array('uzivId' => $id));
 	}
 
-	public function renderStahovani($zacatek, $konec)
+	public function renderStahovani($zacatek = null, $konec = null)
 	{
-    $this->template->nakupy = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec));
+    if(!$zacatek) $zacatek = '01.01.2008';
+    if(!$konec) $konec = date('d.m.Y');
+    $this['obdobiForm']->setDefaults(array('zacatek'=>$zacatek, 'konec'=>$konec));
+    $razeni['sloupec'] = $this->getParameter('raditS');
+    $razeni['smer'] = $this->getParameter('asc') ? 'ASC' : 'DESC';
+
+    $pocetSkladeb = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec))->count();
+    $vp = new VisualPaginator($this, 'vp');
+    $paginator = $vp->getPaginator();
+    $paginator->itemsPerPage = 50;
+    $paginator->itemCount = $pocetSkladeb;
+
+    $this->template->nakupy = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec), $razeni, $paginator->getLength(), $paginator->getOffset());
     $this->template->zacatek = $zacatek;
     $this->template->konec = $konec;
+    $this->template->razeniSloupec = $razeni['sloupec'];
+    $this->template->razeniAsc = $this->getParameter('asc');
 	}
 
 	private function dmyToYmd($text)

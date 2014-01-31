@@ -196,7 +196,7 @@ class SkladbaPresenter extends BasePresenter
     $razeni['smer'] = $this->getParameter('asc') ? 'ASC' : 'DESC';
 
 
-    $pocetSkladeb = $this->skladby->pocetSkladeb($filtry, $razeni);
+    $pocetSkladeb = $this->skladby->findAll($filtry)->count();
     $vp = new VisualPaginator($this, 'vp');
     $paginator = $vp->getPaginator();
     $paginator->itemsPerPage = 50;

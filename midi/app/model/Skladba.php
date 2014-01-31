@@ -65,10 +65,21 @@ class Skladba extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function prehledStahovani($od, $do)
+	public function prehledStahovani($od, $do, $razeni = null, $limit = null, $offset = null)
 	{
     if(!$od || !$do) return null;
-    return $this->database->table('nakup')->select('skladba_id, cena, count(*) AS pocet')->where('datum >= ?', $od)->where('datum <= ?', $do)->group('skladba_id');
+    $do .= ' 23:59:59';
+
+    $skladby = $this->database->table('nakup')->select('skladba_id, skladba.nazev AS nazev, skladba.autor AS autor, nakup.cena AS cena, count(*) AS pocet')->where('datum >= ?', $od)->where('datum <= ?', $do)->group('skladba_id');
+
+    if($razeni) {
+      //if($razeni['sloupec'] == 'nazev' || $razeni['sloupec'] == 'autor')  $razeni['sloupec'] .= 'skladba.';
+      $skladby = $skladby->order($razeni['sloupec'] . ' ' . $razeni['smer']);
+    }
+
+    $skladby = $skladby->limit($limit, $offset);
+
+    return $skladby;
 	}
 
 	/** @return Nette\Database\Table\Selection */
@@ -83,10 +94,6 @@ class Skladba extends Nette\Object
     return $this->findAll()->order('datum_pridani DESC')->limit(10);
 	}
 
-	public function pocetSkladeb($filtry = null, $razeni = null)
-	{
-    return $this->findAll($filtry)->count();
-	}
 
 	public function update($skladbaId, $values)
 	{
