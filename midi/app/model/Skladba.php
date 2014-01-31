@@ -14,9 +14,23 @@ class Skladba extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function findAll($limit = null, $offset = null)
+	public function findAll($filtry = null, $limit = null, $offset = null)
 	{
-		$skladby = $this->database->table('skladba')->limit($limit, $offset);
+		$skladby = $this->database->table('skladba');
+    if($filtry['nazev']) {
+      $skladby = $skladby->where('nazev LIKE ?', '%' . $filtry['nazev'] . '%');
+    }
+    if($filtry['autor']) {
+      $skladby = $skladby->where('autor LIKE ?', '%' . $filtry['autor'] . '%');
+    }
+    if($filtry['zanr']) {
+      $skladby = $skladby->where('zanr_id', $filtry['zanr']);
+    }
+    if($filtry['verze']) {
+      $skladby = $skladby->where('verze', $filtry['verze']);
+    }
+
+    $skladby = $skladby->limit($limit, $offset)->order('nazev');
     return $skladby;
 	}
 
@@ -65,9 +79,9 @@ class Skladba extends Nette\Object
     return $this->findAll()->order('datum_pridani DESC')->limit(10);
 	}
 
-	public function pocetSkladeb()
+	public function pocetSkladeb($filtry = null)
 	{
-    return $this->database->table('skladba')->count();
+    return $this->findAll($filtry)->count();
 	}
 
 	public function update($skladbaId, $values)

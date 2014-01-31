@@ -11,6 +11,15 @@ use Nette\Application\Responses\FileResponse,
 class SkladbaPresenter extends BasePresenter
 {
 
+  /** @persistent */
+  public $nazev;
+  /** @persistent */
+  public $autor;
+  /** @persistent */
+  public $zanr;
+  /** @persistent */
+  public $verze;
+
 	/** @var Skladba @inject*/
 	public $skladby;
 	/** @var Uzivatel @inject*/
@@ -64,6 +73,33 @@ class SkladbaPresenter extends BasePresenter
 
     $form->onSuccess[] = $this->skladbaFormSucceeded;
     $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
+
+    return Bs3Form::transform($form);
+  }
+
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentHledaniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addText('nazev', 'Název:')
+      ->addRule(Form::MAX_LENGTH, 'Název skladby může mít maximálně %d znaků', 100);
+
+    $form->addText('autor', 'Interpret:')
+      ->addRule(Form::MAX_LENGTH, 'Interpret může mít maximálně %d znaků', 100);
+
+    $form->addSelect('zanr', 'Žánr:', $this->skladby->seznamZanru())
+      ->setPrompt('všechny');
+
+    $form->addSelect('verze', 'Verze:', array('MIDI' => 'MIDI', 'Karaoke' => 'Karaoke'))
+      ->setPrompt('všechny');
+
+    $form->addSubmit('send', 'Hledat');
+
+    $form->onSuccess[] = $this->hledaniFormSucceeded;
 
     return Bs3Form::transform($form);
   }
@@ -132,15 +168,32 @@ class SkladbaPresenter extends BasePresenter
     $this->redirect('Skladba:detail', $skladbaId);
   }
 
+
+  public function hledaniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $params = array('nazev' => $values['nazev'], 'autor' => $values['autor'], 'zanr' => $values['zanr'], 'verze' => $values['verze']);
+    if(!$params['nazev']) unset($params['nazev']);
+    if(!$params['autor']) unset($params['autor']);
+    $this->redirect('Skladba:default', $params);
+  }
+
+
 	public function renderDefault($mode = null)
-	{
-    $pocetSkladeb = $this->skladby->pocetSkladeb();
+  {
+    $filtry['nazev'] =  $this->getParameter('nazev');
+    $filtry['autor'] =  $this->getParameter('autor');
+    $filtry['zanr']  =  $this->getParameter('zanr');
+    $filtry['verze'] =  $this->getParameter('verze');
+    $this['hledaniForm']->setDefaults($filtry);
+
+    $pocetSkladeb = $this->skladby->pocetSkladeb($filtry);
     $vp = new VisualPaginator($this, 'vp');
     $paginator = $vp->getPaginator();
     $paginator->itemsPerPage = 50;
     $paginator->itemCount = $pocetSkladeb;
 
-    $this->template->skladby = $this->skladby->findAll($paginator->getLength(), $paginator->getOffset())->order('nazev');
+    $this->template->skladby = $this->skladby->findAll($filtry, $paginator->getLength(), $paginator->getOffset());
     $this->template->adminMode = $this->user->isInRole('admin') && $mode;
 	}
 
