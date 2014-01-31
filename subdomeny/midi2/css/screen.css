@@ -99,7 +99,7 @@ height: 140px;
   color: #fff;
 }
 
-#header2 .tt-hint, #header2 #search {
+#header2 .tt-hint, #header2 #hledaniSkladby #nazev {
   background-color: #fff;
   height: 45px;
 }

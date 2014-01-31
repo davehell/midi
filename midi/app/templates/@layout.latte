@@ -25,7 +25,7 @@
 
 <body>
 
-  <div id="header" class="navbar navbar-inverse" role="navigation" >
+  <div id="header" class="navbar navbar-inverse">
     <div class="container"><div class="row">
       <ul class="nav navbar-nav">
         <li><a n:href="Homepage:">Domů</a></li>
@@ -78,16 +78,17 @@
           <h1>MIDI premier</h1>
         </div>
         <div class="col-md-6">
-          <form class="navbar-form navbar-left" role="search">
+          <form id="hledaniSkladby" class="navbar-form navbar-left">
             <div class="form-group">
-              <input id="search" type="text" class="form-control tt-query" placeholder="název skladby">
+              <input id="nazev" type="text" class="form-control tt-query" placeholder="název skladby">
+              <input id="id" type="hidden" data-skladba-url="{link Skladba:detail, xxx}">
             </div>
-            <button type="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span> Hledat</button>
+            <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span> Hledat</button>
           </form>
         </div>
       </div>
     </div>
-  </div> <!-- /#header -->
+  </div> <!-- /#header2 -->
 
 
   <div class="container">
@@ -105,12 +106,25 @@
   <script src="{$basePath}/js/bootstrap.min.js"></script>
   <script src="{$basePath}/js/typeahead.min.js"></script>
   <script>
-    $('#search').typeahead({
+    $('#hledaniSkladby #nazev').typeahead({
       prefetch: {
-        url:  '{$basePath|noescape}/skladby.json',
-        ttl: 100
+        url:  '{$basePath|noescape}/skladby.json'
       },
       limit: 10
+    });
+    $('#hledaniSkladby #nazev').on('typeahead:selected', function (object, datum) {
+        $('#hledaniSkladby #id').val(datum['id']);
+    });
+    $('#hledaniSkladby button').click(function () {
+      var id = $('#hledaniSkladby #id').val();
+      var url = $('#hledaniSkladby #id').data('skladba-url');
+      if(id) window.location = url.replace('xxx', id);
+      else window.location = {link Skladba:default};
+    });
+    $('#hledaniSkladby #nazev').keypress(function(e) {
+      if(e.which == 13) { //enter
+        $('#hledaniSkladby button').click();
+      }
     });
   </script>
   {block scripts}{/block}
