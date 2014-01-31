@@ -24,6 +24,11 @@
   margin-bottom: 0;
 }
 
+#header #uzivatel {
+  color: #999;
+  padding: 5px 0;
+}
+
 #header2 {
   background-color: #EFEFEF;
   min-height: 100px;
