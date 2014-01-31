@@ -81,7 +81,7 @@ height: 140px;
   padding: 3px 0;
 }
 
-#boxy span.glyphicon{
+#boxy img+span.glyphicon{
   font-size: 50px;
   position: absolute;
   left: 115px;
