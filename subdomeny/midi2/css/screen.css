@@ -132,3 +132,13 @@ height: 140px;
   color: #fff;
   background-color: #0097cf;
 }
+
+.pagination-wrapper {
+  text-align: center;
+}
+th a {
+  color: #000;
+}
+th a:hover {
+  text-decoration: none;
+}

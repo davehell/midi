@@ -35,14 +35,21 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th><a n:href="Skladba:default radit => nazev, asc => ($razeniSloupec == 'nazev' && $razeniAsc) ? 0 : 1">název</a></th>
-      <th><a n:href="Skladba:default radit => autor, asc => ($razeniSloupec == 'autor' && $razeniAsc) ? 0 : 1">interpret</a></th>
-      <th><a n:href="Skladba:default radit => cena, asc => ($razeniSloupec == 'cena' && $razeniAsc) ? 0 : 1">cena</a></th>
-      <th><a n:href="Skladba:default radit => verze, asc => ($razeniSloupec == 'verze' && $razeniAsc) ? 0 : 1">verze</a></th>
-      <th><a n:href="Skladba:default radit => zanr_id, asc => ($razeniSloupec == 'zanr_id' && $razeniAsc) ? 0 : 1">žánr</a></th>
+      <th class="col-md-3"><a n:href="Skladba:default radit => nazev, asc => ($razeniSloupec == 'nazev' && $razeniAsc) ? 0 : 1">název</a>
+      {if $razeniSloupec == 'nazev'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
+      <th class="col-md-3"><a n:href="Skladba:default radit => autor, asc => ($razeniSloupec == 'autor' && $razeniAsc) ? 0 : 1">interpret</a>
+      {if $razeniSloupec == 'autor'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
+      <th><a n:href="Skladba:default radit => cena, asc => ($razeniSloupec == 'cena' && $razeniAsc) ? 0 : 1">cena</a>
+      {if $razeniSloupec == 'cena'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
+      <th><a n:href="Skladba:default radit => verze, asc => ($razeniSloupec == 'verze' && $razeniAsc) ? 0 : 1">verze</a>
+      {if $razeniSloupec == 'verze'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
+      <th><a n:href="Skladba:default radit => zanr_id, asc => ($razeniSloupec == 'zanr_id' && $razeniAsc) ? 0 : 1">žánr</a>
+      {if $razeniSloupec == 'zanr_id'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
       {if $adminMode}
-      <th><a n:href="Skladba:default radit => datum_pridani, asc => ($razeniSloupec == 'datum_pridani' && $razeniAsc) ? 0 : 1">přidáno</a></th>
-      <th><a n:href="Skladba:default radit => pocet_stazeni, asc => ($razeniSloupec == 'pocet_stazeni' && $razeniAsc) ? 0 : 1">stažení</a></th>
+      <th><a n:href="Skladba:default radit => datum_pridani, asc => ($razeniSloupec == 'datum_pridani' && $razeniAsc) ? 0 : 1">přidáno</a>
+      {if $razeniSloupec == 'datum_pridani'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
+      <th><a n:href="Skladba:default radit => pocet_stazeni, asc => ($razeniSloupec == 'pocet_stazeni' && $razeniAsc) ? 0 : 1">stažení</a>
+      {if $razeniSloupec == 'pocet_stazeni'}<span class="glyphicon glyphicon-arrow-{if $razeniAsc}down{else}up{/if}"></span>{/if}</th>
       {/if}
     </tr>
   </thead>

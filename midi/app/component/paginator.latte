@@ -7,11 +7,12 @@
  *}
 
 {if $paginator->pageCount > 1}
+<div class="pagination-wrapper">
 <ul class="pagination">
 	{if $paginator->isFirst()}
-	<li class="disabled"><a><span class="glyphicon glyphicon-backward"></span> Předchozí</a></a></li>
+	<li class="disabled"><a><span class="glyphicon glyphicon-backward"></span></a></a></li>
 	{else}
-	<li><a href="{link this, 'page' => $paginator->page - 1}" rel="prev"><span class="glyphicon glyphicon-backward"></span> Předchozí</a><li>
+	<li><a href="{link this, 'page' => $paginator->page - 1}" rel="prev"><span class="glyphicon glyphicon-backward"></span></a><li>
 	{/if}
 
 	{foreach $steps as $step}
@@ -24,9 +25,10 @@
 	{/foreach}
 
 	{if $paginator->isLast()}
-            <li class="disabled"><a >Další <span class="glyphicon glyphicon-forward"></span></a></li>
+            <li class="disabled"><a><span class="glyphicon glyphicon-forward"></span></a></li>
 	{else}
-            <li><a href="{link this, 'page' => $paginator->page + 1}" rel="next">Další <span class="glyphicon glyphicon-forward"></span></a></li>
+            <li><a href="{link this, 'page' => $paginator->page + 1}" rel="next"><span class="glyphicon glyphicon-forward"></span></a></li>
 	{/if}
-    </ul>
+</ul>
+</div>
 {/if}
