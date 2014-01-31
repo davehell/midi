@@ -25,7 +25,7 @@
 }
 
 #header #uzivatel {
-  color: #999;
+  color: #ccc;
   padding: 5px 0;
 }
 
@@ -42,6 +42,10 @@
 
 .navbar {
   min-height: 20px;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+  color: #ccc;
 }
 
 .navbar-nav>li>a {
@@ -93,6 +97,11 @@ height: 140px;
 
 .tt-hint {
   color: #fff;
+}
+
+#header2 .tt-hint, #header2 #search {
+  background-color: #fff;
+  height: 45px;
 }
 
 .tt-dropdown-menu {
