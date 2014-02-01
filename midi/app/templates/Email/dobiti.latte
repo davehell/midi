@@ -1,0 +1,59 @@
+{layout none}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Požadavek na dobití kreditu</title>
+</head>
+<body>
+<p>
+  Dobrý den,
+</p>
+
+
+<p>
+ Váš požadavek o dobití kreditu byl přijat.
+</p>
+
+<p>
+ <strong>Shrnutí transakce:</strong>
+</p>
+<ul>
+  <li>uživatelské jméno: {$info->uzivatel->login}</li>
+  <li>částka: {$info->castka}&nbsp;Kč</li>
+  <li>požadavek přijat: {$info->datum|date:'%d.%m.%Y'}</li>
+</ul>
+
+
+<p>
+ <strong>Údaje pro platbu:</strong>
+</p>
+<ul>
+  <li>číslo účtu: {$params['cisloUctu']}</li>
+  <li>variabilní symbol: {$info->vs}</li>
+</ul>
+
+<p>
+ Peníze je možné zasílat dvěma způsoby:
+</p>
+<ol>
+  <li>Bankovním převodem</li>
+  <li>Poštovní poukázkou</li>
+</ol>
+
+<p>
+ Po obdržení peněz Vám bude navýšen kredit. O této skutečnosti budete informováni
+e-mailem. Po připsání kreditu na Váš účet můžete začít stahovat skladby.
+</p>
+
+
+<p>
+  S pozdravem
+</p>
+
+<p>
+  Ing. Lubomír Piskoř<br>
+  e-mail: {$params['adminMail']} <br>
+  web: <a href="http://midi.premiermusic.cz">http://midi.premiermusic.cz</a>
+</p>
+</body>
+</html>

@@ -144,11 +144,13 @@ class UcetPresenter extends BasePresenter
 
     try {
       $row = $this->uzivatele->pridatPozadavekNaNabiti($this->user->id, $values->castka);
-      $this->redirect('Ucet:kreditDobiti');
-
-    } catch (Nette\Security\AuthenticationException $e) {
-      $form->addError($e->getMessage());
+    } catch (\Exception $e) {
+      $this->flashMessage('Došlo k chybě. Požadavek na nabití kreditu nebyl přijat.', 'danger');
+      $this->redirect('Ucet:kredit');
     }
+    BasePresenter::sendMail('dobiti.latte', $this->user->getIdentity()->data['email'], $row);
+    $this->flashMessage('Váš požadavek na dobití kreditu byl přijat.', 'success');
+    $this->redirect('Ucet:kreditDobiti');
   }
 
   public function actionOdhlaseni()
