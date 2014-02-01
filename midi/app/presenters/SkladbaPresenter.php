@@ -1,7 +1,6 @@
 <?php
 
 use Nette\Application\Responses\FileResponse,
-    Nette\Application\Responses\JsonResponse,
     Nette\Forms\Form,
     Nette\Utils\Strings;
 
@@ -221,7 +220,6 @@ class SkladbaPresenter extends BasePresenter
     if($this->user->isInRole('admin')) {
       $this['skladbaForm']->setDefaults($skladba->toArray());
     }
-
   }
 
 	public function actionNakup($id)
@@ -248,6 +246,8 @@ class SkladbaPresenter extends BasePresenter
       $this->flashMessage($e->getMessage(), 'danger');
       $this->redirect('Skladba:detail', $id);
     }
+
+    BasePresenter::sendMail('nakup.latte', $this->user->getIdentity()->data['email'], $skladba);
 	}
 
 

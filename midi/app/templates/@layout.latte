@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{block title|striptags}MIDI Premier - výroba a prodej MIDI a KARAOKE{/block}</title>
 
-  <link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css">
+  <link rel="stylesheet" media="all" href="{$basePath}/css/bootstrap.min.css">
   <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/datepicker.css">
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
 	<!-- <link rel="stylesheet" media="print" href="{$basePath}/css/print.css"> -->
@@ -64,7 +64,7 @@
         <li><a n:href="Ucet:odhlaseni">Odhlášení</a></li>
         {else}
         <li><a href="#">Zapomenuté heslo</a></li>
-        <li><a n:href="Ucet:registrace">Nový zákazník</a></li>
+        <li><a n:href="Ucet:registrace">Registrace</a></li>
         <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
         {/if}
       </ul>
@@ -78,7 +78,7 @@
         <div class="col-md-3">
           <h1>MIDI premier</h1>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
           <form id="hledaniSkladby" class="navbar-form navbar-left">
             <div class="form-group">
               <input id="nazev" type="text" class="form-control tt-query" placeholder="název skladby">
@@ -86,6 +86,12 @@
             </div>
             <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span> Hledat</button>
           </form>
+        </div>
+        <div class="col-md-2">
+          <a n:href="Skladba:default">
+          <span class="glyphicon glyphicon-list-alt" style="font-size: 40px;"></span>
+          <span>Katalog <br />skladeb</span>
+          </a>
         </div>
       </div>
     </div>
