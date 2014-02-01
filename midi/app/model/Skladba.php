@@ -94,6 +94,11 @@ class Skladba extends Nette\Object
     return $this->findAll()->order('datum_pridani DESC')->limit(10);
 	}
 
+	public function pocetSkladeb()
+	{
+    return $this->findAll()->count();
+	}
+
 
 	public function update($skladbaId, $values)
 	{
