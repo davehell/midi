@@ -15,20 +15,19 @@
   margin-right: 10px;
   font-weight: normal;
 }
-#katalog:hover  {
-  color: #2982e5;
+#katalog:hover .glyphicon {
+  color: #F5B611;
 }
 
+.btn-warning {
+  background-color: #F5B611;
+}
 
-#carousel-wrapper {
-  background-color: lightgrey;
-  margin-top: -20px;
-  margin-bottom: 20px;
+.carousel-wrapper {
+  margin-top: 20px;
 }
 .carousel {
   text-align: center;
-  background-color: lightgrey;
-  
 }
 .carousel .item {
   height: 200px;
@@ -57,13 +56,7 @@
   padding-top: 20px;
   font-family: 'Raleway', sans-serif;
 
-  background-color: #EFEFEF; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #EFEFEF 100%); /* FF3.6+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#EFEFEF 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#EFEFEF 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#EFEFEF 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#EFEFEF 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#EFEFEF',GradientType=0 ); /* IE6-8 */
+background: grey url(../img/bg.jpg);
 }
 
 #header2 a{
@@ -105,20 +98,14 @@
   margin: 0 0 20px 0;
 }
 
-#boxy h2 {
-  text-align: center;
-  background-color: #4F8FCD;
-  color: #fff;
-  padding: 20px 0;
-} 
 
 #boxy h3 {
   text-align: center;
 }
 
 #boxy img {
-width: 140px;
-height: 140px;
+  width: 128px;
+  height: 128px;
 }
 
 #boxy ul li{
@@ -126,10 +113,10 @@ height: 140px;
 }
 
 #boxy img+span.glyphicon{
-  font-size: 50px;
+  font-size: 64px;
   position: absolute;
   left: 115px;
-  top: 50px;
+  top: 32px;
   color: black;
 }
 
