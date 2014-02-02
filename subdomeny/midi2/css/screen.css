@@ -1,26 +1,26 @@
 #ulozeni legend {display: none;}
 #carousel-wrapper {
-  background-color: lightgrey;
+  background-color: #34526A;
   margin-top: -20px;
   margin-bottom: 20px;
 }
 .carousel {
   text-align: center;
-  background-color: lightgrey;
+  color: white;
   
 }
 .carousel .item {
-  height: 200px;
+  height: 300px;
 }
 .carousel .carousel-caption {
-  color: black;
+  
 }
 .carousel .carousel-control {
   background-image: none;
   width: 10%;
 }
 #header {
-  background-color: #444;
+  background-color: #EB6C55;
   margin-bottom: 0;
 }
 
@@ -30,7 +30,7 @@
 }
 
 #header2 {
-  background-color: #EFEFEF;
+  background-color: #222;
   min-height: 100px;
   margin-bottom: 20px;
   padding-top: 20px;
@@ -38,6 +38,7 @@
 
 #header2 h1{
   margin-top: 5px;
+  color: #33A5C8;
 }
 
 .navbar {

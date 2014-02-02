@@ -25,7 +25,7 @@
 
 <body>
 
-  <div id="header" class="navbar navbar-inverse">
+  <div id="header" class="navbar navbar-default">
     <div class="container"><div class="row">
       <ul class="nav navbar-nav">
         <li><a n:href="Homepage:">Domů</a></li>
@@ -97,9 +97,9 @@
     </div>
   </div> <!-- /#header2 -->
 
-
+{block jumbotron}{/block}
   <div class="container">
-  {block jumbotron}{/block}
+  
     <div class="row">
         <div class="col-md-12">
           <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
@@ -107,6 +107,7 @@
         </div>
     </div>
   </div><!-- /.container -->
+<hr>
 
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="{$basePath}/js/netteForms.js"></script>
