@@ -85,10 +85,6 @@
   font-size: 18px;
 }
 
-#header2 .btn-warning {
-  background-color: #F5B611;
-  font-family: 'Raleway', sans-serif;
-}
 .navbar {
   min-height: 20px;
   border-radius: 0;
@@ -201,4 +197,10 @@ th a:hover {
 }
 .well {
   border: 1px solid #CED8EA;
+}
+.btn-warning {
+  background-color: #F5B611;
+}
+#header2 .btn-warning {
+  font-family: 'Raleway', sans-serif;
 }
