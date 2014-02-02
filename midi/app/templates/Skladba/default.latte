@@ -28,7 +28,12 @@
 {/if}
 
 
+<div class="row">
+<div class="col-sm-6">
+<h3>vyhledávání</h3>
 {control hledaniForm}
+</div>
+</div>
 
 {control vp}
 
@@ -56,7 +61,7 @@
   <tbody>
     <tr n:foreach="$skladby as $skladba">
       <td>
-        <a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a>
+        <a n:href="Skladba:detail $skladba->id, radit=>null, asc=>null, nazev=>null, autor=>null, zanr=>null, verze=>null">{$skladba->nazev}</a>
       </td>
       <td>{$skladba->autor}</td>
       <td>{$skladba->cena}&nbsp;Kč</td>

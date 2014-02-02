@@ -89,7 +89,9 @@ background: grey url(../img/bg.jpg);
   padding-top: 5px;
   padding-bottom: 5px;
 }
-
+.navbar-nav>li:first-child>a {
+  padding-left: 0;
+}
 
 .jumbotron {
   text-align: center;
@@ -120,10 +122,10 @@ background: grey url(../img/bg.jpg);
   color: black;
 }
 
+#frm-hledaniForm select,
 .tt-query,
 .tt-hint {
   width: 400px;
-  
 }
 
 .tt-hint {

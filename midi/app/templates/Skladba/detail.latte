@@ -16,9 +16,23 @@
   </script>
 {/block}
 
-{block content}
+{block title}Detail skladby {$skladba->nazev}{/block}
 
-<h1 n:block="title">Detail skladby {$skladba->nazev}</h1>
+{block content}
+<h1>Detail skladby</h1>
+
+{if $user->loggedIn}
+  {if $maZakoupeno}
+    <p class="alert alert-info">
+      Tuto skladbu máte zakoupenou. Můžete si stáhnout její plnou verzi.
+    </p>
+  {/if}
+{else}
+  <p class="alert alert-warning">
+    Nakupovat a stahovat skladby mohou pouze přihlášení uživatelé.
+  </p>
+{/if}
+
 
 <div class="row">
   <div class="col-md-6">
@@ -35,70 +49,55 @@
       <dd>{$skladba->poznamka}</dd>
       {if !$maZakoupeno}
       <dt>Cena</dt>
-      <dd><strong>{$skladba->cena}&nbsp;Kč</strong></dd>
+      <dd>
+        <p>
+          <strong>{$skladba->cena}&nbsp;Kč</strong><br />včetně poplatků pro OSA
+        </p>
+        <p>
+          <a class="btn btn-success btn-lg {if !$user->loggedIn}disabled{/if}" n:href="Skladba:nakup, $skladba->id"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit skladbu</a>
+        </p>
+      </dd>
       {/if}
     </dl>
+    {if !$maZakoupeno}
+
+    {/if}
+
+
   </div>
-  <div class="col-md-6 well">
-    <div class="form-group">
-      <label class="" for="format">Ukázky ke stažení:</label>
-      <select class="form-control" id="formatDema">
-        <option value="">Zvolte formát</option>
-        <option n:foreach="$soubory as $soubor" n:if="$soubor->format->demo" value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
-      </select>
-    </div>
-    <button id="stahnoutDemo" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout ukázku</button>
-  </div>
-</div>
-
-
-
-
-{if $maZakoupeno}
-  <div class="row">
-  <p class="alert alert-info">
-    <span class="glyphicon glyphicon-info-sign"></span> Tuto skladbu máte zakoupenou. Můžete si stáhnout její plnou verzi.
-  </p>
-  </div>
-  {if $soubory->count()}
-  <div class="row">
-    <div class="col-md-6 well">
-    <form class="form-inline1" id="stazeniSkladby">
+  <div class="col-md-6">
+    <form class="well">
       <div class="form-group">
-        <label class="" for="format">Plná verze:</label>
+        <label class="" for="format">Ukázky ke stažení:</label>
+        <select class="form-control" id="formatDema">
+          <option value="">Zvolte formát</option>
+          <option n:foreach="$soubory as $soubor" n:if="$soubor->format->demo" value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
+        </select>
+      </div>
+      <button id="stahnoutDemo" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout ukázku</button>
+    </form>
+    
+
+    <form id="stazeniSkladby" class="well">
+    {if $maZakoupeno}
+      <div class="form-group">
+        <label for="format">Plná verze ke stažení:</label>
         <select n:inner-foreach="$soubory as $soubor" class="form-control" id="format">
           <option value="">Zvolte formát</option>
           <option n:foreach="$soubory as $soubor" n:if="!$soubor->format->demo" value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
         </select>
       </div>
       <button id="stahnout" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> stáhnout plnou verzi</button>
+    {else}
+      <label>Plná verze je ke stažení v těchto formátech:</label>
+      <ul>
+        <li n:foreach="$soubory as $soubor" n:if="!$soubor->format->demo">{$soubor->format->nazev}</li>
+      </ul>
+    {/if}
     </form>
-    </div>
   </div>
-  {/if}
-{else}
-  <div class="row">
-  {if $user->loggedIn}
-    <a class="btn btn-success btn-lg" n:href="Skladba:nakup, $skladba->id"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit skladbu</a>
-  {else}
-    <p class="alert alert-warning">
-      Zakoupení a stažení skladby je možné pouze po <a n:href="Ucet:prihlaseni">přihlášení</a>.
-    </p>
-  {/if}
-  </div>
-  <hr>
-  <div class="row">
-  <p>
-    Cena skladby je včetně poplatků pro OSA.
-  </p>
-  <p>
-   Skladba je k dispozici v těchto formátech:
-  </p>
-  <ul>
-    <li n:foreach="$soubory as $soubor" n:if="!$soubor->format->demo">{$soubor->format->nazev}</li>
-  </ul>
-  </div>
-{/if}
+</div>
+
 
 {if $user->isInRole('admin')}
   <h2>Editace skladby</h2>
