@@ -147,6 +147,7 @@ class AdminPresenter extends BasePresenter
       $this->error('Požadovaná transakce neexistuje.');
     }
     $this->uzivatele->pripsatKredit($trans);
+    BasePresenter::sendMail('navyseni.latte', $trans->uzivatel->email, $trans);
     $this->flashMessage('Kredit ve výši ' . $trans->castka . ' Kč byl připsán.', 'success');
     $this->redirect('default');
 	}
