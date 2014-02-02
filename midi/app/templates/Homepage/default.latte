@@ -1,7 +1,7 @@
 
 {block jumbotron}
 <div class="row carousel-wrapper">
-  <div id="carousel" class="carousel slide container" data-ride="carousel">
+  <div id="carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -11,19 +11,18 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <h1>MIDI a KARAOKE</h1>
+        <h2>rozsáhlá databáze MIDI a Karaoke skladeb</h2>
         <div class="carousel-caption">
-          <p>{$pocet} skladeb</p>
-          <p>cena od 15 Kč</p>
-          <p><a n:href="Skladba:default" class="btn btn-primary btn-lg" role="button">Katalog skladeb</a></p>
+          <p>celkem {$pocet} skladeb, ceny od 15 Kč</p>
+          <p><a n:href="Skladba:default" class="btn btn-default btn-lg" role="button">Zobrazit skladby</a></p>
         </div>
       </div>
 
       <div class="item">
-        <h1>Karaoke na DVD</h1>
+        <h2>karaoke na DVD</h2>
         <div class="carousel-caption">
-          <p>Skladby je možné zpracovat jako karaoke pro přehrávání v DVD přehrávačích.</p>
-          <p>cena 30 Kč</p>
+          <p>skladby zpracované jako karaoke pro přehrávání v DVD přehrávačích.</p>
+          <p><a n:href="Homepage:karaokeNaDvd" class="btn btn-default btn-lg" role="button">Více informací</a></p>
         </div>
       </div>
     </div>
@@ -66,7 +65,6 @@
         </ul>
       </div>
     </div>
-    <hr>
   </div>
 </div>
 

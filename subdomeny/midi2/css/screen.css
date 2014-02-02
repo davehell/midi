@@ -8,6 +8,7 @@
   vertical-align: center;
   font-size: 18px;
   text-align: right;
+  font-family: 'Raleway', sans-serif;
 }
 #katalog span {
   float: right;
@@ -21,26 +22,33 @@
   color: #ed9c28;
 }
 
-.btn-warning {
-  background-color: #F5B611;
-}
-
 .carousel-wrapper {
   margin-top: 20px;
 }
 .carousel {
   text-align: center;
 }
+.carousel h2 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 31px;
+}
 .carousel .item {
   height: 200px;
 }
 .carousel .carousel-caption {
   color: black;
+  font-size: 18px;
+  text-shadow: none;
+  font-family: 'Raleway', sans-serif;
+}
+.carousel .carousel-caption p{
+  margin-bottom: 15px;
 }
 .carousel .carousel-control {
   background-image: none;
   width: 10%;
 }
+
 #header {
   background-color: #444;
   margin-bottom: 0;
@@ -56,7 +64,7 @@
   min-height: 100px;
   margin-bottom: 30px;
   padding-top: 20px;
-  font-family: 'Raleway', sans-serif;
+  
   background: #A8E2F8 url(../img/bg.jpg) no-repeat center top;
 }
 
@@ -77,6 +85,10 @@
   font-size: 18px;
 }
 
+#header2 .btn-warning {
+  background-color: #F5B611;
+  font-family: 'Raleway', sans-serif;
+}
 .navbar {
   min-height: 20px;
   border-radius: 0;
@@ -93,13 +105,6 @@
 }
 .navbar-nav>li:first-child>a {
   padding-left: 0;
-}
-
-.jumbotron {
-  text-align: center;
-  background-color: lightgrey;
-  padding: 20px;
-  margin: 0 0 20px 0;
 }
 
 
