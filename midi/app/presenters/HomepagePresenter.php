@@ -18,4 +18,9 @@ class HomepagePresenter extends BasePresenter
     $this->template->formaty = $this->skladby->seznamFormatu('plneVerze');
 	}
 
+	public function renderJakNakupovat()
+	{
+    $this->template->cisloUctu = $this->context->parameters['midi']['cisloUctu'];
+	}
+
 }

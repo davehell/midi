@@ -82,7 +82,7 @@
     {if $maZakoupeno}
       <div class="form-group">
         <label for="format">Plná verze ke stažení:</label>
-        <select n:inner-foreach="$soubory as $soubor" class="form-control" id="format">
+        <select class="form-control" id="format">
           <option value="">Zvolte formát</option>
           <option n:foreach="$soubory as $soubor" n:if="!$soubor->format->demo" value="{link //Skladba:download, $soubor->id}">{$soubor->format->nazev}</option>
         </select>
