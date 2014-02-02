@@ -43,30 +43,30 @@
 
 <div id="boxy">
   <div class="col-md-10 col-md-offset-1">
-    <div class="col-md-4">
-      <img class="center-block" src="{$basePath}/img/puntik-music.png">
-      <h3>Formáty</h3>
-      <ul>
-        <li><a n:href="Homepage:karaokeNaDvd">Karaoke na DVD <span class="glyphicon glyphicon-question-sign"></span></a> </li>
-        <li n:foreach="$formaty as $format">{$format}</li>
-      </ul>
-    </div>
+    <div class="row">
+      <div class="col-md-4 formaty">
+        <h3>Formáty</h3>
+        <ul>
+          <li><a n:href="Homepage:karaokeNaDvd">Karaoke na DVD <span class="glyphicon glyphicon-question-sign"></span></a> </li>
+          <li n:foreach="$formaty as $format">{$format}</li>
+        </ul>
+      </div>
 
-    <div class="col-md-4">
-      <img class="center-block" src="{$basePath}/img/puntik-fire.png">
-      <h3>Novinky</h3>
-      <ul n:inner-foreach="$novinky as $skladba">
-        <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>
-      </ul>
-    </div>
+      <div class="col-md-4 novinky">
+        <h3>Novinky</h3>
+        <ul n:inner-foreach="$novinky as $skladba">
+          <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>
+        </ul>
+      </div>
 
-    <div class="col-md-4">
-      <img class="center-block" src="{$basePath}/img/puntik-heart.png">
-      <h3>Oblíbené</h3>
-      <ul n:inner-foreach="$oblibene as $skladba">
-        <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>
-      </ul>
+      <div class="col-md-4 oblibene">
+        <h3>Oblíbené</h3>
+        <ul n:inner-foreach="$oblibene as $skladba">
+          <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>
+        </ul>
+      </div>
     </div>
+    <hr>
   </div>
 </div>
 

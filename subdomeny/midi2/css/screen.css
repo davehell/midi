@@ -6,9 +6,11 @@
   line-height: 40px;
   margin-top: 5px;
   vertical-align: center;
+  font-size: 18px;
+  text-align: right;
 }
 #katalog span {
-  float: left;
+  float: right;
 }
 #katalog .glyphicon {
   font-size: 40px;
@@ -16,7 +18,7 @@
   font-weight: normal;
 }
 #katalog:hover .glyphicon {
-  color: #F5B611;
+  color: #ed9c28;
 }
 
 .btn-warning {
@@ -52,11 +54,10 @@
 
 #header2 {
   min-height: 100px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding-top: 20px;
   font-family: 'Raleway', sans-serif;
-
-background: grey url(../img/bg.jpg);
+  background: #A8E2F8 url(../img/bg.jpg) no-repeat center top;
 }
 
 #header2 a{
@@ -64,15 +65,15 @@ background: grey url(../img/bg.jpg);
 }
 
 #header2 h1{
-  margin-top: 10px;
+  margin-top: 5px;
   font-family: 'Comfortaa', cursive;
   color: #444;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 #header2 h1 span{
   font-family: 'Raleway', sans-serif;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .navbar {
@@ -114,12 +115,26 @@ background: grey url(../img/bg.jpg);
   padding: 3px 0;
 }
 
-#boxy img+span.glyphicon{
-  font-size: 64px;
-  position: absolute;
-  left: 115px;
-  top: 32px;
-  color: black;
+#boxy .formaty, #boxy .novinky, #boxy .oblibene {
+  padding-top: 130px;
+}
+#boxy .formaty {
+  background: #fff url(../img/puntik-music.png) center top no-repeat;
+}
+#boxy .novinky {
+  background: #fff url(../img/puntik-fire.png) center top no-repeat;
+}
+#boxy .oblibene {
+  background: #fff url(../img/puntik-heart.png) center top no-repeat;
+}
+#boxy .formaty:hover {
+  background: #fff url(../img/puntik-music2.png) center top no-repeat;
+}
+#boxy .novinky:hover {
+  background: #fff url(../img/puntik-fire2.png) center top no-repeat;
+}
+#boxy .oblibene:hover {
+  background: #fff url(../img/puntik-heart2.png) center top no-repeat;
 }
 
 #frm-hledaniForm select,
@@ -135,6 +150,7 @@ background: grey url(../img/bg.jpg);
 #header2 .tt-hint, #header2 #hledaniSkladby #nazev {
   background-color: #fff;
   height: 45px;
+  border-radius: 0;
 }
 
 .tt-dropdown-menu {
@@ -147,11 +163,6 @@ background: grey url(../img/bg.jpg);
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
-/*
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-          box-shadow: 0 5px 10px rgba(0,0,0,.2);
-*/
 }
 
 .tt-suggestion {
@@ -174,4 +185,14 @@ th a {
 }
 th a:hover {
   text-decoration: none;
+}
+.well,
+.table-striped>tbody>tr:nth-child(odd)>td {
+  background-color: #ECF1FA;
+}
+.table>tbody>tr>td {
+  border-top: 1px solid #CED8EA;
+}
+.well {
+  border: 1px solid #CED8EA;
 }

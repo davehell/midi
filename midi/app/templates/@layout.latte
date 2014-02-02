@@ -18,7 +18,7 @@
   <link rel="stylesheet" media="all" href="{$basePath}/css/bootstrap.min.css">
   <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/datepicker.css">
 	<link rel="stylesheet" media="all" href="{$basePath}/css/screen.css">
-  <link href='http://fonts.googleapis.com/css?family=Muli|Raleway|Comfortaa' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway|Comfortaa' rel='stylesheet' type='text/css'>
 	<!-- <link rel="stylesheet" media="print" href="{$basePath}/css/print.css"> -->
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{block head}{/block}
@@ -81,7 +81,7 @@
             <h1>midi&nbsp;premier <span>výroba a&nbsp;prodej midi&nbsp;a&nbsp;karaoke</span></h1>
           </a>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <form id="hledaniSkladby" class="navbar-form navbar-left">
             <div class="form-group">
               <input id="nazev" type="text" class="form-control tt-query" placeholder="název skladby">
@@ -90,10 +90,10 @@
             <button type="button" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-search"></span> Hledat</button>
           </form>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <a n:href="Skladba:default" id="katalog">
-            <span class="glyphicon glyphicon-book"></span>
             <span>Katalog skladeb</span>
+            <span class="glyphicon glyphicon-book"></span>
           </a>
         </div>
       </div>
@@ -104,10 +104,10 @@
 
   <div class="container">
     <div class="row">
-        <div class="col-md-12">
-          <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
-          {include content}
-        </div>
+      <div class="col-md-12">
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+        {include content}
+      </div>
     </div>
   </div><!-- /.container -->
 
