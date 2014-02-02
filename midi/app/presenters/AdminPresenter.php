@@ -159,6 +159,7 @@ class AdminPresenter extends BasePresenter
     }
 
     $this->uzivatele->zrusitPozadavekNaNabiti($id);
+    BasePresenter::sendMail('storno.latte', $trans->uzivatel->email, $trans);
     $this->flashMessage('Požadavek na nabití částky ' . $trans->castka . ' Kč byl odebrán.', 'success');
     $this->redirect('default');
 	}
