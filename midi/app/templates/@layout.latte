@@ -17,7 +17,8 @@
 
   <link rel="stylesheet" media="all" href="{$basePath}/css/bootstrap.min.css">
   <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/datepicker.css">
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="all" href="{$basePath}/css/screen.css">
+  <link href='http://fonts.googleapis.com/css?family=Muli|Raleway|Comfortaa' rel='stylesheet' type='text/css'>
 	<!-- <link rel="stylesheet" media="print" href="{$basePath}/css/print.css"> -->
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{block head}{/block}
@@ -76,7 +77,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-3">
-          <h1>MIDI premier</h1>
+          <a n:href="Homepage:">
+            <h1>midi premier <span>výroba a prodej midi a karaoke</span></h1>
+          </a>
         </div>
         <div class="col-md-7">
           <form id="hledaniSkladby" class="navbar-form navbar-left">
@@ -88,9 +91,9 @@
           </form>
         </div>
         <div class="col-md-2">
-          <a n:href="Skladba:default">
-          <span class="glyphicon glyphicon-list-alt" style="font-size: 40px;"></span>
-          <span>Katalog <br />skladeb</span>
+          <a n:href="Skladba:default" id="katalog">
+            <span class="glyphicon glyphicon-book"></span>
+            <span>Katalog skladeb</span>
           </a>
         </div>
       </div>

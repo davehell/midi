@@ -1,4 +1,25 @@
 #ulozeni legend {display: none;}
+#katalog {
+  color: #444;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 5px;
+  vertical-align: center;
+}
+#katalog span {
+  float: left;
+}
+#katalog .glyphicon {
+  font-size: 40px;
+  margin-right: 10px;
+  font-weight: normal;
+}
+#katalog:hover  {
+  color: #2982e5;
+}
+
+
 #carousel-wrapper {
   background-color: lightgrey;
   margin-top: -20px;
@@ -22,6 +43,7 @@
 #header {
   background-color: #444;
   margin-bottom: 0;
+  font-family: 'Raleway', sans-serif;
 }
 
 #header #uzivatel {
@@ -30,18 +52,40 @@
 }
 
 #header2 {
-  background-color: #EFEFEF;
   min-height: 100px;
   margin-bottom: 20px;
   padding-top: 20px;
+  font-family: 'Raleway', sans-serif;
+
+  background-color: #EFEFEF; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #EFEFEF 100%); /* FF3.6+ */
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#EFEFEF 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #ffffff 0%,#EFEFEF 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #ffffff 0%,#EFEFEF 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #ffffff 0%,#EFEFEF 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#EFEFEF',GradientType=0 ); /* IE6-8 */
+}
+
+#header2 a{
+  text-decoration: none;
 }
 
 #header2 h1{
-  margin-top: 5px;
+  margin-top: 10px;
+  font-family: 'Comfortaa', cursive;
+  color: #444;
+  line-height: 20px;
+}
+
+#header2 h1 span{
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
 }
 
 .navbar {
   min-height: 20px;
+  border-radius: 0;
+  border: none;
 }
 
 .navbar-inverse .navbar-nav>li>a {
