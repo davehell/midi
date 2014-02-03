@@ -185,6 +185,11 @@
   background-color: #0097cf;
 }
 
+form ul.error {
+  color: #a94442;
+  padding-left: 20px;
+}
+
 .pagination-wrapper {
   text-align: center;
 }
@@ -212,4 +217,12 @@ th a:hover {
 }
 .alert {
   margin-top: 20px;
+}
+@media print {
+  a[href]:after {
+    content: "";
+  }
+  abbr[title]:after {
+    content: "";
+  }
 }

@@ -14,8 +14,10 @@ Extensions=*.*
 [Project tree]
 midiweb
 	+app
-		-component
+		+component
 			midi\app\component\Bs3Form.php
+			midi\app\component\paginator.latte
+			midi\app\component\VisualPaginator.php
 		+config
 			midi\app\config\config.local.neon
 			midi\app\config\config.neon
@@ -36,8 +38,6 @@ midiweb
 				midi\app\templates\Admin\stahovani.latte
 				midi\app\templates\Admin\zakaznici.latte
 				midi\app\templates\Admin\zakaznikDetail.latte
-			-components
-				midi\app\templates\components\form.latte
 			-Error
 				midi\app\templates\Error\403.latte
 				midi\app\templates\Error\404.latte
@@ -95,54 +95,18 @@ midiweb
 1=subdomeny\midi2\css\screen.css
 2=midi\app\templates\Homepage\default.latte
 3=midi\app\bootstrap.php
-4=midi\app\presenters\SkladbaPresenter.php
-5=midi\app\templates\Skladba\default.latte
-6=midi\app\templates\Ucet\prihlaseni.latte
-7=midi\app\templates\Skladba\detail.latte
-8=midi\app\templates\Homepage\jakNakupovat.latte
-9=midi\app\presenters\HomepagePresenter.php
-10=import-soubor.php
-11=import-skladby.php
-12=soubor.sql
 [Selected Project Files]
 Main=
-Selected=soubor.sql
+Selected=midi\app\bootstrap.php
 [midi\app\templates\@layout.latte]
-TopLine=91
-Caret=11,112
+TopLine=65
+Caret=52,93
 [subdomeny\midi2\css\screen.css]
-TopLine=155
-Caret=1,181
+TopLine=176
+Caret=1,222
 [midi\app\templates\Homepage\default.latte]
-TopLine=20
-Caret=1,68
+TopLine=1
+Caret=43,3
 [midi\app\bootstrap.php]
 TopLine=1
-Caret=61,30
-[midi\app\presenters\SkladbaPresenter.php]
-TopLine=65
-Caret=1,92
-[midi\app\templates\Skladba\default.latte]
-TopLine=21
-Caret=48,64
-[midi\app\templates\Ucet\prihlaseni.latte]
-TopLine=1
-Caret=7,6
-[midi\app\templates\Skladba\detail.latte]
-TopLine=44
-Caret=17,85
-[midi\app\templates\Homepage\jakNakupovat.latte]
-TopLine=6
-Caret=3,52
-[midi\app\presenters\HomepagePresenter.php]
-TopLine=1
-Caret=13,23
-[import-soubor.php]
-TopLine=1
-Caret=5,27
-[import-skladby.php]
-TopLine=1
-Caret=18,13
-[soubor.sql]
-TopLine=1973
-Caret=1,2025
+Caret=52,31
