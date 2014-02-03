@@ -42,7 +42,7 @@ class UserManager extends Nette\Object implements Security\IAuthenticator
 			throw new Security\AuthenticationException('Nesprávné uživatelské jméno nebo heslo.', self::IDENTITY_NOT_FOUND);
 		}
 
-		if ($row->heslo !== $this->generateHash($password, $row->heslo)) {
+		if ($row->heslo !== $this->generateHash($password, $row->salt)) {
 			throw new Security\AuthenticationException('Nesprávné uživatelské jméno nebo heslo.', self::INVALID_CREDENTIAL);
 		}
 
@@ -62,7 +62,7 @@ class UserManager extends Nette\Object implements Security\IAuthenticator
 	 */
 	public static function generateHash($password, $salt)
 	{
-		return crypt($password, $salt);
+		return sha1($password.$salt);
 	}
 
 }
