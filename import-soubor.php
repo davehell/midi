@@ -8,8 +8,8 @@ if ($handle = opendir('midi/data/old')) {
     $pok = explode("_", $entry);
     $id = $pok[0];
 
-    if(strpos($entry, 'skladba')) $format = '3';
-    elseif(strpos($entry, 'demo')) $format = '10';
+    if(strpos($entry, 'skladba')) $format = '4';
+    elseif(strpos($entry, 'demo')) $format = '11';
     elseif(strpos($entry, 'text')) $format = '1';
 
     $pok = explode(".", $entry);
