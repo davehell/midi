@@ -140,10 +140,15 @@
   background: #fff url(../img/puntik-heart2.png) center top no-repeat;
 }
 
+#hledaniForm-wrapper h3{
+  margin-top: 0;
+}
+
 #frm-hledaniForm select,
 .tt-query,
 .tt-hint {
   width: 400px;
+  height: 100%;
 }
 
 .tt-hint {
