@@ -19,7 +19,7 @@
 {block title}Detail skladby {$skladba->nazev}{/block}
 
 {block content}
-<h1>Detail skladby</h1>
+<h1>{$skladba->nazev}</h1>
 
 {if $user->loggedIn}
   {if $maZakoupeno}
@@ -36,9 +36,8 @@
 
 <div class="row">
   <div class="col-md-6">
+    <!-- <h3 id="skladbaNazev">{$skladba->nazev}</h3> -->
     <dl class="dl-horizontal">
-      <dt>Název</dt>
-      <dd>{$skladba->nazev}</dd>
       <dt>Interpret</dt>
       <dd>{$skladba->autor}</dd>
       <dt>Verze</dt>
@@ -47,7 +46,9 @@
       <dd>{$skladba->zanr->nazev}</dd>
       <dt>Poznámka</dt>
       <dd>{$skladba->poznamka}</dd>
-      {if !$maZakoupeno}
+    </dl>
+{if !$maZakoupeno}
+    <dl class="dl-horizontal">
       <dt>Cena</dt>
       <dd>
         <p>
@@ -57,13 +58,8 @@
           <a class="btn btn-success btn-lg {if !$user->loggedIn}disabled{/if}" n:href="Skladba:nakup, $skladba->id"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit skladbu</a>
         </p>
       </dd>
-      {/if}
     </dl>
-    {if !$maZakoupeno}
-
-    {/if}
-
-
+{/if}
   </div>
   <div class="col-md-6">
     <form class="well">
