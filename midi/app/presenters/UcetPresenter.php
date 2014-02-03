@@ -61,7 +61,8 @@ class UcetPresenter extends BasePresenter
 
     $form->addText('email', 'E-mail:')
       ->setRequired('Prosím zadejte váš e-mail.')
-      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu');
+      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu')
+      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100);
 
     $form->addSubmit('send', 'Dokončení registrace');
 
