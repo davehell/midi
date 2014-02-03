@@ -205,3 +205,6 @@ th a:hover {
 #header2 .btn-warning {
   font-family: 'Raleway', sans-serif;
 }
+.alert {
+  margin-top: 20px;
+}
