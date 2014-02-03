@@ -13,6 +13,11 @@
       var url = $('#formatDema').val();
       if(url) window.location = url;
     });
+
+    //stazeni ukazky skladby po kliknuti na tlacitko #stahnoutDemo
+    $('a#koupit').click(function() {
+      return confirm('Chystáte se koupit skladbu {$skladba->nazev} v ceně {$skladba->cena} Kč. Pokračovat?');
+    });
   </script>
 {/block}
 
@@ -55,7 +60,7 @@
           <strong>{$skladba->cena}&nbsp;Kč</strong><br />včetně poplatků pro OSA
         </p>
         <p>
-          <a class="btn btn-success btn-lg {if !$user->loggedIn}disabled{/if}" n:href="Skladba:nakup, $skladba->id"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit skladbu</a>
+          <a id="koupit" class="btn btn-success btn-lg {if !$user->loggedIn}disabled{/if}" n:href="Skladba:nakup, $skladba->id"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit skladbu</a>
         </p>
       </dd>
     </dl>
