@@ -185,6 +185,11 @@
   background-color: #0097cf;
 }
 
+/* u registraèního formuláøe je potøeba mít širší label, jinak se do nìj nevejdou texty */
+#frm-uzivatelForm .control-label {
+  width: 25%;
+}
+
 form ul.error {
   color: #a94442;
   padding-left: 20px;
