@@ -1,0 +1,52 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+	<meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{block title|striptags}HUDBA Premier{/block}</title>
+
+  <link rel="stylesheet" media="all" href="{$basePath}/css/bootstrap.min.css">
+	<link rel="stylesheet" media="all" href="{$basePath}/css/screen.css?cache={=time("now")}">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	{block head}{/block}
+</head>
+
+<body>
+
+  <div id="header" class="navbar navbar-inverse">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><a n:href="Homepage:">Domů</a></li>
+      </ul>
+    </div>
+  </div> <!-- /#header -->
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+        {include content}
+      </div>
+    </div>
+    <hr />
+  </div><!-- /.container -->
+
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="{$basePath}/js/netteForms.js"></script>
+  <script src="{$basePath}/js/bootstrap.min.js"></script>
+  <script>
+  </script>
+  {block scripts}{/block}
+</body>
+</html>
