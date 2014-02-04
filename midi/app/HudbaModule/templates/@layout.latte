@@ -27,6 +27,7 @@
     <div class="container">
       <ul class="nav navbar-nav">
         <li><a n:href="Homepage:">Domů</a></li>
+        <li><a n:href="Homepage:">Kontakt</a></li>
       </ul>
     </div>
   </div> <!-- /#header -->
@@ -34,7 +35,17 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+         <li class="disabled"><a href="">hudební vydavatelství</a></li>
+         <li class="disabled"><a href="">hudební agentura</a></li>
+         <li><a n:href="Bazar:default">hudební bazar</a></li>
+         <li><a n:href="Homepage:posezeniSHarmonikou">posezení s harmonikou</a></li>
+         <li><a n:href="Homepage:pronajemAparaturyOzvuceni">pronájem aparatury, ozvučení</a></li>
+         <li><a n:href="Homepage:halfplayback">halfplayback s použitím živých kytar</a></li>
+        </ul>
+      </div>
+      <div class="col-md-9">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}
       </div>

@@ -27,6 +27,4 @@ nette:
 
 
 services:
-	- Skladba
-	- UserManager
-	- Uzivatel
+	- Bazar

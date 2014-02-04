@@ -28,6 +28,20 @@ CREATE TABLE `format` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
+DROP TABLE IF EXISTS `hudba_bazar`;
+CREATE TABLE `hudba_bazar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `text` varchar(1000) COLLATE utf8_czech_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `tel` varchar(30) COLLATE utf8_czech_ci NOT NULL,
+  `datum` date NOT NULL,
+  `foto1` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
+  `foto2` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
+  `foto3` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
 DROP TABLE IF EXISTS `nakup`;
 CREATE TABLE `nakup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -101,4 +115,4 @@ CREATE TABLE `zanr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2014-02-03 20:39:13
+-- 2014-02-04 20:48:46

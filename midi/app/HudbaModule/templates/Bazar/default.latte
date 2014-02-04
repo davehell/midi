@@ -1,0 +1,47 @@
+{block content}
+<h1 n:block=title>Hudební bazar</h1>
+<p>
+  V této sekci máte možnost inzerce nákupu i prodeje hudebních nástrojů.
+</p>
+<a n:href="Bazar:pridat" class="btn btn-primary">Přidat inzerát</a>
+<h2>
+  Přehled inzerátů
+</h2>
+
+{if $inzeraty->count()}
+
+  {control vp}
+
+  {foreach $inzeraty as $inzerat}
+  <div>
+    <p>
+      Vloženo dne: {$inzerat->datum|date:'%d.%m.%Y'}
+    </p>
+    <p>
+      {$inzerat->text}
+    </p>
+    <dl>
+      <dt>Telefon:</dt>
+      <dd>{$inzerat->tel}</dd>
+      <dt>E-mail:</dt>
+      <dd>{$inzerat->email}</dd>
+    </dl>
+
+    <a n:if="$inzerat->foto1" href="{$basePath}/bazar/inzerat-{$inzerat->foto1}">
+      <img src="{$basePath}/bazar/thumb-{$inzerat->foto1}">
+    </a>
+
+    <a n:if="$inzerat->foto2" href="{$basePath}/bazar/inzerat-{$inzerat->foto2}">
+      <img src="{$basePath}/bazar/thumb-{$inzerat->foto2}">
+    </a>
+
+    <a n:if="$inzerat->foto3" href="{$basePath}/bazar/inzerat-{$inzerat->foto3}">
+      <img src="{$basePath}/bazar/thumb-{$inzerat->foto3}">
+    </a>
+  </div>
+  {/foreach}
+{else}
+  <p>
+    Nejsou uloženy žádné inzeráty.
+  </p>
+{/if}

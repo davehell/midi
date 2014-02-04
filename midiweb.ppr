@@ -14,14 +14,30 @@ Extensions=*.*
 [Project tree]
 midiweb
 	+app
-		+component
+		+HUDBA
+			+templates
+				+Bazar
+					midi\app\HudbaModule\templates\Bazar\default.latte
+					midi\app\HudbaModule\templates\Bazar\detail.latte
+					midi\app\HudbaModule\templates\Bazar\pridat.latte
+				+Homepage
+					midi\app\HudbaModule\templates\Homepage\default.latte
+					midi\app\HudbaModule\templates\Homepage\halfplayback.latte
+					midi\app\HudbaModule\templates\Homepage\posezeniSHarmonikou.latte
+					midi\app\HudbaModule\templates\Homepage\pronajemAparaturyOzvuceni.latte
+				midi\app\HudbaModule\templates\@layout.latte
+			+presenters
+				midi\app\HudbaModule\presenters\BazarPresenter.php
+				midi\app\HudbaModule\presenters\HomepagePresenter.php
+		-component
 			midi\app\component\Bs3Form.php
 			midi\app\component\paginator.latte
 			midi\app\component\VisualPaginator.php
-		+config
+		-config
 			midi\app\config\config.local.neon
 			midi\app\config\config.neon
 		+model
+			midi\app\model\Bazar.php
 			midi\app\model\Skladba.php
 			midi\app\model\UserManager.php
 			midi\app\model\Uzivatel.php
@@ -69,7 +85,7 @@ midiweb
 			midi\app\templates\@layout.latte
 		midi\app\.htaccess
 		midi\app\bootstrap.php
-	+www
+	-www
 		+css
 			subdomeny\midi2\css\bootstrap.css
 			subdomeny\midi2\css\bootstrap.min.css
@@ -91,22 +107,38 @@ midiweb
 		subdomeny\midi2\favicon.ico
 		subdomeny\midi2\index.php
 [Open project files]
-0=midi\app\templates\@layout.latte
-1=subdomeny\midi2\css\screen.css
-2=midi\app\templates\Homepage\default.latte
-3=midi\app\bootstrap.php
+0=subdomeny\midi2\css\screen.css
+1=midi\app\HudbaModule\presenters\BazarPresenter.php
+2=midi\app\HudbaModule\templates\Bazar\detail.latte
+3=midi\app\model\Bazar.php
+4=midi\app\presenters\SkladbaPresenter.php
+5=midi\app\HudbaModule\templates\Bazar\default.latte
+6=midi\app\templates\Skladba\default.latte
+7=midi.sql
 [Selected Project Files]
 Main=
-Selected=midi\app\bootstrap.php
-[midi\app\templates\@layout.latte]
-TopLine=65
-Caret=52,93
+Selected=midi\app\HudbaModule\templates\Bazar\default.latte
 [subdomeny\midi2\css\screen.css]
 TopLine=176
 Caret=1,222
-[midi\app\templates\Homepage\default.latte]
+[midi\app\HudbaModule\presenters\BazarPresenter.php]
+TopLine=79
+Caret=16,109
+[midi\app\HudbaModule\templates\Bazar\detail.latte]
 TopLine=1
-Caret=43,3
-[midi\app\bootstrap.php]
+Caret=1,4
+[midi\app\model\Bazar.php]
 TopLine=1
-Caret=52,31
+Caret=66,42
+[midi\app\presenters\SkladbaPresenter.php]
+TopLine=180
+Caret=122,204
+[midi\app\HudbaModule\templates\Bazar\default.latte]
+TopLine=1
+Caret=35,45
+[midi\app\templates\Skladba\default.latte]
+TopLine=1
+Caret=1,39
+[midi.sql]
+TopLine=66
+Caret=23,118
