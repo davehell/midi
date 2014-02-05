@@ -3,7 +3,9 @@
 namespace HudbaModule;
 
 use Nette\Forms\Form,
-    Nette\Image;
+    Nette\Image,
+    Nette\Mail\Message,
+    Nette\Mail\SendmailMailer;
 
 /**
  * Homepage presenter.
@@ -54,13 +56,15 @@ class VydavatelstviPresenter extends \BasePresenter
   {
     $form = new \Nette\Application\UI\Form;
 
+    $form->addHidden('id');
+
     $form->addText('pocet', 'Počet kusů:')
       ->setRequired('Prosím zadejte počet kusů.')
       ->addRule(Form::INTEGER, 'Počet kusů musí být číslo')
       ->addRule(Form::RANGE, 'Počet kusů musí být od %d do %d Kč', array(1, 10))
       ->setType('number');
 
-    $form->addTextArea('text', 'Dodací adresa:')
+    $form->addTextArea('adresa', 'Dodací adresa:')
       ->setRequired('Prosím zadejte dodací adresu.')
       ->addRule(Form::MAX_LENGTH, 'Název musí mít maximálně %d znaků', 300);
 
@@ -137,26 +141,34 @@ class VydavatelstviPresenter extends \BasePresenter
   {
     $values = $form->getValues();
 
-    $text = "Název:\n" . $values['nazev'] . "\n";
-    $text .= "Popis:\n" . $values['popis'] . "\n";
-    $text .= "Kontakt:\n" . $values['kontakt'] . "\n";
-    $text .= "Web:\n" . $values['www'] . "\n";
-    $text .= "Zastupovat:\n";
-    $text .= $values['popis'] == "1" ? "ano" : "ne" . "\n";
+    $cd = $this->vydavatelstvi->findById($values['id']);
+    if (!$cd) {
+      $this->error('Požadované CD neexistuje.');
+    }
+
+    $text = "Název: " . $cd->nazev . "\n";
+    $text .= "Interpret: " . $cd->autor . "\n";
+    $text .= "Cena za kus: " . $cd->cena . " Kč\n\n";
+    $text .= "Počet kusů: " . $values['pocet'] . "\n";
+    $text .= "Adresa:\n" . $values['adresa'] . "\n";
+    $text .= "Telefon: " . $values['tel'] . "\n";
+    $text .= "Email: " . $values['email'] . "\n";
+    $text .= "Poznámka:\n" . $values['pozn'] . "\n";
+
 
     $params = $this->context->parameters['hudba'];
 
     $mail = new Message;
     $mail->setFrom('Lubomír Piskoř <' . $params['adminMail'] . '>')
         ->addTo($params['adminMail'])
-        ->setSubject('Hudební agentura - poptávka zveřejnění kapely')
+        ->setSubject('Hudební vydavatelství - objednávka CD')
         ->setBody($text);
     $mailer = new SendmailMailer;
     $mailer->send($mail);
 
 
     $this->flashMessage('Objednávka byla odeslána.' , 'success');
-    $this->redirect('Agentura:default');
+    $this->redirect('Vydavatelstvi:default');
   }
 
 	public function renderDefault()
@@ -172,5 +184,6 @@ class VydavatelstviPresenter extends \BasePresenter
       $this->error('Požadované CD neexistuje.');
     }
     $this->template->cd = $cd;
+    $this['nakupForm']->setDefaults(array('id'=>$id));
   }
 }

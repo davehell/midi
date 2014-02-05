@@ -100,7 +100,7 @@ class BazarPresenter extends \BasePresenter
     }
 
     $this->flashMessage('Inzerát byl uložen.' , 'success');
-    $this->redirect('Bazar:detail', $inzeratId);
+    $this->redirect('Bazar:default');
   }
 
 	public function renderDefault()

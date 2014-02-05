@@ -12,7 +12,13 @@
     <dd>{$cd->popis}</dd>
     <dt>Cena</dt>
     <dd>{$cd->cena}&nbsp;Kč</dd>
+    <dt>&nbsp;</dt>
+    <dd>
+      <a n:if="$cd->foto" href="{$basePath}/vydavatelstvi/{$cd->foto}">
+        <img src="{$basePath}/vydavatelstvi/thumb-{$cd->foto}">
+      </a>
+    </dd>
   </dl>
-  <a n:href="Vydavatelstvi:nakup $cd->id" class="btn btn-primary">Koupit</a>
+  <a n:href="Vydavatelstvi:nakup $cd->id" class="btn btn-success">Koupit</a>
   <hr>
 {/foreach}
