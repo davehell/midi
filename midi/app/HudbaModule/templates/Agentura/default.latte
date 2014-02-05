@@ -1,0 +1,30 @@
+{block content}
+<h1 n:block=title>Hudební agentura</h1>
+<p>
+  V této sekci nabízím prezentaci kapelám, včetně možnosti jejich zastupování při sjednání hudební produkce. Prezentace je zdarma.
+</p>
+
+<p>
+  <a n:href="Agentura:poptavka">Objednávkový formulář pro zveřejnění kapely</a>
+</p>
+
+
+
+<h2>
+  Přehled kapel
+</h2>
+
+
+{foreach $kapely as $kapela}
+<div>
+  <h3>
+    {$kapela->nazev}
+  </h3>
+  <p>
+    {$kapela->popis}
+  </p>
+  <p>
+    <a href="{$kapela->www}"">{$kapela->www}</a>
+  </p>
+</div>
+{/foreach}

@@ -1,6 +1,8 @@
 parameters:
 	midi:
 		adminMail: 'david.hellebrand@seznam.cz'
+	hudba:
+		adminMail: 'david.hellebrand@seznam.cz'
 
 nette:
 	database:

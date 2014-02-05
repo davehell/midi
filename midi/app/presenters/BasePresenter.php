@@ -22,7 +22,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     $mail = new Message;
     $mail->setFrom('Lubomír Piskoř <' . $params['adminMail'] . '>')
-        ->addTo('david.hellebrand@seznam.cz')
+        ->addTo($adresat)
         ->setHtmlBody($template);
     $mailer = new SendmailMailer;
     $mailer->send($mail);
