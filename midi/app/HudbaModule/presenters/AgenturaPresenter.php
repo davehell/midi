@@ -65,7 +65,6 @@ class AgenturaPresenter extends \BasePresenter
     $mail->setFrom('Lubomír Piskoř <' . $params['adminMail'] . '>')
         ->addTo($params['adminMail'])
         ->setSubject('Hudební agentura - poptávka zveřejnění kapely')
-        //->setBody("Název: $values['nazev']\nPopis: $values['popis']\nKontakt: $values['kontakt']\nWeb: $values['www']\nZastupování: " . $values['zastupovat'] == "1" ? "ano" : "ne");
         ->setBody($text);
     $mailer = new SendmailMailer;
     $mailer->send($mail);

@@ -1,0 +1,13 @@
+{block content}
+<h1 n:block=title>{$cd->nazev}</h1>
+
+<dl class="dl-horizontal">
+  <dt>Interpret</dt>
+  <dd>{$cd->autor}</dd>
+  <dt>Popis</dt>
+  <dd>{$cd->popis}</dd>
+  <dt>Cena</dt>
+  <dd>{$cd->cena}&nbsp;Kč</dd>
+</dl>
+
+{control nakupForm}

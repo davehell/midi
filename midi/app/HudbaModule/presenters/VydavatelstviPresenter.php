@@ -1,0 +1,176 @@
+<?php
+
+namespace HudbaModule;
+
+use Nette\Forms\Form,
+    Nette\Image;
+
+/**
+ * Homepage presenter.
+ */
+class VydavatelstviPresenter extends \BasePresenter
+{
+
+	/** @var Vydavatelstvi @inject*/
+	public $vydavatelstvi;
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentCdForm()
+  {
+    $form = new \Nette\Application\UI\Form;
+
+    $form->addText('autor', 'Interpret:')
+      ->setRequired('Prosím zadejte interpreta.')
+      ->addRule(Form::MAX_LENGTH, 'Interpret musí mít maximálně %d znaků', 100);
+
+    $form->addText('nazev', 'Název:')
+      ->setRequired('Prosím zadejte název CD.')
+      ->addRule(Form::MAX_LENGTH, 'Název CD musí mít maximálně %d znaků', 100);
+
+    $form->addTextArea('popis', 'Popis:')
+      ->addRule(Form::MAX_LENGTH, 'Popis musí mít maximálně %d znaků', 1000);
+
+    $form->addText('cena', 'Cena:')
+      ->setRequired('Prosím zadejte cenu skladby.')
+      ->addRule(Form::INTEGER, 'Částka musí být číslo')
+      ->addRule(Form::RANGE, 'Částka musí být od %d do %d Kč', array(1, 1000))
+      ->setType('number');
+
+    $form->addUpload('foto', 'Foto:');
+
+    $form->addSubmit('send', 'Uložit');
+
+    $form->onSuccess[] = $this->cdFormSucceeded;
+
+    return \Bs3Form::transform($form);
+  }
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentNakupForm()
+  {
+    $form = new \Nette\Application\UI\Form;
+
+    $form->addText('pocet', 'Počet kusů:')
+      ->setRequired('Prosím zadejte počet kusů.')
+      ->addRule(Form::INTEGER, 'Počet kusů musí být číslo')
+      ->addRule(Form::RANGE, 'Počet kusů musí být od %d do %d Kč', array(1, 10))
+      ->setType('number');
+
+    $form->addTextArea('text', 'Dodací adresa:')
+      ->setRequired('Prosím zadejte dodací adresu.')
+      ->addRule(Form::MAX_LENGTH, 'Název musí mít maximálně %d znaků', 300);
+
+    $form->addText('email', 'E-mail:')
+      ->setRequired('Prosím zadejte váš e-mail.')
+      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu')
+      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100);
+
+    $form->addText('tel', 'Telefon:')
+      ->setRequired('Prosím zadejte vaše telefonní číslo.')
+      ->addRule(Form::MAX_LENGTH, 'Telefonní číslo musí mít maximálně %d znaků', 20);
+
+    $form->addText('pozn', 'Poznámka:')
+      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 300);
+
+    $form->addSubmit('send', 'Odeslat');
+
+    $form->onSuccess[] = $this->nakupFormSucceeded;
+
+    return \Bs3Form::transform($form);
+  }
+
+  public function cdFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $cdId = $this->getParameter('id');
+    $uploads = $this->context->getService('httpRequest')->getFiles();
+    unset($values['foto']);
+
+    if($cdId) { //editace
+      try {
+        $this->vydavatelstvi->update($cdId, $values);
+      } catch (\Exception $e) {
+        $this->flashMessage('CD se nepodařilo uložit.', 'danger');
+      }
+    }
+    else { //nova skladba
+      try {
+        $cd = $this->vydavatelstvi->insert($values);
+        $cdId = $cd->id;
+      } catch (\Exception $e) {
+        $this->flashMessage('CD se nepodařilo uložit.', 'danger');
+      }
+    }
+
+    //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
+    $destDir = $this->context->parameters['wwwDir'] . '/vydavatelstvi';
+    $nazev = '';
+    foreach ($uploads as $soubor) {
+      if($soubor && $soubor->isOk) {
+        $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
+        $nazev = 'cd-' . $cdId . '.' . $ext;
+        $soubor->move($destDir . '/' . $nazev);
+        $image = Image::fromFile($destDir . '/' . $nazev);
+        $image->resize(1024, 1024);
+        $image->save($destDir . '/' . $nazev);
+        $image->resize(150, 150);
+        $image->save($destDir . '/thumb-' . $nazev);
+      }
+    }
+
+    try {
+      $this->vydavatelstvi->update($cdId, array('foto'=>$nazev));
+    } catch (\Exception $e) {
+      $this->flashMessage('Nepodařilo se uložit fotky.', 'danger');
+    }
+
+    $this->flashMessage('CD bylo uloženo.' , 'success');
+    $this->redirect('Vydavatelstvi:nakup', $cdId);
+  }
+
+
+  public function nakupFormSucceeded($form)
+  {
+    $values = $form->getValues();
+
+    $text = "Název:\n" . $values['nazev'] . "\n";
+    $text .= "Popis:\n" . $values['popis'] . "\n";
+    $text .= "Kontakt:\n" . $values['kontakt'] . "\n";
+    $text .= "Web:\n" . $values['www'] . "\n";
+    $text .= "Zastupovat:\n";
+    $text .= $values['popis'] == "1" ? "ano" : "ne" . "\n";
+
+    $params = $this->context->parameters['hudba'];
+
+    $mail = new Message;
+    $mail->setFrom('Lubomír Piskoř <' . $params['adminMail'] . '>')
+        ->addTo($params['adminMail'])
+        ->setSubject('Hudební agentura - poptávka zveřejnění kapely')
+        ->setBody($text);
+    $mailer = new SendmailMailer;
+    $mailer->send($mail);
+
+
+    $this->flashMessage('Objednávka byla odeslána.' , 'success');
+    $this->redirect('Agentura:default');
+  }
+
+	public function renderDefault()
+	{
+    $polozky = $this->vydavatelstvi->findAll();
+    $this->template->polozky = $polozky;
+	}
+
+  public function renderNakup($id)
+  {
+    $cd = $this->vydavatelstvi->findById($id);
+    if (!$cd) {
+      $this->error('Požadované CD neexistuje.');
+    }
+    $this->template->cd = $cd;
+  }
+}

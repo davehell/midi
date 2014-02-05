@@ -1,0 +1,18 @@
+{block content}
+<h1 n:block=title>Hudební vydavatelství</h1>
+
+<a n:href="Vydavatelstvi:pridat" class="btn btn-primary">Přidat CD</a>
+
+{foreach $polozky as $cd}
+  <h2>{$cd->nazev}</h2>
+  <dl class="dl-horizontal">
+    <dt>Interpret</dt>
+    <dd>{$cd->autor}</dd>
+    <dt>Popis</dt>
+    <dd>{$cd->popis}</dd>
+    <dt>Cena</dt>
+    <dd>{$cd->cena}&nbsp;Kč</dd>
+  </dl>
+  <a n:href="Vydavatelstvi:nakup $cd->id" class="btn btn-primary">Koupit</a>
+  <hr>
+{/foreach}

@@ -81,13 +81,13 @@ class BazarPresenter extends \BasePresenter
       if($soubor && $soubor->isOk) {
         $i++;
         $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
-        $nazev = '/inzerat-' . $inzeratId . '-' . $i . '.' . $ext;
+        $nazev = 'inzerat-' . $inzeratId . '-' . $i . '.' . $ext;
         $soubor->move($destDir . '/' . $nazev);
         $image = Image::fromFile($destDir . '/' . $nazev);
         $image->resize(1024, 1024);
         $image->save($destDir . '/' . $nazev);
         $image->resize(150, 150);
-        $nazev = '/thumb-' . $inzeratId . '-' . $i . '.' . $ext;
+        $nazev = 'thumb-' . $inzeratId . '-' . $i . '.' . $ext;
         $image->save($destDir . '/' . $nazev);
         $fotky['foto' . $i] = $inzeratId . '-' . $i . '.' . $ext;
       }

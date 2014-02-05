@@ -28,6 +28,18 @@ CREATE TABLE `format` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
+DROP TABLE IF EXISTS `hudba_agentura`;
+CREATE TABLE `hudba_agentura` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `kontakt` varchar(200) COLLATE utf8_czech_ci NOT NULL,
+  `popis` varchar(1000) COLLATE utf8_czech_ci NOT NULL,
+  `www` varchar(200) COLLATE utf8_czech_ci NOT NULL,
+  `zastupovat` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
 DROP TABLE IF EXISTS `hudba_bazar`;
 CREATE TABLE `hudba_bazar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -38,6 +50,18 @@ CREATE TABLE `hudba_bazar` (
   `foto1` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
   `foto2` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
   `foto3` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
+DROP TABLE IF EXISTS `hudba_cd`;
+CREATE TABLE `hudba_cd` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `autor` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `popis` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `cena` int(11) NOT NULL,
+  `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -115,4 +139,4 @@ CREATE TABLE `zanr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2014-02-04 20:48:46
+-- 2014-02-05 14:14:40
