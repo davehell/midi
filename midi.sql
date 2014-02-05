@@ -28,22 +28,31 @@ CREATE TABLE `format` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
+-- Adminer 4.0.2 MySQL dump
+
+SET NAMES utf8;
+SET foreign_key_checks = 0;
+SET time_zone = '+01:00';
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
 DROP TABLE IF EXISTS `hudba_agentura`;
 CREATE TABLE `hudba_agentura` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
-  `kontakt` varchar(200) COLLATE utf8_czech_ci NOT NULL,
-  `popis` varchar(1000) COLLATE utf8_czech_ci NOT NULL,
+  `popis` text COLLATE utf8_czech_ci NOT NULL,
   `www` varchar(200) COLLATE utf8_czech_ci NOT NULL,
-  `zastupovat` int(11) NOT NULL,
+  `foto` varchar(100) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `hudba_agentura` (`id`, `nazev`, `popis`, `www`, `foto`) VALUES
+(1,	'Michal Tučný revival band',	'Jsme revival Michala Tučného na Moravě, se sídlem ve Frýdku-Místku.\r\n\r\nNaše produkce je vhodná pro společenské a obecní akce, festivaly, kluby, firemní a soukromé večírky. V neposlední řadě jsou uspěšné i samostatné koncerty.\r\n\r\nCelý koncert je spíš vzpomínka na velkou osobnost a nezapomenutelnou legendu české country, Michala Tučného.',	'http://www.michaltucnyrevival.cz/',	'kapela-1.jpg'),
+(2,	'Lubomír Piskoř - posezení s harmonikou',	'Vystoupení je bez jakékoliv aparatury a maximální délka trvání je 4 hodiny.',	'',	'');
 
 DROP TABLE IF EXISTS `hudba_bazar`;
 CREATE TABLE `hudba_bazar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` varchar(1000) COLLATE utf8_czech_ci NOT NULL,
+  `text` text COLLATE utf8_czech_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_czech_ci NOT NULL,
   `tel` varchar(30) COLLATE utf8_czech_ci NOT NULL,
   `datum` date NOT NULL,
@@ -53,17 +62,24 @@ CREATE TABLE `hudba_bazar` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `hudba_bazar` (`id`, `text`, `email`, `tel`, `datum`, `foto1`, `foto2`, `foto3`) VALUES
+(1,	'Prodám housle',	'david@david.cz',	'123456',	'2014-02-05',	'1-1.jpg',	'1-2.jpg',	'1-3.gif');
 
 DROP TABLE IF EXISTS `hudba_cd`;
 CREATE TABLE `hudba_cd` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `autor` varchar(100) COLLATE utf8_czech_ci NOT NULL,
   `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
-  `popis` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `popis` text COLLATE utf8_czech_ci NOT NULL,
   `cena` int(11) NOT NULL,
   `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `hudba_cd` (`id`, `autor`, `nazev`, `popis`, `cena`, `foto`) VALUES
+(1,	'Karel Gott',	'Konec ptačích árií',	'Karel Gott zpívá písně s texty Jiřího Štaidla (2013) - Supraphon',	100,	'cd-1.jpg');
+
+-- 2014-02-05 20:54:44
 
 
 DROP TABLE IF EXISTS `nakup`;
