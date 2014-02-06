@@ -25,14 +25,9 @@ class Bazar extends Nette\Object
 		return $this->findAll()->get($id);
 	}
 
-// 	public function pocetInzeratu()
-// 	{
-//     return $this->findAll()->count();
-// 	}
-
-	public function update($inzerateId, $values)
+	public function update($inzeratId, $values)
 	{
-		$this->database->table('hudba_bazar')->wherePrimary($inzerateId)->update($values);
+		$this->database->table('hudba_bazar')->wherePrimary($inzeratId)->update($values);
 	}
 
   /** @return Nette\Database\Table\ActiveRow */
@@ -40,5 +35,23 @@ class Bazar extends Nette\Object
 	{
     $inzerat['datum'] = new Nette\Database\SqlLiteral('NOW()');
     return $this->database->table('hudba_bazar')->insert($inzerat);
+	}
+
+	public function smazatFoto($inzeratId, $fotoId, $soubory)
+	{
+    $values = array();
+    if($fotoId == 1) $values['foto1'] = null;
+    else if($fotoId == 1) $values['foto2'] = null;
+    else $values['foto2'] = null;
+    $this->database->table('hudba_bazar')->wherePrimary($inzeratId)->update($values);
+
+    foreach ($soubory as $soubor) {
+      if(file_exists($soubor)) unlink($soubor);
+    }
+	}
+
+	public function smazat($inzeratId)
+	{
+    $this->database->table('hudba_bazar')->wherePrimary($inzeratId)->delete();
 	}
 }

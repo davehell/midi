@@ -3,43 +3,50 @@
 <p>
   V této sekci máte možnost inzerce nákupu i prodeje hudebních nástrojů.
 </p>
-<a n:href="Bazar:pridat" class="btn btn-primary">Přidat inzerát</a>
-<h2>
-  Přehled inzerátů
-</h2>
+<p>
+  <a n:href="Bazar:pridat" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Přidat inzerát</a>
+</p>
 
 {if $inzeraty->count()}
 
   {control vp}
 
   {foreach $inzeraty as $inzerat}
-  <div>
-    <p>
-      Vloženo dne: {$inzerat->datum|date:'%d.%m.%Y'}
-    </p>
-    <p>
-      {$inzerat->text}
-    </p>
-    <dl>
-      <dt>Telefon:</dt>
-      <dd>{$inzerat->tel}</dd>
-      <dt>E-mail:</dt>
-      <dd>{$inzerat->email}</dd>
-    </dl>
+  <div class="panel panel-default">
+    <div class="panel-body">
 
-    <a n:if="$inzerat->foto1" href="{$basePath}/bazar/inzerat-{$inzerat->foto1}">
-      <img src="{$basePath}/bazar/thumb-{$inzerat->foto1}">
-    </a>
+      <p>
+        {$inzerat->text}
+      </p>
+      <p>
+        <a n:if="$inzerat->foto1" href="{$basePath}/bazar/{$inzerat->foto1}">
+          <img src="{$basePath}/bazar/thumb-{$inzerat->foto1}">
+        </a>
 
-    <a n:if="$inzerat->foto2" href="{$basePath}/bazar/inzerat-{$inzerat->foto2}">
-      <img src="{$basePath}/bazar/thumb-{$inzerat->foto2}">
-    </a>
+        <a n:if="$inzerat->foto2" href="{$basePath}/bazar/{$inzerat->foto2}">
+          <img src="{$basePath}/bazar/thumb-{$inzerat->foto2}">
+        </a>
 
-    <a n:if="$inzerat->foto3" href="{$basePath}/bazar/inzerat-{$inzerat->foto3}">
-      <img src="{$basePath}/bazar/thumb-{$inzerat->foto3}">
-    </a>
+        <a n:if="$inzerat->foto3" href="{$basePath}/bazar/{$inzerat->foto3}">
+          <img src="{$basePath}/bazar/thumb-{$inzerat->foto3}">
+        </a>
+      </p>
+
+      <a n:href="Bazar:detail, $inzerat->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> upravit</a>
+      <a n:href="Bazar:smazat, $inzerat->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat inzerát?')"><span class="glyphicon glyphicon-remove"></span> smazat</a>
+      
+    </div>
+    <div class="panel-footer">
+      <p class="pull-left">
+        <strong>Kontakt</strong><br>telefon: {$inzerat->tel}, e-mail: {$inzerat->email}
+      </p>
+      <p class="pull-right">
+        Vloženo dne: {$inzerat->datum|date:'%d.%m.%Y'}
+      </p>
+      <span class="clearfix"></span>
+    </div>
   </div>
-  <hr >
+
   {/foreach}
 {else}
   <p>

@@ -56,13 +56,12 @@ class BazarPresenter extends \BasePresenter
     unset($values['foto2']);
     unset($values['foto3']);
 
-
     if($inzeratId) { //editace
-//       try {
-//         $this->skladby->update($skladbaId, $values);
-//       } catch (\Exception $e) {
-//         $this->flashMessage('Skladbu se nepodařilo uložit.', 'danger');
-//       }
+      try {
+        $this->bazar->update($inzeratId, $values);
+      } catch (\Exception $e) {
+        $this->flashMessage('Inzerát se nepodařilo uložit.', 'danger');
+      }
     }
     else { //nova skladba
       try {
@@ -87,16 +86,17 @@ class BazarPresenter extends \BasePresenter
         $image->resize(1024, 1024);
         $image->save($destDir . '/' . $nazev);
         $image->resize(150, 150);
-        $nazev = 'thumb-' . $inzeratId . '-' . $i . '.' . $ext;
-        $image->save($destDir . '/' . $nazev);
-        $fotky['foto' . $i] = $inzeratId . '-' . $i . '.' . $ext;
+        $image->save($destDir . '/thumb-' . $nazev);
+        $fotky['foto' . $i] = $nazev;
       }
     }
 
-    try {
-      $this->bazar->update($inzeratId, $fotky);
-    } catch (\Exception $e) {
-      $this->flashMessage('Nepodařilo se uložit fotky.', 'danger');
+    if(count($fotky)) {
+      try {
+        $this->bazar->update($inzeratId, $fotky);
+      } catch (\Exception $e) {
+        $this->flashMessage('Nepodařilo se uložit fotky.', 'danger');
+      }
     }
 
     $this->flashMessage('Inzerát byl uložen.' , 'success');
@@ -123,14 +123,43 @@ class BazarPresenter extends \BasePresenter
       $this->error('Požadovaný inzerát neexistuje.');
     }
     $this->template->inzerat = $inzerat;
-    $fotky = array();
-    for ($i=0; $i<3; $i++) {
-      $soubor = 'inzerat-' . $id . '-' . $i;
-      if(is_file($this->context->parameters['wwwDir'] . '/bazar/' . $soubor)) {
-        $fotky[] = $soubor;
-      }
+
+    $this['inzeratForm']->setDefaults($inzerat);
+	}
+
+	public function actionSmazatFoto($inzeratId, $fotoId)
+	{
+    $inzerat = $this->bazar->findById($inzeratId);
+    if (!$inzerat) {
+      $this->error('Požadovaný inzerát neexistuje.');
     }
-    $this->template->fotky = $fotky;
+    $destDir = $this->context->parameters['wwwDir'] . '/bazar';
+    if($fotoId == 1) $soubor = $inzerat->foto1;
+    else if($fotoId == 1) $soubor = $inzerat->foto2;
+    else $soubor = $inzerat->foto3;
+    $soubory = array($destDir . '/' . $soubor, $destDir . '/thumb-' . $soubor);
+    $this->bazar->smazatFoto($inzeratId, $fotoId, $soubory);
+    $this->redirect('Bazar:detail', $inzeratId);
+	}
+
+	public function actionSmazat($inzeratId)
+	{
+    $inzerat = $this->bazar->findById($inzeratId);
+    if (!$inzerat) {
+      $this->error('Požadovaný inzerát neexistuje.');
+    }
+
+    $destDir = $this->context->parameters['wwwDir'] . '/bazar';
+    $soubory = array($inzerat->foto1, $inzerat->foto2, $inzerat->foto3);
+    foreach ($soubory as $soubor) {
+      if(!$soubor) continue;
+      if(file_exists($destDir . '/' . $soubor)) unlink($destDir . '/' . $soubor);
+      if(file_exists($destDir . '/thumb-' . $soubor)) unlink($destDir . '/thumb-' . $soubor);
+    }
+
+    $this->bazar->smazat($inzeratId);
+    $this->flashMessage('Inzerát byl smazán.' , 'success');
+    $this->redirect('Bazar:default');
 	}
   
 }

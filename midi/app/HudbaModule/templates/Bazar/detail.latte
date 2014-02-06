@@ -2,26 +2,24 @@
 <h1 n:block=title>Detail inzerátu</h1>
 
 <p>
-  Vloženo dne: {$inzerat->datum|date:'%d.%m.%Y'}
+  <a n:href="Bazar:smazat, $inzerat->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat inzerát?')"><span class="glyphicon glyphicon-remove"></span> smazat inzerát</a>
 </p>
-<p>
-  {$inzerat->text}
-</p>
-<dl>
-  <dt>Telefon:</dt>
-  <dd>{$inzerat->tel}</dd>
-  <dt>E-mail:</dt>
-  <dd>{$inzerat->email}</dd>
-</dl>
 
-<a n:if="$inzerat->foto1" href="{$basePath}/bazar/inzerat-{$inzerat->foto1}">
+<h2>Úprava textu inzerátu</h2>
+{control inzeratForm}
+
+<h2>Odstranění fotek</h2>
+
+
+<p n:if="$inzerat->foto1">
   <img src="{$basePath}/bazar/thumb-{$inzerat->foto1}">
-</a>
-
-<a n:if="$inzerat->foto2" href="{$basePath}/bazar/inzerat-{$inzerat->foto2}">
+  <a n:href="Bazar:smazatFoto, $inzerat->id, 1" class="btn btn-danger media-body" onclick="return confirm('Opravdu smazat fotku?')">smazat foto</a>
+</p>
+<p n:if="$inzerat->foto2">
   <img src="{$basePath}/bazar/thumb-{$inzerat->foto2}">
-</a>
-
-<a n:if="$inzerat->foto3" href="{$basePath}/bazar/inzerat-{$inzerat->foto3}">
+  <a n:href="Bazar:smazatFoto, $inzerat->id, 2" class="btn btn-danger media-body" onclick="return confirm('Opravdu smazat fotku?')">smazat foto</a>
+</p>
+<p n:if="$inzerat->foto3">
   <img src="{$basePath}/bazar/thumb-{$inzerat->foto3}">
-</a>
+  <a n:href="Bazar:smazatFoto, $inzerat->id, 3" class="btn btn-danger media-body" onclick="return confirm('Opravdu smazat fotku?')">smazat foto</a>
+</p>
