@@ -28,13 +28,6 @@ CREATE TABLE `format` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- Adminer 4.0.2 MySQL dump
-
-SET NAMES utf8;
-SET foreign_key_checks = 0;
-SET time_zone = '+01:00';
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
 DROP TABLE IF EXISTS `hudba_agentura`;
 CREATE TABLE `hudba_agentura` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -63,7 +56,9 @@ CREATE TABLE `hudba_bazar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `hudba_bazar` (`id`, `text`, `email`, `tel`, `datum`, `foto1`, `foto2`, `foto3`) VALUES
-(1,	'Prodám housle',	'david@david.cz',	'123456',	'2014-02-05',	'1-1.jpg',	'1-2.jpg',	'1-3.gif');
+(2,	'Prodám akordeon Lignatone Melodia  III, 80 basů, plně funkční, včetně kufru na přepravu',	'lubos.p@cbox.cz',	'602744055',	'2014-02-06',	'inzerat-2-1.JPG',	'inzerat-2-2.JPG',	'inzerat-2-3.JPG'),
+(3,	'Prodám Alt Saxofon Amati Classic SUPER, po celkové generální opravě, včetně kufru. \nCena: 6.500,- Kč',	'lubos.p@cbox.cz',	'602744055',	'2014-02-06',	'inzerat-3-1.JPG',	'inzerat-3-2.JPG',	'inzerat-3-3.JPG'),
+(4,	'Prodám dynamický nástrojový mikrofon Beyerdynamic TGX 5. Cena 1.300,- Kč',	'lubos.p@cbox.cz',	'602744055',	'2014-02-06',	'inzerat-4-1.JPG',	'inzerat-4-2.JPG',	NULL);
 
 DROP TABLE IF EXISTS `hudba_cd`;
 CREATE TABLE `hudba_cd` (
@@ -78,9 +73,6 @@ CREATE TABLE `hudba_cd` (
 
 INSERT INTO `hudba_cd` (`id`, `autor`, `nazev`, `popis`, `cena`, `foto`) VALUES
 (1,	'Karel Gott',	'Konec ptačích árií',	'Karel Gott zpívá písně s texty Jiřího Štaidla (2013) - Supraphon',	100,	'cd-1.jpg');
-
--- 2014-02-05 20:54:44
-
 
 DROP TABLE IF EXISTS `nakup`;
 CREATE TABLE `nakup` (
@@ -155,4 +147,4 @@ CREATE TABLE `zanr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2014-02-05 14:14:40
+-- 2014-02-06 17:58:35
