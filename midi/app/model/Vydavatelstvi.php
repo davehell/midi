@@ -34,4 +34,9 @@ class Vydavatelstvi extends Nette\Object
 	{
     return $this->database->table('hudba_cd')->insert($cd);
 	}
+
+	public function smazat($cdId)
+	{
+    $this->database->table('hudba_cd')->wherePrimary($cdId)->delete();
+	}
 }

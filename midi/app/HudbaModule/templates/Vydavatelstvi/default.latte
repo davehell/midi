@@ -1,7 +1,7 @@
 {block content}
 <h1 n:block=title>Hudební vydavatelství</h1>
 
-<a n:href="Vydavatelstvi:pridat" class="btn btn-primary">Přidat CD</a>
+<a n:href="Vydavatelstvi:pridat" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span> Přidat album</a>
 
 {foreach $polozky as $cd}
   <h2>{$cd->nazev}</h2>
@@ -19,6 +19,13 @@
       </a>
     </dd>
   </dl>
-  <a n:href="Vydavatelstvi:nakup $cd->id" class="btn btn-success">Koupit</a>
+  <p>
+    <a n:href="Vydavatelstvi:detail, $cd->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
+    <a n:href="Vydavatelstvi:smazat, $cd->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat album?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
+  </p>
+
+  <p>
+    <a n:href="Vydavatelstvi:nakup $cd->id" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit</a>
+  </p>
   <hr>
 {/foreach}

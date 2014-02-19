@@ -28,8 +28,8 @@ class VydavatelstviPresenter extends \BasePresenter
       ->addRule(Form::MAX_LENGTH, 'Interpret musí mít maximálně %d znaků', 100);
 
     $form->addText('nazev', 'Název:')
-      ->setRequired('Prosím zadejte název CD.')
-      ->addRule(Form::MAX_LENGTH, 'Název CD musí mít maximálně %d znaků', 100);
+      ->setRequired('Prosím zadejte název alba.')
+      ->addRule(Form::MAX_LENGTH, 'Název alba musí mít maximálně %d znaků', 100);
 
     $form->addTextArea('popis', 'Popis:')
       ->addRule(Form::MAX_LENGTH, 'Popis musí mít maximálně %d znaků', 1000);
@@ -98,7 +98,7 @@ class VydavatelstviPresenter extends \BasePresenter
       try {
         $this->vydavatelstvi->update($cdId, $values);
       } catch (\Exception $e) {
-        $this->flashMessage('CD se nepodařilo uložit.', 'danger');
+        $this->flashMessage('Album se nepodařilo uložit.', 'danger');
       }
     }
     else { //nova skladba
@@ -106,7 +106,7 @@ class VydavatelstviPresenter extends \BasePresenter
         $cd = $this->vydavatelstvi->insert($values);
         $cdId = $cd->id;
       } catch (\Exception $e) {
-        $this->flashMessage('CD se nepodařilo uložit.', 'danger');
+        $this->flashMessage('Album se nepodařilo uložit.', 'danger');
       }
     }
 
@@ -126,14 +126,16 @@ class VydavatelstviPresenter extends \BasePresenter
       }
     }
 
-    try {
-      $this->vydavatelstvi->update($cdId, array('foto'=>$nazev));
-    } catch (\Exception $e) {
-      $this->flashMessage('Nepodařilo se uložit fotky.', 'danger');
+    if($nazev) {
+      try {
+        $this->vydavatelstvi->update($cdId, array('foto'=>$nazev));
+      } catch (\Exception $e) {
+        $this->flashMessage('Nepodařilo se uložit foto.', 'danger');
+      }
     }
 
-    $this->flashMessage('CD bylo uloženo.' , 'success');
-    $this->redirect('Vydavatelstvi:nakup', $cdId);
+    $this->flashMessage('Album bylo uloženo.' , 'success');
+    $this->redirect('Vydavatelstvi:default');
   }
 
 
@@ -143,10 +145,10 @@ class VydavatelstviPresenter extends \BasePresenter
 
     $cd = $this->vydavatelstvi->findById($values['id']);
     if (!$cd) {
-      $this->error('Požadované CD neexistuje.');
+      $this->error('Požadované album neexistuje.');
     }
 
-    $text = "Název: " . $cd->nazev . "\n";
+    $text = "Název alba: " . $cd->nazev . "\n";
     $text .= "Interpret: " . $cd->autor . "\n";
     $text .= "Cena za kus: " . $cd->cena . " Kč\n\n";
     $text .= "Počet kusů: " . $values['pocet'] . "\n";
@@ -181,9 +183,36 @@ class VydavatelstviPresenter extends \BasePresenter
   {
     $cd = $this->vydavatelstvi->findById($id);
     if (!$cd) {
-      $this->error('Požadované CD neexistuje.');
+      $this->error('Požadované album neexistuje.');
     }
     $this->template->cd = $cd;
     $this['nakupForm']->setDefaults(array('id'=>$id));
   }
+
+	public function renderDetail($id)
+	{
+    $cd = $this->vydavatelstvi->findById($id);
+    if (!$cd) {
+      $this->error('Požadované album neexistuje.');
+    }
+    $this->template->cd = $cd;
+
+    $this['cdForm']->setDefaults($cd);
+	}
+
+	public function actionSmazat($id)
+	{
+    $cd = $this->vydavatelstvi->findById($id);
+    if (!$cd) {
+      $this->error('Požadované album neexistuje.');
+    }
+
+    $destDir = $this->context->parameters['wwwDir'] . '/vydavatelstvi';
+    if(file_exists($destDir . '/' . $cd->foto)) unlink($destDir . '/' . $cd->foto);
+    if(file_exists($destDir . '/thumb-' . $cd->foto)) unlink($destDir . '/thumb-' . $cd->foto);
+
+    $this->vydavatelstvi->smazat($id);
+    $this->flashMessage('Album bylo smazáno.' , 'success');
+    $this->redirect('Vydavatelstvi:default');
+	}
 }
