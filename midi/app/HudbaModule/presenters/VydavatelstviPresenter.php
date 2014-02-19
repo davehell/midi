@@ -175,8 +175,8 @@ class VydavatelstviPresenter extends \BasePresenter
 
 	public function renderDefault()
 	{
-    $polozky = $this->vydavatelstvi->findAll();
-    $this->template->polozky = $polozky;
+    $alba = $this->vydavatelstvi->findAll();
+    $this->template->alba = $alba;
 	}
 
   public function renderNakup($id)
