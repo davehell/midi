@@ -23,4 +23,9 @@ class HomepagePresenter extends BasePresenter
     $this->template->pocet = $this->skladby->pocetSkladeb();
     $this->template->formaty = $this->skladby->seznamFormatu('plneVerze');
 	}
+
+	public function renderVyrobaNaZakazku()
+	{
+    $this->template->formaty = $this->skladby->seznamFormatu('plneVerze');
+	}
 }

@@ -1,0 +1,17 @@
+
+{block content}
+
+<h1 n:block="title">Výroba hudebních podkladů na zakázku</h1>
+
+<p>
+  Pokud Vámi požadovaná píseň není v katalogu skladeb, zhotovím ji na zakázku. Cena se pohybuje od 300 do 1000&nbsp;Kč podle složitosti a náročnosti skladby. V ceně jsou zahrnuty autorské poplatky pro OSA.
+</p>
+
+<p>
+  Skladby dodávám v těchto formátech:
+</p>
+
+<ul>
+  <li><a n:href="Homepage:karaokeNaDvd">Karaoke na DVD <span class="glyphicon glyphicon-question-sign"></span></a> </li>
+  <li n:foreach="$formaty as $format">{$format}</li>
+</ul>
