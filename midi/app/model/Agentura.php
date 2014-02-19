@@ -31,4 +31,14 @@ class Agentura extends Nette\Object
 	{
     return $this->database->table('hudba_agentura')->insert($kapela);
 	}
+
+	public function update($id, $values)
+	{
+		$this->database->table('hudba_agentura')->wherePrimary($id)->update($values);
+	}
+
+	public function smazat($id)
+	{
+    $this->database->table('hudba_agentura')->wherePrimary($id)->delete();
+	}
 }

@@ -207,9 +207,11 @@ class VydavatelstviPresenter extends \BasePresenter
       $this->error('Požadované album neexistuje.');
     }
 
-    $destDir = $this->context->parameters['wwwDir'] . '/vydavatelstvi';
-    if(file_exists($destDir . '/' . $cd->foto)) unlink($destDir . '/' . $cd->foto);
-    if(file_exists($destDir . '/thumb-' . $cd->foto)) unlink($destDir . '/thumb-' . $cd->foto);
+    if($cd->foto) {
+      $destDir = $this->context->parameters['wwwDir'] . '/vydavatelstvi';
+      if(file_exists($destDir . '/' . $cd->foto)) unlink($destDir . '/' . $cd->foto);
+      if(file_exists($destDir . '/thumb-' . $cd->foto)) unlink($destDir . '/thumb-' . $cd->foto);
+    }
 
     $this->vydavatelstvi->smazat($id);
     $this->flashMessage('Album bylo smazáno.' , 'success');

@@ -3,6 +3,7 @@
 namespace HudbaModule;
 
 use Nette\Forms\Form,
+    Nette\Image,
     Nette\Mail\Message,
     Nette\Mail\SendmailMailer;
 
@@ -48,6 +49,36 @@ class AgenturaPresenter extends \BasePresenter
     return \Bs3Form::transform($form);
   }
 
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentKapelaForm()
+  {
+    $form = new \Nette\Application\UI\Form;
+
+    $form->addText('nazev', 'Název:')
+      ->setRequired('Prosím zadejte název kapely.')
+      ->addRule(Form::MAX_LENGTH, 'Název kapely musí mít maximálně %d znaků', 100);
+
+    $form->addTextArea('popis', 'Popis:')
+      ->setRequired('Prosím zadejte popis kapely.')
+      ->addRule(Form::MAX_LENGTH, 'Kontaktní údaje musí mít maximálně %d znaků', 1000);
+
+
+    $form->addText('www', 'Webové stránky:')
+      ->addRule(Form::MAX_LENGTH, 'Webové stránky musí mít maximálně %d znaků', 200);
+
+    $form->addUpload('foto', 'Foto:');
+
+    $form->addSubmit('send', 'Odeslat');
+
+    $form->onSuccess[] = $this->kapelaFormSucceeded;
+
+    return \Bs3Form::transform($form);
+  }
+
+
+
   public function poptavkaFormSucceeded($form)
   {
     $values = $form->getValues();
@@ -77,27 +108,51 @@ class AgenturaPresenter extends \BasePresenter
   public function kapelaFormSucceeded($form)
   {
     $values = $form->getValues();
-
     $kapelaId = $this->getParameter('id');
-
+    $uploads = $this->context->getService('httpRequest')->getFiles();
+    unset($values['foto']);
 
     if($kapelaId) { //editace
-//       try {
-//         $this->skladby->update($skladbaId, $values);
-//       } catch (\Exception $e) {
-//         $this->flashMessage('Skladbu se nepodařilo uložit.', 'danger');
-//       }
+      try {
+        $this->agentura->update($kapelaId, $values);
+      } catch (\Exception $e) {
+        $this->flashMessage('kapelu se nepodařilo uložit.', 'danger');
+      }
     }
-    else { //nova skladba
+    else { //nova kapela
       try {
         $kapela = $this->agentura->insert($values);
         $kapelaId = $kapela->id;
       } catch (\Exception $e) {
-        $this->flashMessage('Objednávku se nepodařilo uložit.', 'danger');
+        $this->flashMessage('Kapelu se nepodařilo uložit.', 'danger');
       }
     }
 
-    $this->flashMessage('Objednávka byla odeslána.' , 'success');
+    //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
+    $destDir = $this->context->parameters['wwwDir'] . '/agentura';
+    $nazev = '';
+    foreach ($uploads as $soubor) {
+      if($soubor && $soubor->isOk) {
+        $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
+        $nazev = 'kapela-' . $kapelaId . '.' . $ext;
+        $soubor->move($destDir . '/' . $nazev);
+        $image = Image::fromFile($destDir . '/' . $nazev);
+        $image->resize(1024, 1024);
+        $image->save($destDir . '/' . $nazev);
+        $image->resize(150, 150);
+        $image->save($destDir . '/thumb-' . $nazev);
+      }
+    }
+
+    if($nazev) {
+      try {
+        $this->agentura->update($kapelaId, array('foto'=>$nazev));
+      } catch (\Exception $e) {
+        $this->flashMessage('Nepodařilo se uložit foto.', 'danger');
+      }
+    }
+
+    $this->flashMessage('Kapela byla uložena.' , 'success');
     $this->redirect('Agentura:default');
   }
 
@@ -105,6 +160,35 @@ class AgenturaPresenter extends \BasePresenter
 	{
     $kapely = $this->agentura->findAll();
     $this->template->kapely = $kapely;
+	}
+
+	public function renderDetail($id)
+	{
+    $kapela = $this->agentura->findById($id);
+    if (!$kapela) {
+      $this->error('Požadovaná kapela neexistuje.');
+    }
+    $this->template->kapela = $kapela;
+
+    $this['kapelaForm']->setDefaults($kapela);
+	}
+
+	public function actionSmazat($id)
+	{
+    $kapela = $this->agentura->findById($id);
+    if (!$kapela) {
+      $this->error('Požadované album neexistuje.');
+    }
+
+    if($kapela->foto) {
+      $destDir = $this->context->parameters['wwwDir'] . '/agentura';
+      if(file_exists($destDir . '/' . $kapela->foto)) unlink($destDir . '/' . $kapela->foto);
+      if(file_exists($destDir . '/thumb-' . $kapela->foto)) unlink($destDir . '/thumb-' . $kapela->foto);
+    }
+
+    $this->agentura->smazat($id);
+    $this->flashMessage('Kapela byla smazána.' , 'success');
+    $this->redirect('Agentura:default');
 	}
 
 }

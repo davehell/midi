@@ -1,5 +1,10 @@
 {block content}
 <h1 n:block=title>Hudební agentura</h1>
+
+<p>
+  <a n:href="Agentura:pridat" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span> Přidat kapelu</a>
+</p>
+
 <p>
   V této sekci nabízím prezentaci kapelám, včetně možnosti jejich zastupování při sjednání hudební produkce. Prezentace je zdarma.
 </p>
@@ -15,19 +20,32 @@
 </h2>
 
 
-{foreach $kapely as $kapela}
-<div>
-  <h3>
-    {$kapela->nazev}
-  </h3>
+{if $kapely->count()}
+  {foreach $kapely as $kapela}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">{$kapela->nazev}</h2>
+      </div>
+
+      <div class="panel-body">
+        <p>
+          <a n:href="Agentura:detail, $kapela->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
+          <a n:href="Agentura:smazat, $kapela->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat kapelu?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
+        </p>
+        <p>
+          {$kapela->popis}
+        </p>
+        <p>
+          <a href="{$kapela->www}"">{$kapela->www}</a>
+        </p>
+        <a n:if="$kapela->foto" href="{$basePath}/agentura/{$kapela->foto}">
+          <img src="{$basePath}/agentura/thumb-{$kapela->foto}">
+        </a>
+      </div>
+    </div>
+  {/foreach}
+{else}
   <p>
-    {$kapela->popis}
+    Nejsou uloženy žádné kapely.
   </p>
-  <p>
-    <a href="{$kapela->www}"">{$kapela->www}</a>
-  </p>
-  <a n:if="$kapela->foto" href="{$basePath}/agentura/{$kapela->foto}">
-    <img src="{$basePath}/agentura/thumb-{$kapela->foto}">
-  </a>
-</div>
-{/foreach}
+{/if}
