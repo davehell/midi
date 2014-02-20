@@ -73,7 +73,7 @@ class BazarPresenter extends \BasePresenter
     }
 
     //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
-    $destDir = $this->context->parameters['wwwDir'] . '/bazar';
+    $destDir = $this->context->parameters['wwwDir'] . '/img/bazar';
     $i = 0;
     $fotky = array();
     foreach ($uploads as $soubor) {
@@ -133,7 +133,7 @@ class BazarPresenter extends \BasePresenter
     if (!$inzerat) {
       $this->error('Požadovaný inzerát neexistuje.');
     }
-    $destDir = $this->context->parameters['wwwDir'] . '/bazar';
+    $destDir = $this->context->parameters['wwwDir'] . '/img/bazar';
     if($fotoId == 1) $soubor = $inzerat->foto1;
     else if($fotoId == 1) $soubor = $inzerat->foto2;
     else $soubor = $inzerat->foto3;
@@ -149,7 +149,7 @@ class BazarPresenter extends \BasePresenter
       $this->error('Požadovaný inzerát neexistuje.');
     }
 
-    $destDir = $this->context->parameters['wwwDir'] . '/bazar';
+    $destDir = $this->context->parameters['wwwDir'] . '/img/bazar';
     $soubory = array($inzerat->foto1, $inzerat->foto2, $inzerat->foto3);
     foreach ($soubory as $soubor) {
       if(!$soubor) continue;

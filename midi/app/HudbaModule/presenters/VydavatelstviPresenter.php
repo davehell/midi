@@ -111,7 +111,7 @@ class VydavatelstviPresenter extends \BasePresenter
     }
 
     //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
-    $destDir = $this->context->parameters['wwwDir'] . '/vydavatelstvi';
+    $destDir = $this->context->parameters['wwwDir'] . '/img/vydavatelstvi';
     $nazev = '';
     foreach ($uploads as $soubor) {
       if($soubor && $soubor->isOk) {
@@ -208,7 +208,7 @@ class VydavatelstviPresenter extends \BasePresenter
     }
 
     if($cd->foto) {
-      $destDir = $this->context->parameters['wwwDir'] . '/vydavatelstvi';
+      $destDir = $this->context->parameters['wwwDir'] . '/img/vydavatelstvi';
       if(file_exists($destDir . '/' . $cd->foto)) unlink($destDir . '/' . $cd->foto);
       if(file_exists($destDir . '/thumb-' . $cd->foto)) unlink($destDir . '/thumb-' . $cd->foto);
     }
