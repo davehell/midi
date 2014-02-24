@@ -27,28 +27,21 @@
   <div id="header" class="navbar navbar-inverse">
     <div class="container">
       <ul class="nav navbar-nav">
-        <li><a n:href="Homepage:">Domů</a></li>
+        <li><a n:href="Hudba:">Domů</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nabízené služby <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li>Výroba a prodej MIDI a Karaoke souborů</li>
-            <li>Karaoke na DVD</li>
+            <li><a href="http://midi2.premiermusic.cz">Výroba a prodej MIDI a Karaoke souborů</a></li>
+            <li><a href="http://midi2.premiermusic.cz/homepage/karaoke-na-dvd">Karaoke na DVD</a></li>
             <li><a n:href="Vydavatelstvi:default">hudební vydavatelství</a></li>
             <li><a n:href="Agentura:default">hudební agentura</a></li>
             <li><a n:href="Bazar:default">hudební bazar</a></li>
-            <li><a n:href="Homepage:posezeniSHarmonikou">posezení s harmonikou</a></li>
-            <li><a n:href="Homepage:pronajemAparaturyOzvuceni">pronájem aparatury, ozvučení</a></li>
-            <li><a n:href="Homepage:halfplayback">halfplayback s použitím živých kytar</a></li>
+            <li><a n:href="Hudba:posezeniSHarmonikou">posezení s harmonikou</a></li>
+            <li><a n:href="Hudba:pronajemAparaturyOzvuceni">pronájem aparatury, ozvučení</a></li>
+            <li><a n:href="Hudba:halfplayback">halfplayback s použitím živých kytar</a></li>
           </ul>
         </li>
-        <li><a n:href="Homepage:kontakt">Kontakt</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {if $user->loggedIn}
-        <li><a n:href="Ucet:odhlaseni">Odhlášení</a></li>
-        {else}
-        <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
-        {/if}
+        <li><a n:href="Hudba:kontakt">Kontakt</a></li>
       </ul>
     </div>
   </div> <!-- /#header -->
@@ -58,7 +51,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <a n:href="Homepage:">
+          <a n:href="Hudba:">
             <h1>premiermusic.cz</span></h1>
           </a>
         </div>
@@ -73,6 +66,14 @@
         {include content}
       </div>
     </div>
+    <hr>
+      <ul>
+        {if $user->loggedIn}
+        <li>{$user->getIdentity()->data['login']} <a n:href="Ucet:odhlaseni">Odhlášení</a></li>
+        {else}
+        <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
+        {/if}
+      </ul>
   </div><!-- /.container -->
 
   <script src="https://code.jquery.com/jquery.js"></script>

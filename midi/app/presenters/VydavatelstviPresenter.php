@@ -1,7 +1,5 @@
 <?php
 
-namespace HudbaModule;
-
 use Nette\Forms\Form,
     Nette\Image,
     Nette\Mail\Message,
@@ -10,11 +8,17 @@ use Nette\Forms\Form,
 /**
  * Homepage presenter.
  */
-class VydavatelstviPresenter extends \BasePresenter
+class VydavatelstviPresenter extends BasePresenter
 {
 
 	/** @var Vydavatelstvi @inject*/
 	public $vydavatelstvi;
+
+  protected function beforeRender()
+  {
+    parent::beforeRender();
+    $this->setLayout('layoutHudba');
+  }
 
   /**
    * @return Nette\Application\UI\Form

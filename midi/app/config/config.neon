@@ -30,3 +30,6 @@ services:
 	- Skladba
 	- UserManager
 	- Uzivatel
+	- Bazar
+	- Agentura
+	- Vydavatelstvi
