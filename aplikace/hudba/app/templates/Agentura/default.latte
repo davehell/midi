@@ -43,7 +43,7 @@
         <p>
           <a href="{$kapela->www}"">{$kapela->www}</a>
         </p>
-        <a n:if="$kapela->foto" href="{$basePath}/img/agentura/{$kapela->foto}">
+        <a n:if="$kapela->foto" href="{$basePath}/img/agentura/{$kapela->foto}" data-lightbox="group{$kapela->id}">
           <img src="{$basePath}/img/agentura/thumb-{$kapela->foto}">
         </a>
       </div>

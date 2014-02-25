@@ -19,15 +19,15 @@
         {$inzerat->text}
       </p>
       <p>
-        <a n:if="$inzerat->foto1" href="{$basePath}/img/bazar/{$inzerat->foto1}">
+        <a n:if="$inzerat->foto1" href="{$basePath}/img/bazar/{$inzerat->foto1}" data-lightbox="group{$inzerat->id}">
           <img src="{$basePath}/img/bazar/thumb-{$inzerat->foto1}">
         </a>
 
-        <a n:if="$inzerat->foto2" href="{$basePath}/img/bazar/{$inzerat->foto2}">
+        <a n:if="$inzerat->foto2" href="{$basePath}/img/bazar/{$inzerat->foto2}" data-lightbox="group{$inzerat->id}">
           <img src="{$basePath}/img/bazar/thumb-{$inzerat->foto2}">
         </a>
 
-        <a n:if="$inzerat->foto3" href="{$basePath}/img/bazar/{$inzerat->foto3}">
+        <a n:if="$inzerat->foto3" href="{$basePath}/img/bazar/{$inzerat->foto3}" data-lightbox="group{$inzerat->id}">
           <img src="{$basePath}/img/bazar/thumb-{$inzerat->foto3}">
         </a>
       </p>

@@ -31,7 +31,7 @@
           <dd>{$cd->cena}&nbsp;Kč</dd>
           <dt>&nbsp;</dt>
           <dd>
-            <a n:if="$cd->foto" href="{$basePath}/img/vydavatelstvi/{$cd->foto}">
+            <a n:if="$cd->foto" href="{$basePath}/img/vydavatelstvi/{$cd->foto}" data-lightbox="group{$cd->id}">
               <img src="{$basePath}/img/vydavatelstvi/thumb-{$cd->foto}">
             </a>
           </dd>
