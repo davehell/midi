@@ -1,9 +1,11 @@
 {block content}
 <h1 n:block=title>Hudební vydavatelství</h1>
 
+{if $user->isInRole('admin')}
 <p>
   <a n:href="Vydavatelstvi:pridat" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span> Přidat album</a>
 </p>
+{/if}
 
 {if $alba->count()}
   {foreach $alba as $cd}
@@ -13,10 +15,12 @@
       </div>
 
       <div class="panel-body">
+        {if $user->isInRole('admin')}
         <p>
           <a n:href="Vydavatelstvi:detail, $cd->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
           <a n:href="Vydavatelstvi:smazat, $cd->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat album?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
         </p>
+        {/if}
 
         <dl class="dl-horizontal">
           <dt>Interpret</dt>

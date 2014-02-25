@@ -121,6 +121,11 @@ class BazarPresenter extends BasePresenter
 
 	public function renderDetail($id)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $inzerat = $this->bazar->findById($id);
     if (!$inzerat) {
       $this->error('Požadovaný inzerát neexistuje.');
@@ -132,6 +137,11 @@ class BazarPresenter extends BasePresenter
 
 	public function actionSmazatFoto($inzeratId, $fotoId)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $inzerat = $this->bazar->findById($inzeratId);
     if (!$inzerat) {
       $this->error('Požadovaný inzerát neexistuje.');
@@ -147,6 +157,11 @@ class BazarPresenter extends BasePresenter
 
 	public function actionSmazat($inzeratId)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $inzerat = $this->bazar->findById($inzeratId);
     if (!$inzerat) {
       $this->error('Požadovaný inzerát neexistuje.');
@@ -164,5 +179,5 @@ class BazarPresenter extends BasePresenter
     $this->flashMessage('Inzerát byl smazán.' , 'success');
     $this->redirect('Bazar:default');
 	}
-  
+
 }

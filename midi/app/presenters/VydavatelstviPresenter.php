@@ -195,6 +195,11 @@ class VydavatelstviPresenter extends BasePresenter
 
 	public function renderDetail($id)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $cd = $this->vydavatelstvi->findById($id);
     if (!$cd) {
       $this->error('Požadované album neexistuje.');
@@ -206,6 +211,11 @@ class VydavatelstviPresenter extends BasePresenter
 
 	public function actionSmazat($id)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $cd = $this->vydavatelstvi->findById($id);
     if (!$cd) {
       $this->error('Požadované album neexistuje.');
@@ -220,5 +230,13 @@ class VydavatelstviPresenter extends BasePresenter
     $this->vydavatelstvi->smazat($id);
     $this->flashMessage('Album bylo smazáno.' , 'success');
     $this->redirect('Vydavatelstvi:default');
+	}
+
+	public function actionPridat()
+	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
 	}
 }

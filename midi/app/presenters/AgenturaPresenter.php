@@ -168,6 +168,11 @@ class AgenturaPresenter extends BasePresenter
 
 	public function renderDetail($id)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $kapela = $this->agentura->findById($id);
     if (!$kapela) {
       $this->error('Požadovaná kapela neexistuje.');
@@ -179,9 +184,14 @@ class AgenturaPresenter extends BasePresenter
 
 	public function actionSmazat($id)
 	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
     $kapela = $this->agentura->findById($id);
     if (!$kapela) {
-      $this->error('Požadované album neexistuje.');
+      $this->error('Požadovaná kapela neexistuje.');
     }
 
     if($kapela->foto) {
@@ -191,8 +201,15 @@ class AgenturaPresenter extends BasePresenter
     }
 
     $this->agentura->smazat($id);
-    $this->flashMessage('Kapela byla smazána.' , 'success');
+    $this->flashMessage('Kapela byla smazána.', 'success');
     $this->redirect('Agentura:default');
 	}
 
+	public function actionPridat()
+	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+	}
 }
