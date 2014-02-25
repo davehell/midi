@@ -44,6 +44,7 @@
   <div class="col-md-10 col-md-offset-1">
     <div class="row">
       <div class="col-md-4 formaty">
+        <div class="glyphicon glyphicon-music puntik"></div>
         <h3>Formáty</h3>
         <ul>
           <li><a n:href="Homepage:karaokeNaDvd">Karaoke na DVD <span class="glyphicon glyphicon-question-sign"></span></a> </li>
@@ -52,6 +53,7 @@
       </div>
 
       <div class="col-md-4 novinky">
+        <div class="glyphicon glyphicon-fire puntik"></div>
         <h3>Novinky</h3>
         <ul n:inner-foreach="$novinky as $skladba">
           <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>
@@ -59,6 +61,7 @@
       </div>
 
       <div class="col-md-4 oblibene">
+        <div class="glyphicon glyphicon-heart puntik"></div>
         <h3>Oblíbené</h3>
         <ul n:inner-foreach="$oblibene as $skladba">
           <li><a n:href="Skladba:detail $skladba->id">{$skladba->nazev}</a></li>

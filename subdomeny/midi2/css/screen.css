@@ -118,26 +118,28 @@
   padding: 3px 0;
 }
 
-#boxy .formaty, #boxy .novinky, #boxy .oblibene {
-  padding-top: 130px;
+#boxy {
+  text-align: center;
 }
-#boxy .formaty {
-  background: #fff url(../img/puntik-music.png) center top no-repeat;
+#boxy ul{
+  text-align: left;
 }
-#boxy .novinky {
-  background: #fff url(../img/puntik-fire.png) center top no-repeat;
+
+#boxy .puntik {
+  background-color: #F5B611;
+  font-size: 50px;
+  width: 130px;
+  height: 130px;
+  text-align: center;
+  line-height: 130px;
+  border-radius: 50%;
+  margin: 0 auto;
 }
-#boxy .oblibene {
-  background: #fff url(../img/puntik-heart.png) center top no-repeat;
-}
-#boxy .formaty:hover {
-  background: #fff url(../img/puntik-music2.png) center top no-repeat;
-}
-#boxy .novinky:hover {
-  background: #fff url(../img/puntik-fire2.png) center top no-repeat;
-}
-#boxy .oblibene:hover {
-  background: #fff url(../img/puntik-heart2.png) center top no-repeat;
+
+#boxy .formaty:hover .puntik,
+#boxy .novinky:hover .puntik,
+#boxy .oblibene:hover .puntik {
+  background-color: #ED9C28;
 }
 
 #hledaniForm-wrapper h3{
@@ -168,9 +170,7 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+  border-radius: 4px;
 }
 
 .tt-suggestion {
