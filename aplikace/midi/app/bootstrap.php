@@ -2,22 +2,24 @@
 use Nette\Application\Routers\Route,
     Nette\Application\Routers\SimpleRouter;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 $configurator = new Nette\Configurator;
 
 //$configurator->setDebugMode(false);  // debug mode MUST NOT be enabled on production server
-$configurator->enableDebugger(__DIR__ . '/../log');
+$configurator->enableDebugger(__DIR__ . '/../../log');
 
-$configurator->setTempDirectory(__DIR__ . '/../temp');
+$configurator->setTempDirectory(__DIR__ . '/../../temp');
 
 $configurator->createRobotLoader()
 	->addDirectory(__DIR__)
+  ->addDirectory(__DIR__ . '/../../component')
 	->register();
 
-$configurator->addConfig(__DIR__ . '/config/config.neon');
-if (is_file(__DIR__ . '/config/config.local.neon')) {
-  $configurator->addConfig(__DIR__ . '/config/config.local.neon');
+$configurator->addConfig(__DIR__ . '/../../config/config.neon');
+$configurator->addConfig(__DIR__ . '/../../config/midi.neon');
+if (is_file(__DIR__ . '/../../config/config.local.neon')) {
+  $configurator->addConfig(__DIR__ . '/../../config/config.local.neon');
 }
 
 $container = $configurator->createContainer();

@@ -25,11 +25,3 @@ nette:
 	session:
 		expiration: 60 minutes
 
-
-services:
-	- Skladba
-	- UserManager
-	- Uzivatel
-	- Bazar
-	- Agentura
-	- Vydavatelstvi

@@ -1,7 +1,7 @@
-midi/data/*
-midi/log/*
-midi/temp/*
-midi/vendor/Nette/*
+aplikace/midi/data/*
+aplikace/log/*
+aplikace/temp/*
+aplikace/vendor/Nette/*
 Thumbs.db
 subdomeny/midi2/*.json
 subdomeny/hudba/img/agentura

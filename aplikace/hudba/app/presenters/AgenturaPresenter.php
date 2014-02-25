@@ -14,12 +14,6 @@ class AgenturaPresenter extends BasePresenter
 	/** @var Agentura @inject*/
 	public $agentura;
 
-  protected function beforeRender()
-  {
-    parent::beforeRender();
-    $this->setLayout('layoutHudba');
-  }
-
   /**
    * @return Nette\Application\UI\Form
    */

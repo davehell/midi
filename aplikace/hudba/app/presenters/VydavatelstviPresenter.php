@@ -14,12 +14,6 @@ class VydavatelstviPresenter extends BasePresenter
 	/** @var Vydavatelstvi @inject*/
 	public $vydavatelstvi;
 
-  protected function beforeRender()
-  {
-    parent::beforeRender();
-    $this->setLayout('layoutHudba');
-  }
-
   /**
    * @return Nette\Application\UI\Form
    */
