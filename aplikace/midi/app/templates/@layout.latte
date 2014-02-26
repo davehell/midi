@@ -29,7 +29,7 @@
   <div id="header" class="navbar navbar-inverse">
     <div class="container">
       <ul class="nav navbar-nav">
-        <li><a n:href="Homepage:">Domů</a></li>
+        <li><a n:href="Info:">Domů</a></li>
         <li><a n:href="Skladba:default radit=>null, asc=>null, nazev=>null, autor=>null, zanr=>null, verze=>null">Katalog skladeb</a></li>
         {if $user->loggedIn}
         <li class="dropdown">
@@ -43,9 +43,9 @@
         {else}
         <li><a n:href="Ucet:informace">Můj účet</a></li>
         {/if}
-        <li><a n:href="Homepage:jakNakupovat">Jak nakupovat</a></li>
-        <li><a n:href="Homepage:vyrobaNaZakazku">Zakázková výroba</a></li>
-        <li><a n:href="Homepage:kontakt">Kontakt</a></li>
+        <li><a n:href="Info:jakNakupovat">Jak nakupovat</a></li>
+        <li><a n:href="Info:vyrobaNaZakazku">Zakázková výroba</a></li>
+        <li><a n:href="Info:kontakt">Kontakt</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -78,7 +78,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-3">
-          <a n:href="Homepage:">
+          <a n:href="Info:">
             <h1>midi&nbsp;premier <br ><span>výroba a&nbsp;prodej midi&nbsp;a&nbsp;karaoke</span></h1>
           </a>
         </div>

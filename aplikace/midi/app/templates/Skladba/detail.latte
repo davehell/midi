@@ -91,7 +91,7 @@
     {else}
       <label>Plná verze je ke stažení v těchto formátech:</label>
       <ul>
-        <li><a n:href="Homepage:karaokeNaDvd">Karaoke na DVD <span class="glyphicon glyphicon-question-sign"></span></a> </li>
+        <li><a n:href="Info:karaokeNaDvd">Karaoke na DVD <span class="glyphicon glyphicon-question-sign"></span></a> </li>
         <li n:foreach="$soubory as $soubor" n:if="!$soubor->format->demo">{$soubor->format->nazev}</li>
       </ul>
     {/if}

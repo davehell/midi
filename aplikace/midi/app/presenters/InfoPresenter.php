@@ -4,7 +4,7 @@
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BasePresenter
+class InfoPresenter extends BasePresenter
 {
 
 	/** @var Skladba @inject*/
