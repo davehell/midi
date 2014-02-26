@@ -116,7 +116,7 @@ CREATE TABLE `soubor` (
   UNIQUE KEY `skladba_id_format_id` (`skladba_id`,`format_id`),
   KEY `skladba_id` (`skladba_id`),
   KEY `format_id` (`format_id`),
-  CONSTRAINT `soubor_ibfk_1` FOREIGN KEY (`skladba_id`) REFERENCES `skladba` (`id`),
+  CONSTRAINT `soubor_ibfk_1` FOREIGN KEY (`skladba_id`) REFERENCES `skladba` (`id`) ON DELETE CASCADE,
   CONSTRAINT `soubor_ibfk_2` FOREIGN KEY (`format_id`) REFERENCES `format` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 

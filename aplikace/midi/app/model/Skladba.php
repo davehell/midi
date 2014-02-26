@@ -113,6 +113,12 @@ class Skladba extends Nette\Object
 	}
 
   /** @return Nette\Database\Table\ActiveRow */
+	public function delete($skladbaId)
+	{
+    return $this->database->table('skladba')->wherePrimary($skladbaId)->delete();
+	}
+
+  /** @return Nette\Database\Table\ActiveRow */
 	public function ulozitSoubory($soubory, $adresar)
 	{
     foreach ($soubory as $soubor) {

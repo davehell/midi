@@ -263,7 +263,7 @@ class SkladbaPresenter extends BasePresenter
 	{
     $soubor = $this->skladby->nazevSouboru($id);
     if (!$soubor) {
-      $this->error('Požadovaná skladba neexistuje.');
+      $this->error('Požadovaný soubor neexistuje.');
     }
 
     if(!$soubor->format->demo) {
@@ -279,5 +279,37 @@ class SkladbaPresenter extends BasePresenter
     }
 
     $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
+	}
+
+
+	public function actionSmazat($id)
+	{
+    if (!$this->user->isInRole('admin')) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    }
+
+    $skladba = $this->skladby->findById($id);
+    if (!$skladba) {
+      $this->error('Požadovaná skladba neexistuje.');
+    }
+    $soubory = $this->skladby->formatySkladby($id);
+
+    try {
+      $this->skladby->delete($id);
+    } catch (\Exception $e) {
+      $msg = 'Tuto skladbu není možné smazat. ';
+      if($e->getCode() == 23000) $msg .= ' Pravděpodobně si ji už někdo koupil.'; //a foreign key constraint fails
+      $this->flashMessage($msg, 'danger');
+      $this->redirect('Skladba:detail', $id);
+    }
+
+    foreach($soubory as $soubor) {
+      $nazev = $this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id;
+      if(file_exists($nazev)) unlink($nazev);
+    }
+
+    $this->flashMessage('Sklaba byla smazána.', 'success');
+    $this->redirect('Skladba:default');
 	}
 }

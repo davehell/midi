@@ -102,6 +102,9 @@
 
 {if $user->isInRole('admin')}
   <h2>Editace skladby</h2>
+  <p>
+    <a class="btn btn-danger" n:href="Skladba:smazat, $skladba->id"><span class="glyphicon glyphicon-remove"></span> Smazat skladbu</a>
+  </p>
   <div id="editaceSkladby">
   {control skladbaForm }
   </div>
