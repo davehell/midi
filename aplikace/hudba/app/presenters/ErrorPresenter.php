@@ -1,7 +1,5 @@
 <?php
 
-namespace App;
-
 use Nette,
 	Model,
 	Nette\Diagnostics\Debugger;
