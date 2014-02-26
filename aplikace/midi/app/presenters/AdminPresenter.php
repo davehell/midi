@@ -1,6 +1,6 @@
 <?php
-
-use Nette\Utils\Validators,
+use Nette\Application\Responses\FileResponse,
+    Nette\Utils\Validators,
     Nette\Forms\Form,
     Nette\Application\Responses\TextResponse;
 
@@ -248,17 +248,28 @@ class AdminPresenter extends BasePresenter
 
 	public function actionStahovaniDownload($zacatek, $konec)
 	{
-    $nakupy = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec));
-    $eol = "\r\n";
-    $content = 'název;interpret;cena;počet stažení' . $eol;
+    $nakupy = $this->skladby->prehledStahovani($this->dmyToYmd($zacatek), $this->dmyToYmd($konec), array('sloupec' => 'nazev', 'smer' => 'ASC'));
+
+    $objPHPExcel = new PHPExcel();
+    $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A1', 'Název')
+                ->setCellValue('B1', 'Interpret')
+                ->setCellValue('C1', 'Cena')
+                ->setCellValue('D1', 'Počet stažení');
+
+    $radek = 2;
     foreach ($nakupy as $nakup) {
-        $content .= $nakup->skladba->nazev . ';' . $nakup->skladba->autor . ';' . $nakup->skladba->cena . ';' . $nakup->pocet . $eol;
+      $objPHPExcel->setActiveSheetIndex(0)
+                  ->setCellValue('A' . $radek, $nakup->skladba->nazev)
+                  ->setCellValue('B' . $radek, $nakup->skladba->autor)
+                  ->setCellValue('C' . $radek, $nakup->skladba->cena)
+                  ->setCellValue('D' . $radek, $nakup->pocet);
+      $radek++;
     }
 
-    $httpResponse = $this->presenter->getHttpResponse();
-    $httpResponse->setContentType('text/plain');
-    $httpResponse->setHeader('Content-Disposition', 'attachment; filename="stahovani.csv"');
-    $httpResponse->setHeader('Content-Length', strlen($content));
-    $this->presenter->sendResponse(new TextResponse($content));
+    $soubor = $this->context->parameters['appDir'] . '/../data/stahovani.xlsx';
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    $objWriter->save($soubor);
+    $this->sendResponse(new FileResponse($soubor));
 	}
 }

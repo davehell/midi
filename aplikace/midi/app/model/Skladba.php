@@ -73,7 +73,6 @@ class Skladba extends Nette\Object
     $skladby = $this->database->table('nakup')->select('skladba_id, skladba.nazev AS nazev, skladba.autor AS autor, nakup.cena AS cena, count(*) AS pocet')->where('datum >= ?', $od)->where('datum <= ?', $do)->group('skladba_id');
 
     if($razeni) {
-      //if($razeni['sloupec'] == 'nazev' || $razeni['sloupec'] == 'autor')  $razeni['sloupec'] .= 'skladba.';
       $skladby = $skladby->order($razeni['sloupec'] . ' ' . $razeni['smer']);
     }
 
