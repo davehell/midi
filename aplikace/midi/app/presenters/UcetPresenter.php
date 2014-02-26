@@ -192,18 +192,33 @@ class UcetPresenter extends BasePresenter
 
   public function renderKredit()
   {
+    if (!$this->user->isLoggedIn()) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
     $this->template->historie = $this->uzivatele->historieDobijeni($this->user->id);
     $this->template->cisloUctu = $this->context->parameters['midi']['cisloUctu'];
   }
 
   public function renderKreditDobiti()
   {
+    if (!$this->user->isLoggedIn()) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
     $this->template->transakce = $this->uzivatele->posledniDobiti($this->user->id);
     $this->template->cisloUctu = $this->context->parameters['midi']['cisloUctu'];
   }
 
   public function renderNakupy()
   {
+    if (!$this->user->isLoggedIn()) {
+      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
     $this->template->nakupy = $this->uzivatele->zakoupeneSkladby($this->user->id);
   }
 }
