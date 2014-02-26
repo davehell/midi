@@ -28,10 +28,11 @@ $container = $configurator->createContainer();
 // Setup router using mod_rewrite detection
 if (function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules())) {
 	$router = $container->getService('router');
-	$router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
-	$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+	$router[] = new Route('index.php', 'Sluzby:default', Route::ONE_WAY);
+  $router[] = new Route('kontakt', 'Sluzby:kontakt');
+	$router[] = new Route('<presenter>/<action>[/<id>]', 'Sluzby:default');
 } else {
- 	$container->addService('router', new SimpleRouter('Homepage:default'));
+ 	$container->addService('router', new SimpleRouter('Sluzby:default'));
 }
 
 return $container;
