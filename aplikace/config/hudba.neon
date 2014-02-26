@@ -2,3 +2,4 @@ services:
 	- Bazar
 	- Agentura
 	- Vydavatelstvi
+	- UserManager
