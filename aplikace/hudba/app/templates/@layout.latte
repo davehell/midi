@@ -25,7 +25,7 @@
 </head>
 
 <body>
-
+<div id="body-wrap">
   <div id="header" class="navbar navbar-inverse">
     <div class="container">
       <ul class="nav navbar-nav">
@@ -35,19 +35,18 @@
           <ul class="dropdown-menu">
             <li><a href="http://midi2.premiermusic.cz">Výroba a prodej MIDI a Karaoke souborů</a></li>
             <li><a href="http://midi2.premiermusic.cz/homepage/karaoke-na-dvd">Karaoke na DVD</a></li>
-            <li><a n:href="Vydavatelstvi:default">hudební vydavatelství</a></li>
-            <li><a n:href="Agentura:default">hudební agentura</a></li>
-            <li><a n:href="Bazar:default">hudební bazar</a></li>
-            <li><a n:href="Sluzby:posezeniSHarmonikou">posezení s harmonikou</a></li>
-            <li><a n:href="Sluzby:pronajemAparaturyOzvuceni">pronájem aparatury, ozvučení</a></li>
-            <li><a n:href="Sluzby:halfplayback">halfplayback s použitím živých kytar</a></li>
+            <li><a n:href="Vydavatelstvi:default">Hudební vydavatelství</a></li>
+            <li><a n:href="Agentura:default">Hudební agentura</a></li>
+            <li><a n:href="Bazar:default">Hudební bazar</a></li>
+            <li><a n:href="Sluzby:posezeniSHarmonikou">Posezení s harmonikou</a></li>
+            <li><a n:href="Sluzby:pronajemAparaturyOzvuceni">Pronájem aparatury, ozvučení</a></li>
+            <li><a n:href="Sluzby:halfplayback">Halfplayback s použitím živých kytar</a></li>
           </ul>
         </li>
         <li><a n:href="Sluzby:kontakt">Kontakt</a></li>
       </ul>
     </div>
   </div> <!-- /#header -->
-
 
   <div id="header2">
     <div class="container">
@@ -57,24 +56,57 @@
     </div><!-- /.container -->
   </div> <!-- /#header2 -->
 
-  <div class="container" id="page">
+  <div id="page" class="container">
     <div class="row">
       <div class="col-md-12">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}
       </div>
     </div>
-  </div><!-- /.container -->
+  </div><!-- /#page -->
 
-  <div class="container">
-    <ul>
-      {if $user->loggedIn}
-      <li>{$user->getIdentity()->data['login']} <a n:href="Ucet:odhlaseni">Odhlášení</a></li>
-      {else}
-      <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
-      {/if}
-    </ul>
-  </div><!-- /.container -->
+  <div id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <p>
+            Ing. Lubomír Piskoř
+          </p>
+          <p>
+            Dolní Sklenov 83<br>
+            739 46 Hukvaldy
+          </p>
+          <p>
+            Tel: 602 744 055<br>
+            E-mail: lubos.p@cbox.cz
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <ul>
+            <li><a href="http://midi2.premiermusic.cz">Výroba a prodej MIDI a Karaoke souborů</a></li>
+            <li><a href="http://midi2.premiermusic.cz/homepage/karaoke-na-dvd">Karaoke na DVD</a></li>
+            <li><a n:href="Vydavatelstvi:default">Hudební vydavatelství</a></li>
+            <li><a n:href="Agentura:default">Hudební agentura</a></li>
+            <li><a n:href="Bazar:default">Hudební bazar</a></li>
+            <li><a n:href="Sluzby:posezeniSHarmonikou">Posezení s harmonikou</a></li>
+            <li><a n:href="Sluzby:pronajemAparaturyOzvuceni">Pronájem aparatury, ozvučení</a></li>
+            <li><a n:href="Sluzby:halfplayback">Halfplayback s použitím živých kytar</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4">
+          <p class="pull-right">
+            {if $user->loggedIn}
+            {$user->getIdentity()->data['login']} <a n:href="Ucet:odhlaseni">Odhlášení</a>
+            {else}
+            <a n:href="Ucet:prihlaseni">Přihlášení</a>
+            {/if}
+          </p>
+        </div>
+      </div>
+    </div><!-- /.container -->
+  </div><!-- /#footer -->
 
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="{$basePath}/js/netteForms.js"></script>
@@ -83,5 +115,6 @@
   <script>
   </script>
   {block scripts}{/block}
+</div><!-- /.body-wrap -->
 </body>
 </html>
