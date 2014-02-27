@@ -55,21 +55,23 @@
     </a>
   </div> <!-- /#header2 -->
 
-  <div class="container">
+  <div class="container" id="page">
     <div class="row">
       <div class="col-md-12">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}
       </div>
     </div>
-    <hr>
-      <ul>
-        {if $user->loggedIn}
-        <li>{$user->getIdentity()->data['login']} <a n:href="Ucet:odhlaseni">Odhlášení</a></li>
-        {else}
-        <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
-        {/if}
-      </ul>
+  </div><!-- /.container -->
+
+  <div class="container">
+    <ul>
+      {if $user->loggedIn}
+      <li>{$user->getIdentity()->data['login']} <a n:href="Ucet:odhlaseni">Odhlášení</a></li>
+      {else}
+      <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
+      {/if}
+    </ul>
   </div><!-- /.container -->
 
   <script src="https://code.jquery.com/jquery.js"></script>
