@@ -25,29 +25,27 @@
 
 {if $kapely->count()}
   {foreach $kapely as $kapela}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{$kapela->nazev}</h3>
-      </div>
-
-      <div class="panel-body">
-        {if $user->isInRole('admin')}
-        <p>
-          <a n:href="Agentura:detail, $kapela->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
-          <a n:href="Agentura:smazat, $kapela->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat kapelu?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
-        </p>
-        {/if}
+    <div class="media">
+      <a class="pull-left" n:if="$kapela->foto" href="{$basePath}/img/agentura/{$kapela->foto}" data-lightbox="group{$kapela->id}">
+        <img class="media-object" src="{$basePath}/img/agentura/thumb-{$kapela->foto}" width="100px" height="100px">
+      </a>
+      <div class="media-body">
+        <h3 class="media-heading">{$kapela->nazev}</h3>
         <p>
           {$kapela->popis}
         </p>
         <p>
           <a href="{$kapela->www}"">{$kapela->www}</a>
         </p>
-        <a n:if="$kapela->foto" href="{$basePath}/img/agentura/{$kapela->foto}" data-lightbox="group{$kapela->id}">
-          <img src="{$basePath}/img/agentura/thumb-{$kapela->foto}">
-        </a>
+        {if $user->isInRole('admin')}
+        <p>
+          <a n:href="Agentura:detail, $kapela->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
+          <a n:href="Agentura:smazat, $kapela->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat kapelu?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
+        </p>
+        {/if}
       </div>
     </div>
+    <hr>
   {/foreach}
 {else}
   <p>
