@@ -17,9 +17,8 @@ body {
 
 #header2 {
   min-height: 100px;
-  padding-top: 20px;
+  padding-top: 10px;
   background: #62B0CE url(../img/bg.jpg) no-repeat center top;
-  text-align: center;
 }
 
 #header2 a{
@@ -32,6 +31,8 @@ body {
   color: #444;
   line-height: 24px;
   font-size: 39px;
+  padding: 10px 10px 10px 100px;
+  background: url(../img/logo.png) no-repeat;
 }
 
 #header2 h1 span{
