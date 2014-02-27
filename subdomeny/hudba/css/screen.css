@@ -5,7 +5,9 @@ body {
   background-color: #fff;
   padding-top: 20px;
 }
-
+#page h1 {
+  margin-top: 0;
+}
 
 #header {
   background-color: #444;
@@ -100,4 +102,7 @@ th a:hover {
 .box .panel-footer {
   background-color: inherit;
   border: none;
+}
+.mediabox img {
+  margin: 0 5px 5px 0;
 }
