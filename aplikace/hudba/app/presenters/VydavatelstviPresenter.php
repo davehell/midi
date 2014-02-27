@@ -21,9 +21,9 @@ class VydavatelstviPresenter extends BasePresenter
   {
     $form = new \Nette\Application\UI\Form;
 
-    $form->addText('autor', 'Interpret:')
-      ->setRequired('Prosím zadejte interpreta.')
-      ->addRule(Form::MAX_LENGTH, 'Interpret musí mít maximálně %d znaků', 100);
+//     $form->addText('autor', 'Interpret:')
+//       ->setRequired('Prosím zadejte interpreta.')
+//       ->addRule(Form::MAX_LENGTH, 'Interpret musí mít maximálně %d znaků', 100);
 
     $form->addText('nazev', 'Název:')
       ->setRequired('Prosím zadejte název alba.')
