@@ -26,7 +26,7 @@
 </head>
 
 <body>
-
+<div id="body-wrap">
   <div id="header" class="navbar navbar-inverse">
     <div class="container">
       <ul class="nav navbar-nav">
@@ -104,15 +104,47 @@
   </div> <!-- /#header2 -->
 
 
-  <div class="container">
+  <div id="page" class="container">
     <div class="row">
       <div class="col-md-12">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}
       </div>
     </div>
-    <hr />
-  </div><!-- /.container -->
+  </div><!-- /#page -->
+
+  <div id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <p>
+            Ing. Lubomír Piskoř
+          </p>
+          <p>
+            Dolní Sklenov 83<br>
+            739 46 Hukvaldy
+          </p>
+          <p>
+            Tel: 602 744 055<br>
+            E-mail: lubos.p@cbox.cz
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <ul>
+            <li><a href="http://midi2.premiermusic.cz">Výroba a&nbsp;prodej MIDI a&nbsp;Karaoke souborů</a></li>
+            <li><a href="http://midi2.premiermusic.cz/info/karaoke-na-dvd">Karaoke na DVD</a></li>
+            <li><a n:href="Vydavatelstvi:default">Hudební vydavatelství</a></li>
+            <li><a n:href="Agentura:default">Hudební agentura</a></li>
+            <li><a n:href="Bazar:default">Hudební bazar</a></li>
+            <li><a n:href="Sluzby:posezeniSHarmonikou">Posezení s&nbsp;harmonikou</a></li>
+            <li><a n:href="Sluzby:pronajemAparaturyOzvuceni">Pronájem aparatury, ozvučení</a></li>
+            <li><a n:href="Sluzby:halfplayback">Halfplayback s&nbsp;použitím živých kytar</a></li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- /.container -->
+  </div><!-- /#footer -->
 
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="{$basePath}/js/netteForms.js"></script>
@@ -141,5 +173,6 @@
     });
   </script>
   {block scripts}{/block}
+</div>
 </body>
 </html>
