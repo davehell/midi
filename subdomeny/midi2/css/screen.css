@@ -6,6 +6,7 @@ html,body {
 #body-wrap {
    min-height: 100%;
    position: relative;
+   background: #fff url(../img/bg-noty.jpg);
 }
 #page {
   background-color: #fff;
