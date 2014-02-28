@@ -119,4 +119,13 @@ th a:hover {
   }
 }
 
+form label.required {
+  color: #A94442;
+}
+form label.required:after {
+  content: "*";
+}
 
+#frm-inzeratForm-text {
+  height: 150px;
+}

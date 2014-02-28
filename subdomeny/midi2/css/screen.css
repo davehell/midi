@@ -254,6 +254,13 @@ th a:hover {
 .alert {
   margin-top: 20px;
 }
+form label.required {
+  color: #A94442;
+}
+form label.required:after {
+  content: "*";
+}
+
 @media print {
   a[href]:after {
     content: "";
