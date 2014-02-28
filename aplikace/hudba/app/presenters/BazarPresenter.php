@@ -19,23 +19,40 @@ class BazarPresenter extends BasePresenter
   {
     $form = new \Nette\Application\UI\Form;
 
+    $form->addSelect('typ', 'Typ inzerátu:', array('prodej' => 'Prodej', 'poptavka' => 'Poptávka'))
+      ->setRequired('Prosím vyberte typ inzerátu.')
+      ->setPrompt('Zvolte typ inzerátu');
+
+    $form->addSelect('hudba_bazar_kategorie_id', 'Kategorie:', $this->bazar->seznamKategorii())
+      ->setRequired('Prosím vyberte kategori.')
+      ->setPrompt('Zvolte kategorii');
+
     $form->addTextArea('text', 'Text:')
       ->setRequired('Prosím zadejte text inzerátu.')
       ->addRule(Form::MAX_LENGTH, 'Název musí mít maximálně %d znaků', 1000);
 
     $form->addText('email', 'E-mail:')
-      ->setRequired('Prosím zadejte váš e-mail.')
-      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu')
-      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100);
+      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100)
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu');
 
     $form->addText('tel', 'Telefon:')
-      ->setRequired('Prosím zadejte vaše telefonní číslo.')
       ->addRule(Form::MAX_LENGTH, 'Telefonní číslo musí mít maximálně %d znaků', 20);
 
-    $form->addUpload('foto1', 'Foto č. 1');
-      //->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
-    $form->addUpload('foto2', 'Foto č. 2');
-    $form->addUpload('foto3', 'Foto č. 3');
+    $form['email']->addConditionOn($form['tel'], ~Form::FILLED)
+      ->setRequired('Prosím zadejte kontaktní telefon nebo e-mail.');
+    $form['tel']->addConditionOn($form['email'], ~Form::FILLED)
+      ->setRequired('Prosím zadejte kontaktní telefon nebo e-mail.');
+
+    $form->addUpload('foto1', 'Foto č. 1')
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
+    $form->addUpload('foto2', 'Foto č. 2')
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
+    $form->addUpload('foto3', 'Foto č. 3')
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
 
     $form->addSubmit('send', 'Uložit');
 
@@ -67,6 +84,7 @@ class BazarPresenter extends BasePresenter
         $inzeratId = $inzerat->id;
       } catch (\Exception $e) {
         $this->flashMessage('Inzerát se nepodařilo uložit.', 'danger');
+        $this->redirect('this');
       }
     }
 

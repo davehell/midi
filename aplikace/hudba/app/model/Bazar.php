@@ -54,4 +54,10 @@ class Bazar extends Nette\Object
 	{
     $this->database->table('hudba_bazar')->wherePrimary($inzeratId)->delete();
 	}
+
+  /** @return array */
+	public function seznamKategorii()
+	{
+    return $this->database->table('hudba_bazar_kategorie')->fetchPairs('id', 'nazev');
+	}
 }
