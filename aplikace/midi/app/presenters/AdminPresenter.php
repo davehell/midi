@@ -267,8 +267,8 @@ class AdminPresenter extends BasePresenter
       $radek++;
     }
 
-    $soubor = $this->context->parameters['appDir'] . '/../data/stahovani.xlsx';
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    $soubor = $this->context->parameters['appDir'] . '/../data/stahovani.xls';
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
     $objWriter->save($soubor);
     $this->sendResponse(new FileResponse($soubor));
 	}
