@@ -6,18 +6,45 @@
 
 <h1 n:block=title>Hudební bazar</h1>
 <p>
-  <a n:href="Bazar:pridat" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Přidat inzerát</a> V této sekci máte možnost inzerce nákupu i prodeje hudebních nástrojů.
+  <a n:href="Bazar:pridat" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Přidat inzerát</a> V této sekci máte možnost inzerce nákupu i prodeje hudebních nástrojů.
 </p>
 
 
 {if $inzeraty->count()}
+
+  <form action="" method="get">
+    <legend>Filtrování inzerátů</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Typ:</label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="nakup" value="nakup"> nákup
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="poptavka" value="poptavka"> poptávka
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Kategorie:</label>
+      {foreach $seznamKategorii as $id => $kategorie}
+        <label class="checkbox-inline">
+          <input type="checkbox" id="kat{$id}" value="kat{$id}"> {$kategorie}
+        </label>
+      {/foreach}
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+        <button type="submit" class="btn btn-primary">Zobrazit</button>
+      </div>
+    </div>
+  </form>
+  <hr>
 
   {control vp}
 
   {foreach $inzeraty as $inzerat}
   <div class="panel panel-default">
     <div class="panel-body">
-
       <p>
         {$inzerat->text}
       </p>

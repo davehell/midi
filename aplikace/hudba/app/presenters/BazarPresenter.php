@@ -24,7 +24,7 @@ class BazarPresenter extends BasePresenter
       ->setPrompt('Zvolte typ inzerátu');
 
     $form->addSelect('hudba_bazar_kategorie_id', 'Kategorie:', $this->bazar->seznamKategorii())
-      ->setRequired('Prosím vyberte kategori.')
+      ->setRequired('Prosím vyberte kategorii.')
       ->setPrompt('Zvolte kategorii');
 
     $form->addTextArea('text', 'Text:')
@@ -130,6 +130,7 @@ class BazarPresenter extends BasePresenter
     $inzeraty = $this->bazar->findAll($paginator->getLength(), $paginator->getOffset());
 
     $this->template->inzeraty = $inzeraty;
+    $this->template->seznamKategorii = $this->bazar->seznamKategorii();
 	}
 
 	public function renderDetail($id)
