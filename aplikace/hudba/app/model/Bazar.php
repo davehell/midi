@@ -14,9 +14,21 @@ class Bazar extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function findAll($limit = null, $offset = null)
+	public function findAll($typ = null, $kategorie = null, $limit = null, $offset = null)
 	{
-		return $this->database->table('hudba_bazar')->order('datum DESC')->limit($limit, $offset);
+		$result = $this->database->table('hudba_bazar');
+
+    if($typ) {
+      $result->where("typ", $typ);
+    }
+    if($kategorie) {
+      $result->where("hudba_bazar_kategorie_id", $kategorie);
+    }
+            
+    $result->order('datum DESC')
+           ->limit($limit, $offset);
+
+    return $result;
 	}
 
 	/** @return Nette\Database\Table\ActiveRow */

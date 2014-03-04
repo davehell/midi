@@ -61,6 +61,27 @@ class BazarPresenter extends BasePresenter
     return \Bs3Form::transform($form);
   }
 
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentHledaniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addCheckbox('prodej', 'Prodej');
+    $form->addCheckbox('poptavka', 'Poptávka');
+
+    foreach ($this->bazar->seznamKategorii() as $id=>$kategorie) {
+      $form->addCheckbox('kat' . $id, $kategorie);
+    }
+
+    $form->addSubmit('send', 'Zobrazit');
+
+    $form->onSuccess[] = $this->hledaniFormSucceeded;
+
+    return Bs3Form::transform($form);
+  }
+
   public function inzeratFormSucceeded($form)
   {
     $values = $form->getValues();
@@ -119,19 +140,45 @@ class BazarPresenter extends BasePresenter
     $this->redirect('Bazar:default');
   }
 
+  public function hledaniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $this->redirect('Bazar:default', array("filtr" => $values));
+  }
+
+
 	public function renderDefault()
 	{
-    $pocetInzeratu = $this->bazar->findAll()->count();
+    $seznamKategorii = $this->bazar->seznamKategorii();
+
+    $filtr = $this->getParameter('filtr');
+    $typ = array();
+    $kategorie = array();
+    if($filtr) {
+      $this['hledaniForm']->setDefaults($filtr);
+      if($filtr['prodej']) $typ[] = 'prodej';
+      if($filtr['poptavka']) $typ[] = 'poptavka';
+      foreach ($seznamKategorii as $id => $nazev) {
+        if($filtr['kat' . $id]) $kategorie[] = $id;
+      }
+    }
+
+    $pocetInzeratu = $this->bazar->findAll($typ, $kategorie)->count();
     $vp = new \VisualPaginator($this, 'vp');
     $paginator = $vp->getPaginator();
     $paginator->itemsPerPage = 50;
     $paginator->itemCount = $pocetInzeratu;
 
-    $inzeraty = $this->bazar->findAll($paginator->getLength(), $paginator->getOffset());
+    $inzeraty = $this->bazar->findAll($typ, $kategorie, $paginator->getLength(), $paginator->getOffset());
 
     $this->template->inzeraty = $inzeraty;
-    $this->template->seznamKategorii = $this->bazar->seznamKategorii();
+    $this->template->seznamKategorii = $seznamKategorii;
+
+
+
 	}
+
+
 
 	public function renderDetail($id)
 	{
