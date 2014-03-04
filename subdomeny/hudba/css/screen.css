@@ -129,3 +129,7 @@ form label.required:after {
 #frm-inzeratForm-text {
   height: 150px;
 }
+.breadcrumb {
+  margin-top: -20px;
+  border-radius: 0;
+}

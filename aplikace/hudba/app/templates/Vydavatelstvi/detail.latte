@@ -1,4 +1,10 @@
 {block content}
-<h1 n:block=title>Úprava alba {$cd->nazev}</h1>
+<ol class="breadcrumb">
+  <li><a n:href="Sluzby:">Úvod</a></li>
+  <li><a n:href="Vydavatelstvi:">Hudební vydavatelství</a></li>
+  <li class="active">Úprava položky</li>
+</ol>
+
+<h1 n:block=title>Úprava položky</h1>
 
 {control cdForm}
