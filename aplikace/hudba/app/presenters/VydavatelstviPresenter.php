@@ -21,10 +21,6 @@ class VydavatelstviPresenter extends BasePresenter
   {
     $form = new \Nette\Application\UI\Form;
 
-//     $form->addText('autor', 'Interpret:')
-//       ->setRequired('Prosím zadejte interpreta.')
-//       ->addRule(Form::MAX_LENGTH, 'Interpret musí mít maximálně %d znaků', 100);
-
     $form->addText('nazev', 'Název:')
       ->setRequired('Prosím zadejte název alba.')
       ->addRule(Form::MAX_LENGTH, 'Název alba musí mít maximálně %d znaků', 100);
@@ -146,8 +142,7 @@ class VydavatelstviPresenter extends BasePresenter
       $this->error('Požadované album neexistuje.');
     }
 
-    $text = "Název alba: " . $cd->nazev . "\n";
-    $text .= "Interpret: " . $cd->autor . "\n";
+    $text = "Název: " . $cd->nazev . "\n";
     $text .= "Cena za kus: " . $cd->cena . " Kč\n\n";
     $text .= "Počet kusů: " . $values['pocet'] . "\n";
     $text .= "Adresa:\n" . $values['adresa'] . "\n";
@@ -161,7 +156,7 @@ class VydavatelstviPresenter extends BasePresenter
     $mail = new Message;
     $mail->setFrom('Lubomír Piskoř <' . $params['adminMail'] . '>')
         ->addTo($params['adminMail'])
-        ->setSubject('Hudební vydavatelství - objednávka CD')
+        ->setSubject('Hudební vydavatelství - objednávka not')
         ->setBody($text);
     $mailer = new SendmailMailer;
     $mailer->send($mail);
@@ -173,8 +168,8 @@ class VydavatelstviPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-    $alba = $this->vydavatelstvi->findAll();
-    $this->template->alba = $alba;
+    $noty = $this->vydavatelstvi->findAll();
+    $this->template->noty = $noty;
 	}
 
   public function renderNakup($id)
