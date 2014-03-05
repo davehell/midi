@@ -43,15 +43,10 @@
     <tbody>
       <tr n:foreach="$noty as $nota">
         <td>
-          <a n:href="Vydavatelstvi:nakup $nota->id">{$nota->nazev}</a>
+          <a n:href="Vydavatelstvi:detail $nota->id">{$nota->nazev}</a>
         </td>
         <td>{$nota->popis}</td>
-        <td>{$nota->cena}&nbsp;Kč
-          {if $user->isInRole('admin')}
-            <a n:href="Vydavatelstvi:detail, $cd->id" class="btn btn-danger"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
-            <a n:href="Vydavatelstvi:smazat, $cd->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat album?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
-          {/if}
-        </td>
+        <td>{$nota->cena}&nbsp;Kč</td>
       </tr>
     </tbody>
   </table>

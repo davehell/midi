@@ -1,6 +1,7 @@
 <?php
 
-use Nette\Forms\Form,
+use Nette\Application\Responses\FileResponse,
+    Nette\Forms\Form,
     Nette\Image,
     Nette\Mail\Message,
     Nette\Mail\SendmailMailer;
@@ -34,7 +35,10 @@ class VydavatelstviPresenter extends BasePresenter
       ->addRule(Form::RANGE, 'Částka musí být od %d do %d Kč', array(1, 1000))
       ->setType('number');
 
-    $form->addUpload('foto', 'Foto:');
+    $form->addSelect('soubor_id', 'Demo:', $this->vydavatelstvi->demoSkladby())
+      ->setPrompt('Zvolte demo mp3');
+
+    $form->addUpload('foto', 'Foto s ukázkou:');
 
     $form->addSubmit('send', 'Uložit');
 
@@ -74,7 +78,7 @@ class VydavatelstviPresenter extends BasePresenter
     $form->addText('pozn', 'Poznámka:')
       ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 300);
 
-    $form->addSubmit('send', 'Odeslat');
+    $form->addSubmit('send', 'Odeslat objednávku');
 
     $form->onSuccess[] = $this->nakupFormSucceeded;
 
@@ -84,23 +88,23 @@ class VydavatelstviPresenter extends BasePresenter
   public function cdFormSucceeded($form)
   {
     $values = $form->getValues();
-    $cdId = $this->getParameter('id');
+    $notyId = $this->getParameter('id');
     $uploads = $this->context->getService('httpRequest')->getFiles();
     unset($values['foto']);
 
-    if($cdId) { //editace
+    if($notyId) { //editace
       try {
-        $this->vydavatelstvi->update($cdId, $values);
+        $this->vydavatelstvi->update($notyId, $values);
       } catch (\Exception $e) {
-        $this->flashMessage('Album se nepodařilo uložit.', 'danger');
+        $this->flashMessage('Noty se nepodařilo uložit.', 'danger');
       }
     }
     else { //nova skladba
       try {
         $cd = $this->vydavatelstvi->insert($values);
-        $cdId = $cd->id;
+        $notyId = $cd->id;
       } catch (\Exception $e) {
-        $this->flashMessage('Album se nepodařilo uložit.', 'danger');
+        $this->flashMessage('Noty se nepodařilo uložit.', 'danger');
       }
     }
 
@@ -110,7 +114,7 @@ class VydavatelstviPresenter extends BasePresenter
     foreach ($uploads as $soubor) {
       if($soubor && $soubor->isOk) {
         $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
-        $nazev = 'cd-' . $cdId . '.' . $ext;
+        $nazev = 'cd-' . $notyId . '.' . $ext;
         $soubor->move($destDir . '/' . $nazev);
         $image = Image::fromFile($destDir . '/' . $nazev);
         $image->resize(1024, 1024);
@@ -122,13 +126,13 @@ class VydavatelstviPresenter extends BasePresenter
 
     if($nazev) {
       try {
-        $this->vydavatelstvi->update($cdId, array('foto'=>$nazev));
+        $this->vydavatelstvi->update($notyId, array('foto'=>$nazev));
       } catch (\Exception $e) {
         $this->flashMessage('Nepodařilo se uložit foto.', 'danger');
       }
     }
 
-    $this->flashMessage('Album bylo uloženo.' , 'success');
+    $this->flashMessage('Noty byly uloženy.' , 'success');
     $this->redirect('Vydavatelstvi:default');
   }
 
@@ -139,7 +143,7 @@ class VydavatelstviPresenter extends BasePresenter
 
     $cd = $this->vydavatelstvi->findById($values['id']);
     if (!$cd) {
-      $this->error('Požadované album neexistuje.');
+      $this->error('Požadované noty neexistují.');
     }
 
     $text = "Název: " . $cd->nazev . "\n";
@@ -176,7 +180,7 @@ class VydavatelstviPresenter extends BasePresenter
   {
     $cd = $this->vydavatelstvi->findById($id);
     if (!$cd) {
-      $this->error('Požadované album neexistuje.');
+      $this->error('Požadované noty neexistují.');
     }
     $this->template->cd = $cd;
     $this['nakupForm']->setDefaults(array('id'=>$id));
@@ -184,18 +188,13 @@ class VydavatelstviPresenter extends BasePresenter
 
 	public function renderDetail($id)
 	{
-    if (!$this->user->isInRole('admin')) {
-      $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
-      $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
+    $noty = $this->vydavatelstvi->findById($id);
+    if (!$noty) {
+      $this->error('Požadované noty neexistují.');
     }
+    $this->template->noty = $noty;
 
-    $cd = $this->vydavatelstvi->findById($id);
-    if (!$cd) {
-      $this->error('Požadované album neexistuje.');
-    }
-    $this->template->cd = $cd;
-
-    $this['cdForm']->setDefaults($cd);
+    $this['cdForm']->setDefaults($noty);
 	}
 
 	public function actionSmazat($id)
@@ -207,7 +206,7 @@ class VydavatelstviPresenter extends BasePresenter
 
     $cd = $this->vydavatelstvi->findById($id);
     if (!$cd) {
-      $this->error('Požadované album neexistuje.');
+      $this->error('Požadované noty neexistují.');
     }
 
     if($cd->foto) {
@@ -217,7 +216,7 @@ class VydavatelstviPresenter extends BasePresenter
     }
 
     $this->vydavatelstvi->smazat($id);
-    $this->flashMessage('Album bylo smazáno.' , 'success');
+    $this->flashMessage('Noty byly smazány.' , 'success');
     $this->redirect('Vydavatelstvi:default');
 	}
 
@@ -227,5 +226,19 @@ class VydavatelstviPresenter extends BasePresenter
       $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
       $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
     }
+	}
+
+	public function actionDownload($id)
+	{
+    $soubor = $this->vydavatelstvi->nazevSouboru($id);
+    if (!$soubor) {
+      $this->error('Požadovaný soubor neexistuje.');
+    }
+
+    if(!$soubor->format->demo) {
+      $this->error('Požadovaný soubor neexistuje.');
+    }
+
+    $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../../midi/data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
 	}
 }

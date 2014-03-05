@@ -15,7 +15,7 @@ class Vydavatelstvi extends Nette\Object
 	/** @return Nette\Database\Table\Selection */
 	public function findAll()
 	{
-		return $this->database->table('hudba_cd')->order('nazev ASC');
+		return $this->database->table('hudba_noty')->order('nazev ASC');
 	}
 
 	/** @return Nette\Database\Table\ActiveRow */
@@ -24,19 +24,30 @@ class Vydavatelstvi extends Nette\Object
 		return $this->findAll()->get($id);
 	}
 
-	public function update($cdId, $values)
+	public function update($notyId, $values)
 	{
-		$this->database->table('hudba_cd')->wherePrimary($cdId)->update($values);
+		$this->database->table('hudba_noty')->wherePrimary($notyId)->update($values);
 	}
 
   /** @return Nette\Database\Table\ActiveRow */
 	public function insert($cd)
 	{
-    return $this->database->table('hudba_cd')->insert($cd);
+    return $this->database->table('hudba_noty')->insert($cd);
 	}
 
-	public function smazat($cdId)
+	public function smazat($notyId)
 	{
-    $this->database->table('hudba_cd')->wherePrimary($cdId)->delete();
+    $this->database->table('hudba_noty')->wherePrimary($notyId)->delete();
+	}
+
+	public function demoSkladby()
+	{
+    //format_id 14 = mp3 vèetnì melodické linky
+    return $this->database->table('soubor')->select('skladba.nazev AS nazev, soubor.id')->where('format_id', 14)->order('nazev ASC')->fetchPairs('id', 'nazev');
+	}
+
+	public function nazevSouboru($id)
+	{
+    return $this->database->table('soubor')->get($id);
 	}
 }
