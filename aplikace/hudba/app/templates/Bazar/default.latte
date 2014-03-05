@@ -9,7 +9,36 @@
   <a n:href="Bazar:pridat" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Přidat inzerát</a> V této sekci máte možnost inzerce nákupu i prodeje hudebních nástrojů.
 </p>
 
-{control hledaniForm}
+
+{form hledaniForm class => ''}
+    <legend>Filtrování inzerátů</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Typ:</label>
+      <label for="frm-hledaniForm-prodej" class="checkbox-inline">
+        <input n:name="prodej:" /> prodej
+      </label>
+
+      <label for="frm-hledaniForm-poptavka" class="checkbox-inline">
+        <input n:name="poptavka:" /> poptávka
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Kategorie:</label>
+      {foreach $seznamKategorii as $id => $kategorie}
+        <label class="checkbox-inline">
+          <input n:name="kat{$id}:" /> {$kategorie}
+        </label>
+      {/foreach}
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+        {input 'send'}
+        <a n:href="Bazar:" class="btn btn-primary">Zobrazit vše</a>
+      </div>
+    </div>
+{/form hledaniForm}
+
 <hr>
 
 {if $inzeraty->count()}

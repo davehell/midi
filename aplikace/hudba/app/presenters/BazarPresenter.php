@@ -75,7 +75,7 @@ class BazarPresenter extends BasePresenter
       $form->addCheckbox('kat' . $id, $kategorie);
     }
 
-    $form->addSubmit('send', 'Zobrazit');
+    $form->addSubmit('send', 'Zobrazit vybrané');
 
     $form->onSuccess[] = $this->hledaniFormSucceeded;
 
