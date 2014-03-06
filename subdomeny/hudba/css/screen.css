@@ -133,3 +133,10 @@ form label.required:after {
   margin-top: -20px;
   border-radius: 0;
 }
+
+table.vydavatelstvi td {
+  vertical-align: middle !important;
+}
+table.vydavatelstvi .buttons {
+  width: 100px;
+}

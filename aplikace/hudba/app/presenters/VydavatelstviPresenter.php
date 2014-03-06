@@ -194,7 +194,9 @@ class VydavatelstviPresenter extends BasePresenter
     }
     $this->template->noty = $noty;
 
-    $this['cdForm']->setDefaults($noty);
+    if($this->user->isInRole('admin')) {
+      $this['cdForm']->setDefaults($noty);
+    }
 	}
 
 	public function actionSmazat($id)
