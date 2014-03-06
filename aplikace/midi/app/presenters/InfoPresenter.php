@@ -13,6 +13,9 @@ class InfoPresenter extends BasePresenter
 	/** @var Dvd @inject*/
 	public $dvd;
 
+	/** @var Skladba @inject*/
+	public $skladby;
+
   public function startup()
   {
     parent::startup();
