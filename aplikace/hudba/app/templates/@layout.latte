@@ -58,6 +58,7 @@
 
   <div id="page" class="container">
     <div class="row">
+      {block breadcrumb}{/block}
       <div class="col-md-12">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}

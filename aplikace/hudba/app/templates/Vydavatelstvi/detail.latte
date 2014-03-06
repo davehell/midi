@@ -1,10 +1,12 @@
-{block content}
+{block breadcrumb}
 <ol class="breadcrumb">
   <li><a n:href="Sluzby:">Úvod</a></li>
   <li><a n:href="Vydavatelstvi:">Hudební vydavatelství</a></li>
   <li class="active">Objednávka</li>
 </ol>
+{/block}
 
+{block content}
 <h1 n:block=title>Noty &bdquo;{$noty->nazev}&ldquo;</h1>
 
 <div class="row">

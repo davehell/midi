@@ -1,14 +1,16 @@
-{block content}
+{block breadcrumb}
 <ol class="breadcrumb">
   <li><a n:href="Sluzby:">Úvod</a></li>
   <li class="active">Hudební bazar</li>
 </ol>
+{/block}
 
+{block content}
 <h1 n:block=title>Hudební bazar</h1>
+
 <p>
   <a n:href="Bazar:pridat" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Přidat inzerát</a> V této sekci máte možnost inzerce nákupu i prodeje hudebních nástrojů.
 </p>
-
 
 {form hledaniForm class => ''}
     <legend>Filtrování inzerátů</legend>

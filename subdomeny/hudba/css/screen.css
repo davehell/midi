@@ -107,9 +107,6 @@ th a:hover {
 .well {
   border: 1px solid #CED8EA;
 }
-.alert {
-  margin-top: 20px;
-}
 @media print {
   a[href]:after {
     content: "";
@@ -131,7 +128,9 @@ form label.required:after {
 }
 .breadcrumb {
   margin-top: -20px;
+  margin-bottom: 0;
   border-radius: 0;
+  background-color: #fff;
 }
 
 table.vydavatelstvi td {

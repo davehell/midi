@@ -1,8 +1,11 @@
-{block content}
+{block breadcrumb}
 <ol class="breadcrumb">
   <li><a n:href="Sluzby:">Úvod</a></li>
   <li class="active">Hudební vydavatelství</li>
 </ol>
+{/block}
+
+{block content}
 <h1 n:block=title>Hudební vydavatelství</h1>
 
 {if $user->isInRole('admin')}
