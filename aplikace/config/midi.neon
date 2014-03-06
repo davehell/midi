@@ -2,3 +2,4 @@ services:
 	- Skladba
 	- UserManager
 	- Uzivatel
+	- Dvd

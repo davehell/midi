@@ -67,16 +67,20 @@ class VydavatelstviPresenter extends BasePresenter
       ->addRule(Form::MAX_LENGTH, 'Název musí mít maximálně %d znaků', 300);
 
     $form->addText('email', 'E-mail:')
-      ->setRequired('Prosím zadejte váš e-mail.')
-      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu')
-      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100);
+      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100)
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu');
 
     $form->addText('tel', 'Telefon:')
-      ->setRequired('Prosím zadejte vaše telefonní číslo.')
       ->addRule(Form::MAX_LENGTH, 'Telefonní číslo musí mít maximálně %d znaků', 20);
 
+    $form['email']->addConditionOn($form['tel'], ~Form::FILLED)
+      ->setRequired('Prosím zadejte kontaktní telefon nebo e-mail.');
+    $form['tel']->addConditionOn($form['email'], ~Form::FILLED)
+      ->setRequired('Prosím zadejte kontaktní telefon nebo e-mail.');
+
     $form->addText('pozn', 'Poznámka:')
-      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 300);
+      ->addRule(Form::MAX_LENGTH, 'Poznámka musí mít maximálně %d znaků', 300);
 
     $form->addSubmit('send', 'Odeslat objednávku');
 

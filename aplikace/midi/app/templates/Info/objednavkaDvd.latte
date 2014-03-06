@@ -1,0 +1,25 @@
+{block content}
+<h1 n:block=title>DVD &bdquo;{$dvd->nazev}&ldquo;</h1>
+
+<div class="media">
+  <img n:if="$dvd->foto" class="media-object pull-left" src="{$basePath}/img/dvd/{$dvd->foto}" width="100px" height="100px">
+  <div class="media-body">
+    <h3 class="media-heading">{$dvd->nazev}</h3>
+    <p>
+      <strong>cena: {$dvd->cena}&nbsp;Kč</strong>
+    </p>
+    <p>
+      {!$dvd->popis|nl2br}
+    </p>
+  </div>
+</div>
+
+
+<h2>
+  Objednávkový formulář
+</h2>
+<p>
+  Platba probíhá převodem na účet? Po odeslání objednávky budete kontaktováni?
+</p>
+{control nakupForm}
+
