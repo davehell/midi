@@ -23,14 +23,13 @@
     </dl>
   </div>
   <div class="col-md-6">
-    <p>
-      <a n:if="$noty->foto" class="btn btn-primary" href="{$basePath}/img/vydavatelstvi/{$noty->foto}" data-lightbox="group{$noty->id}">
-        <span class="glyphicon glyphicon-music"></span> ukázka not
-      </a>
-    </p>
-    <p>
-      <a n:if="$noty->soubor_id" n:href="Vydavatelstvi:download, $noty->soubor_id" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> mp3 ukázka skladby</a>
-    </p>
+    <form class="well">
+      <label>Ukázky ke stažení</label>
+      <ul>
+        <li n:if="$noty->foto"><a href="{$basePath}/img/vydavatelstvi/{$noty->foto}" data-lightbox="group{$noty->id}">ukázka not</a></li>
+        <li n:if="$noty->soubor_id" ><a n:href="Vydavatelstvi:download, $noty->soubor_id">mp3 demo skladby</a></li>
+      </ul>
+    </form>
   </div>
 </div>
 
