@@ -38,7 +38,9 @@ class VydavatelstviPresenter extends BasePresenter
     $form->addSelect('soubor_id', 'Demo:', $this->vydavatelstvi->demoSkladby())
       ->setPrompt('Zvolte demo mp3');
 
-    $form->addUpload('foto', 'Foto s ukázkou:');
+    $form->addUpload('foto', 'Foto s ukázkou:')
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
 
     $form->addSubmit('send', 'Uložit');
 

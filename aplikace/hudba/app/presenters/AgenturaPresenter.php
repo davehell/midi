@@ -66,7 +66,9 @@ class AgenturaPresenter extends BasePresenter
     $form->addText('www', 'Webové stránky:')
       ->addRule(Form::MAX_LENGTH, 'Webové stránky musí mít maximálně %d znaků', 200);
 
-    $form->addUpload('foto', 'Foto:');
+    $form->addUpload('foto', 'Foto:')
+      ->addCondition(Form::FILLED)
+      ->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
 
     $form->addSubmit('send', 'Odeslat');
 
