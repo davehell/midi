@@ -1,3 +1,11 @@
+{block breadcrumb}
+<ol class="breadcrumb">
+  <li><a href="http://hudba.premiermusic.cz">Úvod</a></li>
+  <li><a n:href="Info:default">MIDI a karaoke</a></li>
+  <li class="active">Zákaznický účet</li>
+</ol>
+{/block}
+
 {block content}
 <h1 n:block=title>Profil zákazníka {$user->getIdentity()->data['login']}</h1>
 

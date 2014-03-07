@@ -1,3 +1,12 @@
+{block breadcrumb}
+<ol class="breadcrumb">
+  <li><a href="http://hudba.premiermusic.cz">Úvod</a></li>
+  <li><a n:href="Info:default">MIDI a karaoke</a></li>
+  <li><a n:href="Ucet:informace">Zákaznický účet</a></li>
+  <li class="active">Dobíjení kreditu</li>
+</ol>
+{/block}
+
 {block content}
 <h1 n:block=title>Dobíjení kreditu</h1>
 
@@ -18,7 +27,7 @@
 </ul>
 
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-8">
 {control dobijeniForm }
 </div>
 </div>

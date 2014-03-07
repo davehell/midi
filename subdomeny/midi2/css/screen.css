@@ -269,3 +269,9 @@ form label.required:after {
     content: "";
   }
 }
+.breadcrumb {
+  margin-top: -20px;
+  margin-bottom: 0;
+  border-radius: 0;
+  background-color: #fff;
+}

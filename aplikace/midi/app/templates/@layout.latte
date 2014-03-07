@@ -30,7 +30,7 @@
   <div id="header" class="navbar navbar-inverse">
     <div class="container">
       <ul class="nav navbar-nav">
-        <li><a n:href="Info:">Domů</a></li>
+        <li><a href="http://hudba.premiermusic.cz">Úvod</a></li>
         <li><a n:href="Skladba:default radit=>null, asc=>null, nazev=>null, autor=>null, zanr=>null, verze=>null">Katalog skladeb</a></li>
         {if $user->loggedIn}
         <li class="dropdown">
@@ -106,6 +106,7 @@
 
   <div id="page" class="container">
     <div class="row">
+      {block breadcrumb}{/block}
       <div class="col-md-12">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}
