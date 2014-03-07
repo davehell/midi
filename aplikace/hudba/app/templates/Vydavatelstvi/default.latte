@@ -51,7 +51,7 @@
     <tbody>
       <tr n:foreach="$noty as $nota">
         <td>
-          <a n:if="$nota->foto" href="{$basePath}/img/vydavatelstvi/{$nota->foto}" class="btn btn-primary" data-lightbox="group{$nota->id}" title="Zobrazit ukázku not"><span class="glyphicon glyphicon-music"></span></a>
+          <a n:if="$nota->foto" href="{$basePath}/img/data/vydavatelstvi/{$nota->foto}" class="btn btn-primary" data-lightbox="group{$nota->id}" title="Zobrazit ukázku not"><span class="glyphicon glyphicon-music"></span></a>
           <a n:if="$nota->soubor_id" n:href="Vydavatelstvi:download, $nota->soubor_id" class="btn btn-primary" title="Stáhnout mp3 demo skladby"><span class="glyphicon glyphicon-volume-up"></span></a>
         </td>
         <td>

@@ -15,14 +15,14 @@
 
 
 <p n:if="$inzerat->foto1">
-  <img src="{$basePath}/img/bazar/thumb-{$inzerat->foto1}">
+  <img src="{$basePath}/img/data/bazar/thumb-{$inzerat->foto1}">
   <a n:href="Bazar:smazatFoto, $inzerat->id, 1" class="btn btn-danger" onclick="return confirm('Opravdu smazat fotku?')">smazat foto</a>
 </p>
 <p n:if="$inzerat->foto2">
-  <img src="{$basePath}/img/bazar/thumb-{$inzerat->foto2}">
+  <img src="{$basePath}/img/data/bazar/thumb-{$inzerat->foto2}">
   <a n:href="Bazar:smazatFoto, $inzerat->id, 2" class="btn btn-danger" onclick="return confirm('Opravdu smazat fotku?')">smazat foto</a>
 </p>
 <p n:if="$inzerat->foto3">
-  <img src="{$basePath}/img/bazar/thumb-{$inzerat->foto3}">
+  <img src="{$basePath}/img/data/bazar/thumb-{$inzerat->foto3}">
   <a n:href="Bazar:smazatFoto, $inzerat->id, 3" class="btn btn-danger" onclick="return confirm('Opravdu smazat fotku?')">smazat foto</a>
 </p>

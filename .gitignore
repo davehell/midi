@@ -4,7 +4,5 @@ aplikace/temp/*
 aplikace/vendor/Nette/*
 Thumbs.db
 subdomeny/midi2/*.json
-subdomeny/midi2/img/dvd
-subdomeny/hudba/img/agentura
-subdomeny/hudba/img/bazar
-subdomeny/hudba/img/vydavatelstvi
+subdomeny/midi2/img/data/*
+subdomeny/hudba/img/data/*

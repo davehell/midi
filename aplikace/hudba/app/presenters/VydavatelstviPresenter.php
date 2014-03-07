@@ -113,18 +113,16 @@ class VydavatelstviPresenter extends BasePresenter
     }
 
     //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
-    $destDir = $this->context->parameters['wwwDir'] . '/img/vydavatelstvi';
+    $destDir = $this->context->parameters['wwwDir'] . '/img/data/vydavatelstvi';
     $nazev = '';
     foreach ($uploads as $soubor) {
       if($soubor && $soubor->isOk) {
         $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
-        $nazev = 'cd-' . $notyId . '.' . $ext;
+        $nazev = 'noty-' . $notyId . '.' . $ext;
         $soubor->move($destDir . '/' . $nazev);
         $image = Image::fromFile($destDir . '/' . $nazev);
         $image->resize(1024, 1024);
         $image->save($destDir . '/' . $nazev);
-        $image->resize(150, 150);
-        $image->save($destDir . '/thumb-' . $nazev);
       }
     }
 
@@ -216,9 +214,8 @@ class VydavatelstviPresenter extends BasePresenter
     }
 
     if($cd->foto) {
-      $destDir = $this->context->parameters['wwwDir'] . '/img/vydavatelstvi';
+      $destDir = $this->context->parameters['wwwDir'] . '/img/data/vydavatelstvi';
       if(file_exists($destDir . '/' . $cd->foto)) unlink($destDir . '/' . $cd->foto);
-      if(file_exists($destDir . '/thumb-' . $cd->foto)) unlink($destDir . '/thumb-' . $cd->foto);
     }
 
     $this->vydavatelstvi->smazat($id);

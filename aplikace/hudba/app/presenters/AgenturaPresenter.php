@@ -127,7 +127,7 @@ class AgenturaPresenter extends BasePresenter
     }
 
     //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
-    $destDir = $this->context->parameters['wwwDir'] . '/img/agentura';
+    $destDir = $this->context->parameters['wwwDir'] . '/img/data/agentura';
     $nazev = '';
     foreach ($uploads as $soubor) {
       if($soubor && $soubor->isOk) {
@@ -189,7 +189,7 @@ class AgenturaPresenter extends BasePresenter
     }
 
     if($kapela->foto) {
-      $destDir = $this->context->parameters['wwwDir'] . '/img/agentura';
+      $destDir = $this->context->parameters['wwwDir'] . '/img/data/agentura';
       if(file_exists($destDir . '/' . $kapela->foto)) unlink($destDir . '/' . $kapela->foto);
       if(file_exists($destDir . '/thumb-' . $kapela->foto)) unlink($destDir . '/thumb-' . $kapela->foto);
     }

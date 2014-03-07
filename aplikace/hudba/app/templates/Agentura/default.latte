@@ -33,8 +33,8 @@
 {if $kapely->count()}
   {foreach $kapely as $kapela}
     <div class="media">
-      <a class="pull-left" n:if="$kapela->foto" href="{$basePath}/img/agentura/{$kapela->foto}" data-lightbox="group{$kapela->id}">
-        <img class="media-object" src="{$basePath}/img/agentura/thumb-{$kapela->foto}" width="100px" height="100px">
+      <a class="pull-left" n:if="$kapela->foto" href="{$basePath}/img/data/agentura/{$kapela->foto}" data-lightbox="group{$kapela->id}">
+        <img class="media-object" src="{$basePath}/img/data/agentura/thumb-{$kapela->foto}" width="100px" height="100px">
       </a>
       <div class="media-body">
         <h3 class="media-heading">{$kapela->nazev}</h3>
