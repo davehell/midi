@@ -81,7 +81,7 @@ html,body {
 
 #header2 {
   min-height: 100px;
-  padding-top: 20px;
+  padding-top: 10px;
   background: #62B0CE url(../img/bg.jpg) no-repeat center top;
 }
 
@@ -90,16 +90,20 @@ html,body {
 }
 
 #header2 h1{
-  margin-top: 5px;
-  font-family: 'Comfortaa', cursive;
-  color: #444;
-  line-height: 24px;
-  font-size: 39px;
+  margin: 0;
+  width: 236px;
+  height: 65px;
+  background: url(../img/midipremier.png) 0 -10px no-repeat;
 }
 
 #header2 h1 span{
+  display: none;
+}
+
+#header2 h2{
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
+  margin: 0;
 }
 
 #footer {
