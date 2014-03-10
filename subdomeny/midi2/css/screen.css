@@ -91,9 +91,9 @@ html,body {
 
 #header2 h1{
   margin: 0;
-  width: 236px;
-  height: 65px;
-  background: url(../img/midipremier.png) 0 -10px no-repeat;
+  width: 216px;
+  height: 60px;
+  background: url(../img/logo.png) 0 0px no-repeat;
 }
 
 #header2 h1 span{

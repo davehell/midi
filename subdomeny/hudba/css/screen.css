@@ -51,8 +51,9 @@ html,body {
   color: #444;
   line-height: 24px;
   font-size: 39px;
-  padding: 5px 10px 10px 175px;
-  background: url(../img/premier.png) no-repeat;
+  padding: 5px 10px 10px 230px;
+  background: url(../img/logo.png) 0 10px no-repeat;
+
 }
 
 #header2 h1 span{
