@@ -81,8 +81,12 @@ class Uzivatel extends Nette\Object
 	{
     if($cas === NULL) $cas = new Nette\Database\SqlLiteral('NOW()');
 		$this->database->table('uzivatel')
-      ->where('id', $uziv)
-      ->update(array('posledni_prihlaseni' => $cas));
+      ->wherePrimary($uziv)
+      ->update(array(
+        'posledni_prihlaseni' => $cas,
+        'heslo_token' => null,
+        'heslo_token_platnost' => null
+      ));
 	}
 
 	/** @return Nette\Database\Table\Selection */
@@ -224,5 +228,18 @@ class Uzivatel extends Nette\Object
 	public function pocetZakazniku($filtry = null, $razeni = null)
 	{
     return $this->findAll($filtry)->count();
+	}
+
+	public function zapomenuteHeslo($email, $token)
+	{
+    $row = $this->database->table('uzivatel')->where('email', $email)->update(array('heslo_token' => $token, 'heslo_token_platnost' => new Nette\Database\SqlLiteral('NOW() + INTERVAL 1 DAY')));
+    if(!$row) throw new \MidiException('Uživatelský účet se zadaným e-mailem neexistuje.');
+    return $row;
+	}
+
+	public function obnoveniHesla($email, $token)
+	{
+    $uziv = $this->database->table('uzivatel')->select('id, login, email, heslo_token')->where('email', $email)->where('heslo_token', $token)->where('heslo_token_platnost >= ?', new Nette\Database\SqlLiteral('NOW()'))->fetch();
+    return $uziv;
 	}
 }

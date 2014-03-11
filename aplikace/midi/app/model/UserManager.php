@@ -51,7 +51,8 @@ class UserManager extends Nette\Object implements Security\IAuthenticator
 		unset($arr[self::COLUMN_PASSWORD]);
     unset($arr[self::COLUMN_SALT]);
     unset($arr['admin']);
-    unset($arr['zapomenute_heslo']);
+    unset($arr['heslo_token']);
+    unset($arr['heslo_token_platnost']);
 		return new Security\Identity($row->id, $isAdmin ? 'admin' : 'zakaznik', $arr);
 	}
 

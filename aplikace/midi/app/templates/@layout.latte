@@ -66,7 +66,7 @@
         <li id="uzivatel">{$user->getIdentity()->data['login']}</li>
         <li><a n:href="Ucet:odhlaseni">Odhlášení</a></li>
         {else}
-        <!-- <li><a href="#">Zapomenuté heslo</a></li> -->
+        <li><a n:href="Ucet:zapomenuteHeslo">Zapomenuté heslo</a></li>
         <li><a n:href="Ucet:registrace">Registrace</a></li>
         <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
         {/if}

@@ -23,7 +23,7 @@ class UcetPresenter extends BasePresenter
   protected function createComponentPrihlaseniForm()
   {
     $form = new Nette\Application\UI\Form;
-    
+
     $form->addText('login', 'Jméno:')
       ->setRequired('Prosím zadejte vaše uživatelské jméno.');
 
@@ -41,9 +41,30 @@ class UcetPresenter extends BasePresenter
   /**
    * @return Nette\Application\UI\Form
    */
+  protected function createComponentZapomenuteHesloForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addText('email', 'E-mail:')
+      ->setRequired('Prosím zadejte váš e-mail.')
+      ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu')
+      ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100);
+
+    $form->addSubmit('send', 'Odeslat');
+
+    $form->onSuccess[] = $this->zapomenuteHesloFormSucceeded;
+
+    return Bs3Form::transform($form);
+  }
+
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
   protected function createComponentUzivatelForm()
   {
     $form = new Nette\Application\UI\Form;
+
     $form->addText('login', 'Uživatelské jméno')
       ->setRequired('Prosím zadejte vaše uživatelské jméno.')
       ->addRule(Form::MIN_LENGTH, 'Jméno musí mít alespoň %d znaky', 3)
@@ -67,6 +88,31 @@ class UcetPresenter extends BasePresenter
     $form->addSubmit('send', 'Dokončení registrace');
 
     $form->onSuccess[] = $this->uzivatelFormSucceeded;
+    return Bs3Form::transform($form);
+  }
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentObnovaHeslaForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    $form->addPassword('heslo', 'Heslo:')
+      ->setRequired('Prosím zadejte vaše heslo.')
+      ->addRule(Form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaky', 4)
+      ->addRule(Form::MAX_LENGTH, 'Heslo musí mít maximálně %d znaků', 100);
+
+    $form->addPassword('hesloKontrola', 'Heslo pro kontrolu:')
+      ->setRequired('Zadejte prosím heslo ještě jednou pro kontrolu')
+      ->addRule(Form::EQUAL, 'Hesla se neshodují', $form['heslo']);
+
+    $form->addHidden('email');
+    $form->addHidden('heslo_token');
+
+    $form->addSubmit('send', 'Uložit');
+
+    $form->onSuccess[] = $this->obnovaHeslaFormSucceeded;
     return Bs3Form::transform($form);
   }
 
@@ -139,6 +185,33 @@ class UcetPresenter extends BasePresenter
     }//else
   }
 
+  public function obnovaHeslaFormSucceeded($form)
+  {
+    $values = $form->getValues();
+
+    $uziv = $this->uzivatele->obnoveniHesla($values['email'], $values['heslo_token']);
+    if (!$uziv) {
+      $this->flashMessage('Neplatný požadavek na obnovení hesla.', 'danger');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
+    unset($values['login']);
+    unset($values['email']);
+    unset($values['hesloKontrola']);
+    $values['heslo_token'] = null;
+    $values['heslo_token_platnost'] = null;
+
+    try {
+      $this->uzivatele->update($uziv->id, $values);
+    } catch (\Exception $e) {
+      $this->flashMessage('Změna hesla neproběhla.', 'danger');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
+    $this->flashMessage('Změna hesla byla úspěšná.', 'success');
+    $this->redirect('Ucet:prihlaseni');
+  }
+
   public function dobijeniFormSucceeded($form)
   {
     $values = $form->getValues();
@@ -152,6 +225,26 @@ class UcetPresenter extends BasePresenter
     BasePresenter::sendMail('dobiti.latte', $this->user->getIdentity()->data['email'], $row);
     $this->flashMessage('Váš požadavek na dobití kreditu byl přijat.', 'success');
     $this->redirect('Ucet:kreditDobiti');
+  }
+
+
+  public function zapomenuteHesloFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $token = md5(uniqid(rand(), true));
+
+    try {
+      $row = $this->uzivatele->zapomenuteHeslo($values['email'], $token);
+    } catch (\MidiException $e) {
+      $this->flashMessage($e->getMessage(), 'danger');
+      $this->redirect('Ucet:zapomenuteHeslo');
+    } catch (\Exception $e) {
+      $this->flashMessage('Změna hesla se nepodařila.', 'danger');
+      $this->redirect('Ucet:zapomenuteHeslo');
+    }
+    //BasePresenter::sendMail('zapomenuteHeslo.latte', $values['email'], array('token' => $token, 'email' => $values['email']));
+    $this->flashMessage('E-mail se změnou hesla byl odeslán.', 'success');
+    $this->redirect('Ucet:prihlaseni');
   }
 
   public function actionOdhlaseni()
@@ -220,5 +313,17 @@ class UcetPresenter extends BasePresenter
     }
 
     $this->template->nakupy = $this->uzivatele->zakoupeneSkladby($this->user->id);
+  }
+
+  public function renderObnoveniHesla($email, $token)
+  {
+    $uziv = $this->uzivatele->obnoveniHesla($email, $token);
+    if (!$uziv) {
+      $this->flashMessage('Neplatný požadavek na obnovení hesla.', 'danger');
+      $this->redirect('Ucet:prihlaseni');
+    }
+
+    $this->template->uziv = $uziv;
+    $this['obnovaHeslaForm']->setDefaults($uziv);
   }
 }
