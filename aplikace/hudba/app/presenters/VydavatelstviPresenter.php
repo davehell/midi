@@ -180,15 +180,6 @@ class VydavatelstviPresenter extends BasePresenter
     $this->template->noty = $noty;
 	}
 
-  public function renderNakup($id)
-  {
-    $cd = $this->vydavatelstvi->findById($id);
-    if (!$cd) {
-      $this->error('Požadované noty neexistují.');
-    }
-    $this->template->cd = $cd;
-    $this['nakupForm']->setDefaults(array('id'=>$id));
-  }
 
 	public function renderDetail($id)
 	{
@@ -197,6 +188,7 @@ class VydavatelstviPresenter extends BasePresenter
       $this->error('Požadované noty neexistují.');
     }
     $this->template->noty = $noty;
+    $this['nakupForm']->setDefaults(array('id'=>$id));
 
     if($this->user->isInRole('admin')) {
       $this['cdForm']->setDefaults($noty);
