@@ -109,6 +109,18 @@ CREATE TABLE `hudba_cd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
+DROP TABLE IF EXISTS `hudba_hpback`;
+CREATE TABLE `hudba_hpback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `popis` text COLLATE utf8_czech_ci NOT NULL,
+  `cena` int(11) NOT NULL,
+  `soubor` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `soubor_id` (`soubor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
 DROP TABLE IF EXISTS `hudba_noty`;
 CREATE TABLE `hudba_noty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

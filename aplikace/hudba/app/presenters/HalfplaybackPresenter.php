@@ -3,7 +3,8 @@
 use Nette\Application\Responses\FileResponse,
     Nette\Forms\Form,
     Nette\Mail\Message,
-    Nette\Mail\SendmailMailer;
+    Nette\Mail\SendmailMailer,
+    Nette\Utils\Strings;
 
 class HalfplaybackPresenter extends BasePresenter
 {
@@ -33,8 +34,7 @@ class HalfplaybackPresenter extends BasePresenter
       ->addRule(Form::RANGE, 'Částka musí být od %d do %d Kč', array(1, 1000))
       ->setType('number');
 
-    $form->addSelect('soubor_id', 'Demo:', $this->vydavatelstvi->demoSkladby())
-      ->setPrompt('Zvolte demo mp3');
+    $form->addUpload('soubor', 'Demo:');
 
     $form->addSubmit('send', 'Uložit');
 
@@ -83,6 +83,8 @@ class HalfplaybackPresenter extends BasePresenter
   {
     $values = $form->getValues();
     $skladbaId = $this->getParameter('id');
+    $uploads = $this->context->getService('httpRequest')->getFiles();
+    unset($values['soubor']);
 
     if($skladbaId) { //editace
       try {
@@ -94,12 +96,33 @@ class HalfplaybackPresenter extends BasePresenter
     else { //nova skladba
       try {
         $skladba = $this->halfplayback->insert($values);
+        $skladbaId = $skladba->id;
       } catch (\Exception $e) {
         $this->flashMessage('Skladbu se nepodařilo uložit.', 'danger');
       }
     }
 
-    $this->flashMessage('Skladba byla uloženy.' , 'success');
+    $this->flashMessage('Skladba byla uložena.' , 'success');
+
+    //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
+    $destDir = $this->context->parameters['appDir'] . '/../data/halfplayback';
+    $nazev = '';
+    foreach ($uploads as $soubor) {
+      if($soubor && $soubor->isOk) {
+        $ext = pathinfo($soubor->getName(), PATHINFO_EXTENSION );
+        $nazev = Strings::webalize($values['nazev']) . '.' . $ext;
+        $soubor->move($destDir . '/skladba-' . $skladbaId);
+      }
+    }
+
+    if($nazev) {
+      try {
+        $this->halfplayback->update($skladbaId, array('soubor'=>$nazev));
+      } catch (\Exception $e) {
+        $this->flashMessage('Nepodařilo se uložit demo.', 'danger');
+      }
+    }
+
     $this->redirect('Halfplayback:default');
   }
 
@@ -169,6 +192,12 @@ class HalfplaybackPresenter extends BasePresenter
       $this->error('Požadovaná skladba neexistuje.');
     }
 
+    if($skladba->soubor) {
+      $destDir = $this->context->parameters['appDir'] . '/../data/halfplayback';
+      $nazev = '/skladba-' . $skladba->id;
+      if(file_exists($destDir . '/' . $nazev)) unlink($destDir . '/' . $nazev);
+    }
+
     $this->halfplayback->smazat($id);
     $this->flashMessage('Skladba byla smazána.' , 'success');
     $this->redirect('Halfplayback:default');
@@ -180,5 +209,15 @@ class HalfplaybackPresenter extends BasePresenter
       $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
       $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
     }
+	}
+
+	public function actionDownload($id)
+	{
+    $skladba = $this->halfplayback->findById($id);
+    if (!$skladba) {
+      $this->error('Požadovaná skladba neexistuje.');
+    }
+
+    $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data/halfplayback' . '/skladba-' . $skladba->id, $skladba->soubor));
 	}
 }

@@ -36,7 +36,7 @@
     <tbody>
       <tr n:foreach="$skladby as $skladba">
         <td>
-          <a n:if="$skladba->soubor_id" n:href="Vydavatelstvi:download, $skladba->soubor_id" class="btn btn-primary" title="Stáhnout mp3 demo skladby"><span class="glyphicon glyphicon-volume-up"></span></a>
+          <a n:if="$skladba->soubor" n:href="Halfplayback:download, $skladba->id" class="btn btn-primary" title="Stáhnout mp3 demo skladby"><span class="glyphicon glyphicon-volume-up"></span></a>
         </td>
         <td>
           <a n:href="Halfplayback:detail $skladba->id">{$skladba->nazev}</a>
