@@ -2,4 +2,5 @@ services:
 	- Bazar
 	- Agentura
 	- Vydavatelstvi
+	- Halfplayback
 	- UserManager

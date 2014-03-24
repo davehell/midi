@@ -66,7 +66,7 @@ class VydavatelstviPresenter extends BasePresenter
 
     $form->addTextArea('adresa', 'Dodací adresa:')
       ->setRequired('Prosím zadejte dodací adresu.')
-      ->addRule(Form::MAX_LENGTH, 'Název musí mít maximálně %d znaků', 300);
+      ->addRule(Form::MAX_LENGTH, 'Dodací adresa musí mít maximálně %d znaků', 300);
 
     $form->addText('email', 'E-mail:')
       ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100)

@@ -11,6 +11,7 @@ parameters:
 	hudba:
 		cisloUctu: '43-8859840287/0100 (Komerční banka)'
 		adminMail: 'lubos.p@cbox.cz'
+		hpbackMail: 'audiopodklady@seznam.cz'
 
 php:
 	date.timezone: Europe/Prague

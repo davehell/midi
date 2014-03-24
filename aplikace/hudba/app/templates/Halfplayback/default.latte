@@ -1,0 +1,53 @@
+{block breadcrumb}
+<ol class="breadcrumb">
+  <li><a n:href="Sluzby:">Úvod</a></li>
+  <li class="active">Halfplayback</li>
+</ol>
+{/block}
+
+{block content}
+<h1 n:block=title>Halfplayback s použitím živých kytar</h1>
+<p>
+  Tady jsem poskytl prostor pro mého kamaráda a kolegu z kapely Michal Tučný revival band.
+</p>
+<p>
+  Jako dlouholetý profesionální muzikant se rozhodl zúročit své zkušenosti a vyrábět hudební podklady kombinací počítačové techniky a živých nástrojů.
+</p>
+<p>
+  Odkaz: <a href="http://audiopodklady.webnode.cz">http://audiopodklady.webnode.cz</a>
+</p>
+
+{if $user->isInRole('admin')}
+<p>
+  <a n:href="Halfplayback:pridat" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Přidat skladbu</a>
+</p>
+{/if}
+
+{if $skladby->count()}
+  <table class="table table-striped table-hover vydavatelstvi">
+    <thead>
+      <tr>
+        <th class="buttons">&nbsp;</th>
+        <th>Název</th>
+        <th>Popis</th>
+        <th>Cena</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr n:foreach="$skladby as $skladba">
+        <td>
+          <a n:if="$skladba->soubor_id" n:href="Vydavatelstvi:download, $skladba->soubor_id" class="btn btn-primary" title="Stáhnout mp3 demo skladby"><span class="glyphicon glyphicon-volume-up"></span></a>
+        </td>
+        <td>
+          <a n:href="Halfplayback:detail $skladba->id">{$skladba->nazev}</a>
+        </td>
+        <td>{$skladba->popis}</td>
+        <td>{$skladba->cena}&nbsp;Kč</td>
+      </tr>
+    </tbody>
+  </table>
+{else}
+  <p>
+    Nejsou uloženy žádné skladby.
+  </p>
+{/if}
