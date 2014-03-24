@@ -173,14 +173,30 @@ class UcetPresenter extends BasePresenter
     else {
       try {
         $this->uzivatele->registrace($values->login, $values->heslo, $values->email);
+        $this->flashMessage('Registrace byla úspěšná.', 'success');
+      } catch (\PDOException $e) {
+        $this->flashMessage('Registrace nebyla dokončena.', 'danger');
+
+        if($e->getCode() == 23000) { //Integrity constraint violation
+          if (strpos($e->getMessage(), "1062") !== FALSE) { //Duplicate entry
+            if (strpos($e->getMessage(), 'login') !== FALSE) {
+              $form->addError("Zadejte jiné uživatelské jméno.");
+            }
+            else if (strpos($e->getMessage(), 'email') !== FALSE) {
+              $form->addError("Zadejte jiný email.");
+            }
+          }
+        }
+        $this->presenter->sendTemplate();
+      }
+
+      try {
         $this->getUser()->login($values->login, $values->heslo);
         $this->uzivatele->casPoslPrihlaseni($this->getUser()->getId());
       } catch (\Exception $e) {
-        $form->addError("Zvolte jiné uživatelské jméno");
-        $this->flashMessage('Registrace nebyla dokončena.', 'danger');
+        $this->flashMessage('Přihlášení se nepodařilo.', 'danger');
       }
-
-      $this->flashMessage('Registrace byla úspěšná.', 'success');
+      
       $this->redirect('Ucet:informace');
     }//else
   }
