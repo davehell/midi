@@ -186,14 +186,15 @@ DROP TABLE IF EXISTS `uzivatel`;
 CREATE TABLE `uzivatel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(100) CHARACTER SET latin2 COLLATE latin2_czech_cs NOT NULL,
-  `admin` bit(1) NOT NULL DEFAULT b'0',
+  `role` enum('admin','spravce','zakaznik') COLLATE utf8_czech_ci NOT NULL DEFAULT 'zakaznik',
   `salt` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   `heslo` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_czech_ci NOT NULL,
   `posledni_prihlaseni` datetime DEFAULT NULL,
   `datum_registrace` datetime DEFAULT NULL,
   `kredit` int(11) NOT NULL DEFAULT '0',
-  `zapomenute_heslo` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
+  `heslo_token` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
+  `heslo_token_platnost` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
   UNIQUE KEY `email` (`email`)

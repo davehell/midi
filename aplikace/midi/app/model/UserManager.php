@@ -47,13 +47,16 @@ class UserManager extends Nette\Object implements Security\IAuthenticator
 		}
 
 		$arr = $row->toArray();
-    $isAdmin = $arr['admin'] == '1';
+    $roles = Array();
+    $roles[] = $arr['role'];
+    if($arr['role'] == 'admin') $roles[] = 'spravce';
+
 		unset($arr[self::COLUMN_PASSWORD]);
     unset($arr[self::COLUMN_SALT]);
-    unset($arr['admin']);
+    unset($arr['role']);
     unset($arr['heslo_token']);
     unset($arr['heslo_token_platnost']);
-		return new Security\Identity($row->id, $isAdmin ? 'admin' : 'zakaznik', $arr);
+		return new Security\Identity($row->id, $roles, $arr);
 	}
 
 

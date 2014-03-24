@@ -175,14 +175,14 @@ class HalfplaybackPresenter extends BasePresenter
     $this->template->skladba = $skladba;
     $this['nakupForm']->setDefaults(array('id'=>$id));
 
-    if($this->user->isInRole('admin')) {
+    if($this->user->isInRole('spravce')) {
       $this['skladbaForm']->setDefaults($skladba);
     }
 	}
 
 	public function actionSmazat($id)
 	{
-    if (!$this->user->isInRole('admin')) {
+    if (!$this->user->isInRole('spravce')) {
       $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
       $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
     }
@@ -205,7 +205,7 @@ class HalfplaybackPresenter extends BasePresenter
 
 	public function actionPridat()
 	{
-    if (!$this->user->isInRole('admin')) {
+    if (!$this->user->isInRole('spravce')) {
       $this->flashMessage('Pro vstup na požadovanou stránku se musíte přihlásit.');
       $this->redirect('Ucet:prihlaseni', array('backlink' => $this->storeRequest()));
     }

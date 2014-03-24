@@ -44,7 +44,7 @@
 {control nakupForm}
 
 
-{if $user->isInRole('admin')}
+{if $user->isInRole('spravce')}
   <h2>Editace skladby</h2>
   <a n:href="Halfplayback:smazat, $skladba->id" class="btn btn-danger" onclick="return confirm('Opravdu smazat?')"><span class="glyphicon glyphicon-remove"></span> Smazat</a>
   {control skladbaForm}

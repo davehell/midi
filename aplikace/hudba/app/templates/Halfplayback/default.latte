@@ -17,9 +17,9 @@
   Odkaz: <a href="http://audiopodklady.webnode.cz">http://audiopodklady.webnode.cz</a>
 </p>
 
-{if $user->isInRole('admin')}
+{if $user->isInRole('spravce')}
 <p>
-  <a n:href="Halfplayback:pridat" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Přidat skladbu</a>
+  <a n:href="Halfplayback:pridat" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span> Přidat skladbu</a>
 </p>
 {/if}
 
