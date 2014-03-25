@@ -85,7 +85,7 @@ class KaraokeNaDvdPresenter extends BasePresenter
 
 
     $this->flashMessage('Objednávka byla odeslána.' , 'success');
-    $this->redirect('Info:karaokeNaDvd');
+    $this->redirect('KaraokeNaDvd:detail', $dvd->id);
   }
 
 	public function renderDefault()
