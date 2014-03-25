@@ -5,9 +5,6 @@
 # http://nette.org/security-warning
 #
 parameters:
-	midi:
-		cisloUctu: '43-8859840287/0100 (Komerční banka)'
-		adminMail: 'lubos.p@cbox.cz'
 	hudba:
 		cisloUctu: '43-8859840287/0100 (Komerční banka)'
 		adminMail: 'lubos.p@cbox.cz'
