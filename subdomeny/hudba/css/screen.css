@@ -56,8 +56,8 @@ html,body {
   color: #444;
   line-height: 24px;
   font-size: 39px;
-  padding: 5px 10px 10px 230px;
-  background: url(../img/logo.png) 0 10px no-repeat;
+  padding: 5px 10px 10px 250px;
+  background: url(../img/logo.png) 0 5px no-repeat;
 
 }
 
@@ -92,6 +92,11 @@ html,body {
 }
 .navbar-nav>li:first-child>a {
   padding-left: 0;
+}
+
+form ul.error {
+  color: #a94442;
+  padding-left: 20px;
 }
 
 .pagination-wrapper {
