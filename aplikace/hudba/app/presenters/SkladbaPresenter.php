@@ -153,7 +153,7 @@ class SkladbaPresenter extends BasePresenter
     $this->flashMessage('Skladba byla uložena.', 'success');
 
     //presun uploadovanych souboru z tmp adresare do ciloveho umisteni
-    $destDir = $this->context->parameters['appDir'] . '/../data';
+    $destDir = $this->context->parameters['appDir'] . '/../data/midi';
     $soubory = array();
     foreach ($uploads as $soubor) {
       if($soubor && $soubor->isOk) {
@@ -292,7 +292,7 @@ class SkladbaPresenter extends BasePresenter
       }
     }
 
-    $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
+    $this->sendResponse(new FileResponse($this->context->parameters['appDir'] . '/../data/midi' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id, $soubor->nazev));
 	}
 
 
@@ -319,7 +319,7 @@ class SkladbaPresenter extends BasePresenter
     }
 
     foreach($soubory as $soubor) {
-      $nazev = $this->context->parameters['appDir'] . '/../data' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id;
+      $nazev = $this->context->parameters['appDir'] . '/../data/midi' . '/skladba-' . $soubor->skladba_id . '-' . $soubor->format_id;
       if(file_exists($nazev)) unlink($nazev);
     }
 

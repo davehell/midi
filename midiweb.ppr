@@ -121,7 +121,7 @@ midiweb
 9=midi\app\HudbaModule\presenters\AgenturaPresenter.php
 [Selected Project Files]
 Main=
-Selected=midi\app\HudbaModule\templates\Bazar\detail.latte
+Selected=midi.sql
 [midi\app\HudbaModule\templates\Homepage\default.latte]
 TopLine=14
 Caret=34,53
@@ -129,11 +129,11 @@ Caret=34,53
 TopLine=12
 Caret=1,43
 [midi.sql]
-TopLine=31
-Caret=53,43
+TopLine=99
+Caret=64,116
 [midi\app\HudbaModule\templates\Bazar\detail.latte]
 TopLine=1
-Caret=132,24
+Caret=54,24
 [midi\app\HudbaModule\templates\Bazar\default.latte]
 TopLine=3
 Caret=120,36
@@ -150,5 +150,5 @@ Caret=78,55
 TopLine=95
 Caret=17,125
 [midi\app\HudbaModule\presenters\AgenturaPresenter.php]
-TopLine=25
+TopLine=9
 Caret=4,9
