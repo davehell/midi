@@ -157,7 +157,7 @@ class HalfplaybackPresenter extends BasePresenter
 
 
     $this->flashMessage('Objednávka byla odeslána.' , 'success');
-    $this->redirect('Halfplayback:default');
+    $this->redirect('Halfplayback:detail', $skladba->id);
   }
 
 	public function renderDefault()

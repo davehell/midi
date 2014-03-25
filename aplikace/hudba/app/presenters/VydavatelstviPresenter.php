@@ -61,7 +61,7 @@ class VydavatelstviPresenter extends BasePresenter
     $form->addText('pocet', 'Počet kusů:')
       ->setRequired('Prosím zadejte počet kusů.')
       ->addRule(Form::INTEGER, 'Počet kusů musí být číslo')
-      ->addRule(Form::RANGE, 'Počet kusů musí být od %d do %d Kč', array(1, 10))
+      ->addRule(Form::RANGE, 'Počet kusů musí být od %d do %d', array(1, 10))
       ->setType('number');
 
     $form->addTextArea('adresa', 'Dodací adresa:')
@@ -171,7 +171,7 @@ class VydavatelstviPresenter extends BasePresenter
 
 
     $this->flashMessage('Objednávka byla odeslána.' , 'success');
-    $this->redirect('Vydavatelstvi:default');
+    $this->redirect('Vydavatelstvi:detail', $cd->id);
   }
 
 	public function renderDefault()
