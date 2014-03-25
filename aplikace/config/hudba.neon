@@ -4,3 +4,6 @@ services:
 	- Vydavatelstvi
 	- Halfplayback
 	- UserManager
+	- Skladba
+	- Uzivatel
+	- Dvd

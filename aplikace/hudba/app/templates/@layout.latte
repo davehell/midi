@@ -28,31 +28,37 @@
 <div id="body-wrap">
   <div id="header" class="navbar navbar-inverse">
     <div class="container">
+      {block headerMenu}
       <ul class="nav navbar-nav">
         <li><a n:href="Sluzby:">Úvod</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nabízené služby <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="http://midi2.premiermusic.cz">Výroba a&nbsp;prodej MIDI a&nbsp;Karaoke souborů</a></li>
-            <li><a href="http://midi2.premiermusic.cz/info/karaoke-na-dvd">Karaoke na DVD</a></li>
-            <li><a n:href="Vydavatelstvi:default">Hudební vydavatelství</a></li>
-            <li><a n:href="Agentura:default">Hudební agentura</a></li>
-            <li><a n:href="Bazar:default">Hudební bazar</a></li>
-            <li><a n:href="Sluzby:posezeniSHarmonikou">Posezení s&nbsp;harmonikou</a></li>
-            <li><a n:href="Sluzby:pronajemAparaturyOzvuceni">Pronájem aparatury, ozvučení</a></li>
-            <li><a n:href="Halfplayback:default">Halfplayback s&nbsp;použitím živých kytar</a></li>
+            {include 'nabizeneSluzby.latte'}
           </ul>
         </li>
         <li><a n:href="Sluzby:kontakt">Kontakt</a></li>
       </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        {if $user->loggedIn}
+        <li id="uzivatel">{$user->getIdentity()->data['login']}</li>
+        <li><a n:href="Ucet:odhlaseni">Odhlášení</a></li>
+        {else}
+        <li><a n:href="Ucet:prihlaseni">Přihlášení</a></li>
+        {/if}
+      </ul>
+      {/block}
     </div>
   </div> <!-- /#header -->
 
   <div id="header2">
     <div class="container">
+      {block header}
       <a n:href="Sluzby:">
         <h1>premiermusic.cz<br> <span>stránky s hudební tématikou určené nejen pro muzikanty</span></h1>
       </a>
+      {/block}
     </div><!-- /.container -->
   </div> <!-- /#header2 -->
 
@@ -85,25 +91,8 @@
 
         <div class="col-md-4">
           <ul>
-            <li><a href="http://midi2.premiermusic.cz">Výroba a&nbsp;prodej MIDI a&nbsp;Karaoke souborů</a></li>
-            <li><a href="http://midi2.premiermusic.cz/info/karaoke-na-dvd">Karaoke na DVD</a></li>
-            <li><a href="http://hudba.premiermusic.cz/vydavatelstvi/">Hudební vydavatelství</a></li>
-            <li><a href="http://hudba.premiermusic.cz/agentura/">Hudební agentura</a></li>
-            <li><a href="http://hudba.premiermusic.cz/bazar/">Hudební bazar</a></li>
-            <li><a href="http://hudba.premiermusic.cz/sluzby/posezeni-s-harmonikou">Posezení s&nbsp;harmonikou</a></li>
-            <li><a href="http://hudba.premiermusic.cz/sluzby/pronajem-aparatury-ozvuceni">Pronájem aparatury, ozvučení</a></li>
-            <li><a href="http://hudba.premiermusic.cz/halfplayback">Halfplayback s&nbsp;použitím živých kytar</a></li>
+            {include 'nabizeneSluzby.latte'}
           </ul>
-        </div>
-
-        <div class="col-md-4">
-          <p class="pull-right">
-            {if $user->loggedIn}
-            {$user->getIdentity()->data['login']} <a n:href="Ucet:odhlaseni">Odhlášení</a>
-            {else}
-            <a n:href="Ucet:prihlaseni">Přihlášení</a>
-            {/if}
-          </p>
         </div>
       </div>
     </div><!-- /.container -->
@@ -113,8 +102,7 @@
   <script src="{$basePath}/js/netteForms.js"></script>
   <script src="{$basePath}/js/bootstrap.min.js"></script>
   <script src="{$basePath}/js/lightbox-2.6.min.js"></script>
-  <script>
-  </script>
+  {block midiScripts}{/block}
   {block scripts}{/block}
 </div><!-- /.body-wrap -->
 </body>

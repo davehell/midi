@@ -35,6 +35,11 @@ html,body {
   color: #ccc;
 }
 
+#header #uzivatel {
+  color: #ccc;
+  padding: 5px 0;
+}
+
 #header2 {
   min-height: 100px;
   padding-top: 10px;

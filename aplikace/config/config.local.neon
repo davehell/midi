@@ -1,6 +1,4 @@
 parameters:
-	midi:
-		adminMail: 'david.hellebrand@seznam.cz'
 	hudba:
 		adminMail: 'david.hellebrand@seznam.cz'
 		hpbackMail: 'david.hellebrand@seznam.cz'

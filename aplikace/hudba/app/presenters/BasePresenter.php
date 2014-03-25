@@ -8,9 +8,15 @@ use Nette\Mail\Message,
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
+  public function startup()
+  {
+    parent::startup();
+    $this->template->cisloUctu = $this->context->parameters['hudba']['cisloUctu'];
+  }
+
   public function sendMail($templateName, $adresat, $info)
   {
-    $params = $this->context->parameters['midi'];
+    $params = $this->context->parameters['hudba'];
 
     $template = $this->createTemplate();
     $template->setFile($this->context->parameters['appDir'] . '/templates/Email/' . $templateName);
