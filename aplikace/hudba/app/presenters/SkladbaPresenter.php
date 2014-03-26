@@ -186,7 +186,7 @@ class SkladbaPresenter extends BasePresenter
     $params = array('nazev' => $values['nazev'], 'autor' => $values['autor'], 'zanr' => $values['zanr'], 'verze' => $values['verze']);
     if(!$params['nazev']) $params['nazev'] = null;
     if(!$params['autor']) $params['autor'] = null;
-    $this->redirect('Skladba:default', $params);
+    $this->redirect('Skladba:katalog', $params);
   }
 
 	public function renderDefault()
@@ -324,6 +324,6 @@ class SkladbaPresenter extends BasePresenter
     }
 
     $this->flashMessage('Sklaba byla smazána.', 'success');
-    $this->redirect('Skladba:default');
+    $this->redirect('Skladba:katalog');
 	}
 }
