@@ -263,7 +263,7 @@ class UcetPresenter extends BasePresenter
       $this->flashMessage('Změna hesla se nepodařila.', 'danger');
       $this->redirect('Ucet:zapomenuteHeslo');
     }
-    //BasePresenter::sendMail('zapomenuteHeslo.latte', $values['email'], array('token' => $token, 'email' => $values['email']));
+    BasePresenter::sendMail('zapomenuteHeslo.latte', $values['email'], array('token' => $token, 'email' => $values['email']));
     $this->flashMessage('E-mail se změnou hesla byl odeslán.', 'success');
     $this->redirect('Ucet:prihlaseni');
   }
