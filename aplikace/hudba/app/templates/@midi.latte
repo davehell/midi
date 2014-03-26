@@ -62,7 +62,7 @@
           <form id="hledaniSkladby" class="navbar-form navbar-left">
             <div class="form-group">
               <input id="nazev" type="text" class="form-control tt-query" placeholder="název skladby">
-              <input id="id" type="hidden" data-skladba-url="{link Skladba:detail, xxx}">
+              <input id="id" type="hidden" data-skladba-detail="{link Skladba:detail, xxx}" data-skladba-filtr="{link Skladba:katalog, nazev=>xxx}" data-seznam-skladeb="{$basePath|noescape}/skladby.json">
             </div>
             <button type="button" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-search"></span> Hledat</button>
           </form>
@@ -79,28 +79,8 @@
 
 {block midiScripts}
   <script src="{$basePath}/js/typeahead.min.js"></script>
-  <script>
-    $('#hledaniSkladby #nazev').typeahead({
-      prefetch: {
-        url:  '{$basePath|noescape}/skladby.json'
-      },
-      limit: 10
-    });
-    $('#hledaniSkladby #nazev').on('typeahead:selected', function (object, datum) {
-        $('#hledaniSkladby #id').val(datum['id']);
-    });
-    $('#hledaniSkladby button').click(function () {
-      var id = $('#hledaniSkladby #id').val();
-      var url = $('#hledaniSkladby #id').data('skladba-url');
-      if(id) window.location = url.replace('xxx', id);
-      else window.location = {link Skladba:katalog};
-    });
-    $('#hledaniSkladby #nazev').keypress(function(e) {
-      if(e.which == 13) { //enter
-        $('#hledaniSkladby button').click();
-      }
-    });
-  </script>
+  <script src="{$basePath}/js/vyhledavani.js"></script>
+
 {/block}
 
 {layout '@layout.latte'}
