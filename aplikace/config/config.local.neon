@@ -1,7 +1,7 @@
 parameters:
 	hudba:
 		adminMail: 'david.hellebrand@seznam.cz'
-		hpbackMail: 'david.hellebrand@seznam.cz'
+		hpbackMail: 'david@hellebrand.eu'
 
 nette:
 	database:
