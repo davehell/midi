@@ -134,7 +134,10 @@ form label.required:after {
   content: "*";
 }
 
-#frm-inzeratForm-text {
+#frm-inzeratForm-text, /* bazar */
+#frm-nakupForm-adresa, /* karaoke na dvd, vydavatelstvi, halfplayback  */
+#frm-poptavkaForm-popis, #frm-poptavkaForm-kontakt /* agentura */
+{
   height: 150px;
 }
 .breadcrumb {
