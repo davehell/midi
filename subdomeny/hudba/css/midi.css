@@ -146,7 +146,7 @@
 
 /* u registraèního formuláøe je potøeba mít širší label, jinak se do nìj nevejdou texty */
 #frm-uzivatelForm .control-label {
-  width: 25%;
+  width: 30%;
 }
 
 .pagination-wrapper {
