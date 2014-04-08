@@ -13,9 +13,18 @@ class Halfplayback extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function findAll()
+	public function findAll($kategorie = null, $limit = null, $offset = null)
 	{
-		return $this->database->table('hudba_hpback')->order('nazev ASC');
+    $result = $this->database->table('hudba_hpback');
+
+    if($kategorie) {
+      $result->where("hudba_hpback_kategorie_id", $kategorie);
+    }
+
+    $result->order('nazev ASC')
+           ->limit($limit, $offset);
+
+    return $result;
 	}
 
 	/** @return Nette\Database\Table\ActiveRow */
@@ -38,5 +47,11 @@ class Halfplayback extends Nette\Object
 	public function smazat($id)
 	{
     $this->database->table('hudba_hpback')->wherePrimary($id)->delete();
+	}
+
+  /** @return array */
+	public function seznamKategorii()
+	{
+    return $this->database->table('hudba_hpback_kategorie')->fetchPairs('id', 'nazev');
 	}
 }

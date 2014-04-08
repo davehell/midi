@@ -116,9 +116,26 @@ CREATE TABLE `hudba_hpback` (
   `popis` text COLLATE utf8_czech_ci NOT NULL,
   `cena` int(11) NOT NULL,
   `soubor` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL,
+  `hudba_hpback_kategorie_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `soubor_id` (`soubor`)
+  KEY `soubor_id` (`soubor`),
+  KEY `hudba_hpback_kategorie_id` (`hudba_hpback_kategorie_id`),
+  CONSTRAINT `hudba_hpback_ibfk_1` FOREIGN KEY (`hudba_hpback_kategorie_id`) REFERENCES `hudba_hpback_kategorie` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
+DROP TABLE IF EXISTS `hudba_hpback_kategorie`;
+CREATE TABLE `hudba_hpback_kategorie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
+INSERT INTO `hudba_hpback_kategorie` (`id`, `nazev`) VALUES
+(1,	'podklady pro instrumentalisty'),
+(2,	'podklady pro nekompletní kapely'),
+(3,	'kompletní halfplayback');
 
 
 DROP TABLE IF EXISTS `hudba_noty`;

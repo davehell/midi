@@ -21,6 +21,10 @@ class HalfplaybackPresenter extends BasePresenter
   {
     $form = new \Nette\Application\UI\Form;
 
+    $form->addSelect('hudba_hpback_kategorie_id', 'Kategorie:', $this->halfplayback->seznamKategorii())
+      ->setRequired('Prosím vyberte kategorii.')
+      ->setPrompt('Zvolte kategorii');
+
     $form->addText('nazev', 'Název:')
       ->setRequired('Prosím zadejte název skladby.')
       ->addRule(Form::MAX_LENGTH, 'Název skladby musí mít maximálně %d znaků', 100);
@@ -77,6 +81,24 @@ class HalfplaybackPresenter extends BasePresenter
     $form->onSuccess[] = $this->nakupFormSucceeded;
 
     return \Bs3Form::transform($form);
+  }
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentHledaniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    foreach ($this->halfplayback->seznamKategorii() as $id=>$kategorie) {
+      $form->addCheckbox('kat' . $id, $kategorie);
+    }
+
+    $form->addSubmit('send', 'Zobrazit vybrané');
+
+    $form->onSuccess[] = $this->hledaniFormSucceeded;
+
+    return Bs3Form::transform($form);
   }
 
   public function skladbaFormSucceeded($form)
@@ -160,10 +182,34 @@ class HalfplaybackPresenter extends BasePresenter
     $this->redirect('Halfplayback:detail', $skladba->id);
   }
 
+  public function hledaniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $this->redirect('Halfplayback:default', array("filtr" => $values));
+  }
+
 	public function renderDefault()
 	{
-    $skladby = $this->halfplayback->findAll();
+    $seznamKategorii = $this->halfplayback->seznamKategorii();
+
+    $filtr = $this->getParameter('filtr');
+    $kategorie = array();
+    if($filtr) {
+      $this['hledaniForm']->setDefaults($filtr);
+      foreach ($seznamKategorii as $id => $nazev) {
+        if($filtr['kat' . $id]) $kategorie[] = $id;
+      }
+    }
+
+    $pocetSkladeb = $this->halfplayback->findAll($kategorie)->count();
+    $vp = new \VisualPaginator($this, 'vp');
+    $paginator = $vp->getPaginator();
+    $paginator->itemsPerPage = 50;
+    $paginator->itemCount = $pocetSkladeb;
+
+    $skladby = $this->halfplayback->findAll($kategorie, $paginator->getLength(), $paginator->getOffset());
     $this->template->skladby = $skladby;
+    $this->template->seznamKategorii = $seznamKategorii;
 	}
 
 	public function renderDetail($id)
