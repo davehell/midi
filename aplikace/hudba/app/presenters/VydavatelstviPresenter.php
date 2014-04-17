@@ -22,6 +22,10 @@ class VydavatelstviPresenter extends BasePresenter
   {
     $form = new \Nette\Application\UI\Form;
 
+    $form->addSelect('hudba_noty_kategorie_id', 'Kategorie:', $this->vydavatelstvi->seznamKategorii())
+      ->setRequired('Prosím vyberte kategorii.')
+      ->setPrompt('Zvolte kategorii');
+
     $form->addText('nazev', 'Název:')
       ->setRequired('Prosím zadejte název alba.')
       ->addRule(Form::MAX_LENGTH, 'Název alba musí mít maximálně %d znaků', 100);
@@ -89,6 +93,24 @@ class VydavatelstviPresenter extends BasePresenter
     $form->onSuccess[] = $this->nakupFormSucceeded;
 
     return \Bs3Form::transform($form);
+  }
+
+  /**
+   * @return Nette\Application\UI\Form
+   */
+  protected function createComponentHledaniForm()
+  {
+    $form = new Nette\Application\UI\Form;
+
+    foreach ($this->vydavatelstvi->seznamKategorii() as $id=>$kategorie) {
+      $form->addCheckbox('kat' . $id, $kategorie);
+    }
+
+    $form->addSubmit('send', 'Zobrazit vybrané');
+
+    $form->onSuccess[] = $this->hledaniFormSucceeded;
+
+    return Bs3Form::transform($form);
   }
 
   public function cdFormSucceeded($form)
@@ -174,10 +196,34 @@ class VydavatelstviPresenter extends BasePresenter
     $this->redirect('Vydavatelstvi:detail', $cd->id);
   }
 
+  public function hledaniFormSucceeded($form)
+  {
+    $values = $form->getValues();
+    $this->redirect('Vydavatelstvi:default', array("filtr" => $values));
+  }
+
 	public function renderDefault()
 	{
-    $noty = $this->vydavatelstvi->findAll();
+    $seznamKategorii = $this->vydavatelstvi->seznamKategorii();
+
+    $filtr = $this->getParameter('filtr');
+    $kategorie = array();
+    if($filtr) {
+      $this['hledaniForm']->setDefaults($filtr);
+      foreach ($seznamKategorii as $id => $nazev) {
+        if($filtr['kat' . $id]) $kategorie[] = $id;
+      }
+    }
+
+    $pocetNot = $this->vydavatelstvi->findAll($kategorie)->count();
+    $vp = new \VisualPaginator($this, 'vp');
+    $paginator = $vp->getPaginator();
+    $paginator->itemsPerPage = 50;
+    $paginator->itemCount = $pocetNot;
+
+    $noty = $this->vydavatelstvi->findAll($kategorie, $paginator->getLength(), $paginator->getOffset());
     $this->template->noty = $noty;
+    $this->template->seznamKategorii = $seznamKategorii;
 	}
 
 

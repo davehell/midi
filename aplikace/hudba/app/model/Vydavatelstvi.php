@@ -13,9 +13,18 @@ class Vydavatelstvi extends Nette\Object
 
 
 	/** @return Nette\Database\Table\Selection */
-	public function findAll()
+	public function findAll($kategorie = null, $limit = null, $offset = null)
 	{
-		return $this->database->table('hudba_noty')->order('nazev ASC');
+    $result = $this->database->table('hudba_noty');
+
+    if($kategorie) {
+      $result->where("hudba_noty_kategorie_id", $kategorie);
+    }
+
+    $result->order('nazev ASC')
+           ->limit($limit, $offset);
+
+    return $result;
 	}
 
 	/** @return Nette\Database\Table\ActiveRow */
@@ -49,5 +58,11 @@ class Vydavatelstvi extends Nette\Object
 	public function nazevSouboru($id)
 	{
     return $this->database->table('soubor')->get($id);
+	}
+
+  /** @return array */
+	public function seznamKategorii()
+	{
+    return $this->database->table('hudba_noty_kategorie')->fetchPairs('id', 'nazev');
 	}
 }

@@ -41,7 +41,27 @@
   Toto obsazení je možne na přání upravit pro jakékoliv hlasy, např. doprovod místo B trubky, pro pozoun, Es trubku apod.
 </p>
 
+{form hledaniForm class => ''}
+    <legend>Filtrování skladeb</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Kategorie:</label>
+      {foreach $seznamKategorii as $id => $kategorie}
+        <label class="checkbox-inline">
+          <input n:name="kat{$id}:" /> {$kategorie}
+        </label>
+      {/foreach}
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+        {input 'send'}
+        <a n:href="Vydavatelstvi:" class="btn btn-primary">Zobrazit vše</a>
+      </div>
+    </div>
+{/form hledaniForm}
+
 {if $noty->count()}
+  {control vp}
   <table class="table table-striped table-hover vydavatelstvi">
     <thead>
       <tr>

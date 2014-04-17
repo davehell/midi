@@ -146,10 +146,26 @@ CREATE TABLE `hudba_noty` (
   `cena` int(11) NOT NULL,
   `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   `soubor_id` int(11) DEFAULT NULL,
+  `hudba_noty_kategorie_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `soubor_id` (`soubor_id`),
+  KEY `hudba_noty_kategorie_id` (`hudba_noty_kategorie_id`),
+  CONSTRAINT `hudba_noty_ibfk_2` FOREIGN KEY (`hudba_noty_kategorie_id`) REFERENCES `hudba_noty_kategorie` (`id`),
   CONSTRAINT `hudba_noty_ibfk_1` FOREIGN KEY (`soubor_id`) REFERENCES `soubor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
+CREATE TABLE `hudba_noty_kategorie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `hudba_noty_kategorie` (`id`, `nazev`) VALUES
+(1,	'MDO - malý dechový orchestr'),
+(2,	'VDO - velké dechový orchestr'),
+(3,	'MTO - malý taneční orchestr')
+(4,	'Z - zpěvník');
 
 
 DROP TABLE IF EXISTS `nakup`;
