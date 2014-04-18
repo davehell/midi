@@ -204,14 +204,14 @@ class VydavatelstviPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-    $seznamKategorii = $this->vydavatelstvi->seznamKategorii();
+    $kategorieVse = $this->vydavatelstvi->kategorie();
 
     $filtr = $this->getParameter('filtr');
     $kategorie = array();
     if($filtr) {
       $this['hledaniForm']->setDefaults($filtr);
-      foreach ($seznamKategorii as $id => $nazev) {
-        if($filtr['kat' . $id]) $kategorie[] = $id;
+      foreach ($kategorieVse as $kat) {
+        if($filtr['kat' . $kat->id]) $kategorie[] = $kat->id;
       }
     }
 
@@ -223,7 +223,7 @@ class VydavatelstviPresenter extends BasePresenter
 
     $noty = $this->vydavatelstvi->findAll($kategorie, $paginator->getLength(), $paginator->getOffset());
     $this->template->noty = $noty;
-    $this->template->seznamKategorii = $seznamKategorii;
+    $this->template->kategorie = $kategorieVse;
 	}
 
 

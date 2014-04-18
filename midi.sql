@@ -155,17 +155,20 @@ CREATE TABLE `hudba_noty` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
+DROP TABLE IF EXISTS `hudba_noty_kategorie`;
 CREATE TABLE `hudba_noty_kategorie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `zkratka` varchar(10) COLLATE utf8_czech_ci NOT NULL,
+  `obsazeni` text COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `hudba_noty_kategorie` (`id`, `nazev`) VALUES
-(1,	'MDO - malý dechový orchestr'),
-(2,	'VDO - velké dechový orchestr'),
-(3,	'MTO - malý taneční orchestr')
-(4,	'Z - zpěvník');
+INSERT INTO `hudba_noty_kategorie` (`id`, `nazev`, `zkratka`, `obsazeni`) VALUES
+(1,	'malý dechový orchestr',	'MDO',	'<ul><li>partitura</li><li>Zpěv</li><li>Klarinet Es</li><li>Klarinet 1. B</li><li>Křídlovka 1. B</li><li>Křídlovka 2.B</li><li>Tenor</li><li>Baryton</li><li>Doprovod B hlas</li><li>Bicí</li></ul>'),
+(2,	'velký dechový orchestr',	'VDO',	'<ul>\r\n<li>Pikola</li>\r\n<li>Flétna</li>\r\n<li>Hoboj</li>\r\n<li>Fagot</li>\r\n<li>Klarinety – Es, 1.B, 2.B, 3.B, Bas klarinet</li>\r\n<li>Saxofony – 1.Es alt, 2.B tenor, 3. Es alt, 4.B tenor, Es Baryton</li>\r\n<li>Křídlovky – 1. a 2. B</li>\r\n<li>Tenor</li>\r\n<li>Baryton</li>\r\n<li>Trubky 1.B, 2.B, 3.B</li>\r\n<li>Trubky doprovod – 1.a 2.Es (možno upravit na B hlasy, případně trombon, melofon)</li>\r\n<li>Horna 1. – 4. F</li>\r\n<li>Pozouny 1. – 3.</li>\r\n<li>F tuba</li>\r\n<li>B tuba</li>\r\n<li>Contrabas</li>\r\n<li>Bicí</li>\r\n</ul>\r\n<p>Toto obsazení je standardní, některé aranže nemusí obsahovat všechny nástroje. Po konzultaci je možno obsazení měnit.</p>'),
+(3,	'malý taneční orchestr',	'MTO',	'<ul>\r\n<li>klávesy</li>\r\n<li>saxofon</li>\r\n<li>trubka</li>\r\n<li>basy</li>\r\n<li>kytara</li>\r\n<li>dle potřeby konrétní kapely</li>\r\n</ul>'),
+(4,	'zpěvník',	'Z',	'<ul>\r\n<li>melodie</li>\r\n<li>text</li>\r\n<li>akordy</li>\r\n</ul>');
 
 
 DROP TABLE IF EXISTS `nakup`;

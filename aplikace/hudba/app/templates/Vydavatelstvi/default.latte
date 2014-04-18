@@ -5,6 +5,14 @@
 </ol>
 {/block}
 
+{block scripts}
+<script>
+  $(function () {
+    $("[data-toggle='popover']").popover( { trigger: "hover", html: true } );
+  });
+</script>
+{/block}
+
 {block content}
 <h1 n:block=title>Hudební vydavatelství</h1>
 
@@ -22,34 +30,21 @@
 </p>
 
 <p>
-  Malý dechový orchestr - obsazení:
-</p>
-<ul>
-  <li>partitura</li>
-  <li>Zpěv</li>
-  <li>Klarinet Es</li>
-  <li>Klarinet 1. B</li>
-  <li>Křídlovka 1. B</li>
-  <li>Křídlovka 2.B</li>
-  <li>Tenor</li>
-  <li>Baryton</li>
-  <li>Doprovod B hlas</li>
-  <li>Bicí</li>
-</ul>
-
-<p>
-  Toto obsazení je možne na přání upravit pro jakékoliv hlasy, např. doprovod místo B trubky, pro pozoun, Es trubku apod.
+  Obsazení nástrojů je možne na přání upravit pro jakékoliv hlasy, např. doprovod místo B trubky, pro pozoun, Es trubku apod.
 </p>
 
 {form hledaniForm class => ''}
     <legend>Filtrování skladeb</legend>
     <div class="form-group">
       <label class="col-sm-2 control-label">Kategorie:</label>
-      {foreach $seznamKategorii as $id => $kategorie}
+        <div class="col-sm-offset-2">
+      {foreach $kategorie as $kat}
         <label class="checkbox-inline">
-          <input n:name="kat{$id}:" /> {$kategorie}
-        </label>
+          <input n:name="kat{$kat->id}:" /> {$kat->nazev}
+          <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="{$kat->nazev} - obsazení" data-content="{$kat->obsazeni}"></span>
+        </label><br>
       {/foreach}
+      </div>
     </div>
 
     <div class="form-group">
@@ -83,7 +78,7 @@
           <a n:href="Vydavatelstvi:detail $nota->id">{$nota->nazev}</a>
         </td>
         <td>{$nota->popis}</td>
-        <td>{$nota->hudba_noty_kategorie->nazev|substr:0:3|webalize|upper}</td>
+        <td>{$nota->hudba_noty_kategorie->zkratka}</td>
         <td>{$nota->cena}&nbsp;Kč</td>
       </tr>
     </tbody>

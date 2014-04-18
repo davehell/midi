@@ -65,4 +65,9 @@ class Vydavatelstvi extends Nette\Object
 	{
     return $this->database->table('hudba_noty_kategorie')->fetchPairs('id', 'nazev');
 	}
+  /** @return array */
+	public function kategorie()
+	{
+    return $this->database->table('hudba_noty_kategorie');
+	}
 }
