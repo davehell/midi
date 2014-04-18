@@ -152,4 +152,5 @@ table.vydavatelstvi td {
 }
 table.vydavatelstvi .buttons {
   width: 100px;
+  display: inline-block;
 }
