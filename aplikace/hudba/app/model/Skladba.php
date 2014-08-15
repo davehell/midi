@@ -98,6 +98,10 @@ class Skladba extends Nette\Object
     return $this->findAll()->count();
 	}
 
+	public function prumernaCena()
+	{
+		return $this->findAll()->aggregation("AVG(cena)");
+	}
 
 	public function update($skladbaId, $values)
 	{
@@ -159,5 +163,15 @@ class Skladba extends Nette\Object
     fwrite($handle, '""' . $eol);
     fwrite($handle, ']' . $eol);
     fclose($handle);
+	}
+
+	public function stazenoSkladeb()
+	{
+		return $this->database->table('nakup')->where("uzivatel.role", "zakaznik")->count();
+	}
+
+	public function celkemNakoupenoZa()
+	{
+		return $this->database->table('nakup')->where("uzivatel.role", "zakaznik")->sum("cena");
 	}
 }

@@ -4,6 +4,25 @@
 <h1 n:block=title>Administrační rozhraní</h1>
 
 <h2>
+  Statistika
+</h2>
+
+<dl>
+  <dt>Počet zákazníků</dt>
+  <dd>{$pocetZakazniku} </dd>
+  <dt>Celkem nabito kreditu</dt>
+  <dd>{$nabitoKreditu |number:0:',':' '}&nbsp;Kč</dd>
+  <dt>Počet skladeb</dt>
+  <dd>{$pocetSkladeb |number:0:',':' '}</dd>
+  <dt>Průměrná cena skladby</dt>
+  <dd>{$prumCena |number:0:',':' '}&nbsp;Kč</dd>
+  <dt>Celkem staženo skladeb</dt>
+  <dd>{$stazenoSkladeb |number:0:',':' '}</dd>
+  <dt>Celkem nakoupeno za</dt>
+  <dd>{$nakoupenoZa |number:0:',':' '}&nbsp;Kč</dd>
+</dl>
+
+<h2>
   Zákazníci čekající na nabití kreditu
 </h2>
 

@@ -242,4 +242,13 @@ class Uzivatel extends Nette\Object
     $uziv = $this->database->table('uzivatel')->select('id, login, email, heslo_token')->where('email', $email)->where('heslo_token', $token)->where('heslo_token_platnost >= ?', new Nette\Database\SqlLiteral('NOW()'))->fetch();
     return $uziv;
 	}
+
+	public function vsichniZakaznici()
+	{
+		return $this->findAll()->where('role', "zakaznik");
+	}
+	public function nabitoKreditu()
+	{
+		return $this->database->table('dobijeni')->where("uzivatel.role", "zakaznik")->sum("castka");
+	}
 }

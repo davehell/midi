@@ -143,7 +143,13 @@ class AdminPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-    $this->template->cekajiciNaDobiti = $this->uzivatele->cekajiciNaDobiti();
+		$this->template->pocetZakazniku = $this->uzivatele->vsichniZakaznici()->count();
+		$this->template->nabitoKreditu = $this->uzivatele->nabitoKreditu();
+		$this->template->pocetSkladeb = $this->skladby->pocetSkladeb();
+		$this->template->prumCena = $this->skladby->prumernaCena();
+		$this->template->stazenoSkladeb = $this->skladby->stazenoSkladeb();
+		$this->template->nakoupenoZa = $this->skladby->celkemNakoupenoZa();
+		$this->template->cekajiciNaDobiti = $this->uzivatele->cekajiciNaDobiti();
 	}
 
 	public function actionPripsatKredit($id)
