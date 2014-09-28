@@ -1,9 +1,20 @@
--- Adminer 4.0.2 MySQL dump
+-- Adminer 4.1.0 MySQL dump
 
 SET NAMES utf8;
+SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
-SET time_zone = '+01:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `cd`;
+CREATE TABLE `cd` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `popis` text COLLATE utf8_czech_ci NOT NULL,
+  `cena` int(11) NOT NULL,
+  `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
 
 DROP TABLE IF EXISTS `dobijeni`;
 CREATE TABLE `dobijeni` (
@@ -27,7 +38,6 @@ CREATE TABLE `format` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-TRUNCATE `format`;
 INSERT INTO `format` (`id`, `nazev`, `demo`) VALUES
 (1,	'text',	1),
 (3,	'SMF s  diakritikou',	0),
@@ -53,10 +63,6 @@ CREATE TABLE `hudba_agentura` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-TRUNCATE `hudba_agentura`;
-INSERT INTO `hudba_agentura` (`id`, `nazev`, `popis`, `www`, `foto`) VALUES
-(1,	'Michal Tučný revival band',	'Jsme revival Michala Tučného na Moravě, se sídlem ve Frýdku-Místku.\r\n\r\nNaše produkce je vhodná pro společenské a obecní akce, festivaly, kluby, firemní a soukromé večírky. V neposlední řadě jsou uspěšné i samostatné koncerty.\r\n\r\nCelý koncert je spíš vzpomínka na velkou osobnost a nezapomenutelnou legendu české country, Michala Tučného.',	'http://www.michaltucnyrevival.cz/',	'kapela-1.jpg'),
-(2,	'Lubomír Piskoř - posezení s harmonikou',	'Vystoupení je bez jakékoliv aparatury a maximální délka trvání je 4 hodiny.',	'',	'kapela-2.jpg');
 
 DROP TABLE IF EXISTS `hudba_bazar`;
 CREATE TABLE `hudba_bazar` (
@@ -75,11 +81,6 @@ CREATE TABLE `hudba_bazar` (
   CONSTRAINT `hudba_bazar_ibfk_1` FOREIGN KEY (`hudba_bazar_kategorie_id`) REFERENCES `hudba_bazar_kategorie` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-TRUNCATE `hudba_bazar`;
-INSERT INTO `hudba_bazar` (`id`, `text`, `email`, `tel`, `datum`, `typ`, `hudba_bazar_kategorie_id`, `foto1`, `foto2`, `foto3`) VALUES
-(2,	'Prodám akordeon Lignatone Melodia  III, 80 basů, plně funkční, včetně kufru na přepravu',	'lubos.p@cbox.cz',	'602744055',	'2014-02-06',	'prodej',	3,	'inzerat-2-1.JPG',	'inzerat-2-2.JPG',	'inzerat-2-3.JPG'),
-(4,	'Prodám dynamický nástrojový mikrofon Beyerdynamic TGX 5. Cena 1.300,- Kč',	'lubos.p@cbox.cz',	'602744055',	'2014-02-06',	'prodej',	5,	'inzerat-4-1.JPG',	'inzerat-4-2.JPG',	NULL),
-(5,	'Prodám Alt Saxofon Amati Classic SUPER, po celkové generální opravě, včetně kufru. Cena: 6.500,- Kč',	'lubos.p@cbox.cz',	'602744055',	'2014-02-06',	'prodej',	1,	'inzerat-5-1.JPG',	'inzerat-5-2.JPG',	'inzerat-5-3.JPG');
 
 DROP TABLE IF EXISTS `hudba_bazar_kategorie`;
 CREATE TABLE `hudba_bazar_kategorie` (
@@ -88,7 +89,6 @@ CREATE TABLE `hudba_bazar_kategorie` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-TRUNCATE `hudba_bazar_kategorie`;
 INSERT INTO `hudba_bazar_kategorie` (`id`, `nazev`) VALUES
 (1,	'dechové nástroje'),
 (2,	'strunné nástroje'),
@@ -96,18 +96,6 @@ INSERT INTO `hudba_bazar_kategorie` (`id`, `nazev`) VALUES
 (4,	'bicí nástroje'),
 (5,	'aparatura'),
 (6,	'staré krámy');
-
-DROP TABLE IF EXISTS `hudba_cd`;
-CREATE TABLE `hudba_cd` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `autor` varchar(100) COLLATE utf8_czech_ci NOT NULL,
-  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
-  `popis` text COLLATE utf8_czech_ci NOT NULL,
-  `cena` int(11) NOT NULL,
-  `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
-
 
 DROP TABLE IF EXISTS `hudba_hpback`;
 CREATE TABLE `hudba_hpback` (
@@ -131,12 +119,10 @@ CREATE TABLE `hudba_hpback_kategorie` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-
 INSERT INTO `hudba_hpback_kategorie` (`id`, `nazev`) VALUES
 (1,	'podklady pro instrumentalisty'),
 (2,	'podklady pro nekompletní kapely'),
 (3,	'kompletní halfplayback');
-
 
 DROP TABLE IF EXISTS `hudba_noty`;
 CREATE TABLE `hudba_noty` (
@@ -146,12 +132,12 @@ CREATE TABLE `hudba_noty` (
   `cena` int(11) NOT NULL,
   `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   `soubor_id` int(11) DEFAULT NULL,
-  `hudba_noty_kategorie_id` int(11) NOT NULL,
+  `hudba_noty_kategorie_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `soubor_id` (`soubor_id`),
   KEY `hudba_noty_kategorie_id` (`hudba_noty_kategorie_id`),
-  CONSTRAINT `hudba_noty_ibfk_2` FOREIGN KEY (`hudba_noty_kategorie_id`) REFERENCES `hudba_noty_kategorie` (`id`),
-  CONSTRAINT `hudba_noty_ibfk_1` FOREIGN KEY (`soubor_id`) REFERENCES `soubor` (`id`)
+  CONSTRAINT `hudba_noty_ibfk_1` FOREIGN KEY (`soubor_id`) REFERENCES `soubor` (`id`),
+  CONSTRAINT `hudba_noty_ibfk_2` FOREIGN KEY (`hudba_noty_kategorie_id`) REFERENCES `hudba_noty_kategorie` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
@@ -170,6 +156,18 @@ INSERT INTO `hudba_noty_kategorie` (`id`, `nazev`, `zkratka`, `obsazeni`) VALUES
 (3,	'malý taneční orchestr',	'MTO',	'<ul>\r\n<li>klávesy</li>\r\n<li>saxofon</li>\r\n<li>trubka</li>\r\n<li>basy</li>\r\n<li>kytara</li>\r\n<li>dle potřeby konrétní kapely</li>\r\n</ul>'),
 (4,	'zpěvník',	'Z',	'<ul>\r\n<li>melodie</li>\r\n<li>text</li>\r\n<li>akordy</li>\r\n</ul>');
 
+DROP TABLE IF EXISTS `karaoke_dvd`;
+CREATE TABLE `karaoke_dvd` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazev` varchar(100) COLLATE utf8_czech_ci NOT NULL,
+  `popis` text COLLATE utf8_czech_ci NOT NULL,
+  `cena` int(11) NOT NULL,
+  `foto` varchar(50) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `karaoke_dvd` (`id`, `nazev`, `popis`, `cena`, `foto`) VALUES
+(1,	'Zpíváme v klubu 1',	'1. Bella Maria - Sandmann / Jiřina Fikejzová\r\n2. Beskyde, beskyde - lidová / úprava L. Piskoř\r\n3. Cikánka - K. Vacek / úprava L. Piskoř\r\n4. Co je to za děvčátko - lidová / úprava L. Piskoř\r\n5. Děti z Pirea - M. Hadjidakis / Z. Borovec\r\n6. Do lesíčka na čekanou - lidová / úprava L. Piskoř\r\n7. Hájku háječku - lidová / úprava L. Piskoř\r\n8. Hledám galanečku - lidová / úprava L. Piskoř\r\n9. Javorinka šedivá - lidová / úprava Moravanka\r\n10. Rožnovské hodiny - lidová / úprava L. Piskoř',	300,	'dvd-1.jpg');
 
 DROP TABLE IF EXISTS `nakup`;
 CREATE TABLE `nakup` (
@@ -213,8 +211,8 @@ CREATE TABLE `soubor` (
   UNIQUE KEY `skladba_id_format_id` (`skladba_id`,`format_id`),
   KEY `skladba_id` (`skladba_id`),
   KEY `format_id` (`format_id`),
-  CONSTRAINT `soubor_ibfk_3` FOREIGN KEY (`skladba_id`) REFERENCES `skladba` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `soubor_ibfk_2` FOREIGN KEY (`format_id`) REFERENCES `format` (`id`)
+  CONSTRAINT `soubor_ibfk_2` FOREIGN KEY (`format_id`) REFERENCES `format` (`id`),
+  CONSTRAINT `soubor_ibfk_3` FOREIGN KEY (`skladba_id`) REFERENCES `skladba` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
@@ -244,11 +242,10 @@ CREATE TABLE `zanr` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-TRUNCATE `zanr`;
 INSERT INTO `zanr` (`id`, `nazev`) VALUES
 (2,	'pop-rock'),
 (5,	'lidovky'),
 (6,	'ostatní písně'),
 (7,	'country');
 
--- 2014-02-28 10:05:54
+-- 2014-09-28 15:51:42

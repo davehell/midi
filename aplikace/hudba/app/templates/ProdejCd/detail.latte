@@ -1,0 +1,31 @@
+{block breadcrumb}
+<ol class="breadcrumb">
+  <li><a n:href="Sluzby:default">Úvod</a></li>
+  <li><a n:href="ProdejCd:default">Prodej CD</a></li>
+  <li class="active">Objednávka CD</li>
+</ol>
+{/block}
+
+{block content}
+<h1 n:block=title>CD &bdquo;{$cd->nazev}&ldquo;</h1>
+
+<div class="media">
+  <img n:if="$cd->foto" class="media-object pull-left" src="{$basePath}/img/data/cd/{$cd->foto}" width="100px" height="100px">
+  <div class="media-body">
+    <h3 class="media-heading">{$cd->nazev}</h3>
+    <p>
+      <strong>cena: {$cd->cena}&nbsp;Kč</strong>
+    </p>
+    <p>
+      {!$cd->popis|nl2br}
+    </p>
+  </div>
+</div>
+
+
+<h2>
+  Objednávkový formulář
+</h2>
+
+{control nakupForm}
+
