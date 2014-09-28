@@ -4,7 +4,5 @@ aplikace/log/*
 aplikace/temp/*
 aplikace/vendor/Nette/*
 Thumbs.db
-subdomeny/midi2/*.json
-subdomeny/midi2/img/data/*
-subdomeny/hudba/*.json
-subdomeny/hudba/img/data/*
+subdomeny/www/*.json
+subdomeny/www/img/data/*
