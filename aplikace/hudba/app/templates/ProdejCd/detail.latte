@@ -16,16 +16,17 @@
     <p>
       <strong>cena: {$cd->cena}&nbsp;Kč</strong>
     </p>
-    <p>
-      {!$cd->popis|nl2br}
-    </p>
+    {!$cd->popis}
   </div>
 </div>
-
 
 <h2>
   Objednávkový formulář
 </h2>
 
 {control nakupForm}
+
+<style type="text/css">
+table { display: none; }
+</style>
 

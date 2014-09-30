@@ -27,9 +27,7 @@
         <strong>cena: {$cd->cena}&nbsp;Kč</strong>
         <a n:href="prodejCd:detail, $cd->id" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Objednat CD</a>
       </p>
-      <p>
-        {!$cd->popis|nl2br}
-      </p>
+      {!$cd->popis}
     </div>
   </div>
   <hr>
