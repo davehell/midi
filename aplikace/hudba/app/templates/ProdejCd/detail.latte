@@ -9,22 +9,25 @@
 {block content}
 <h1 n:block=title>CD &bdquo;{$cd->nazev}&ldquo;</h1>
 
-<div class="media">
-  <img n:if="$cd->foto" class="media-object pull-left" src="{$basePath}/img/data/cd/{$cd->foto}" width="100px" height="100px">
-  <div class="media-body">
-    <h3 class="media-heading">{$cd->nazev}</h3>
-    <p>
-      <strong>cena: {$cd->cena}&nbsp;Kč</strong>
-    </p>
+<div class="row">
+  <div class="col-md-7">
     {!$cd->popis}
+    <h2>
+      Objednávkový formulář
+    </h2>
+    <p>
+      <strong>Název CD:</strong> {$cd->nazev}
+    </p>
+    <p>
+      <strong>Cena za kus:</strong> {$cd->cena}&nbsp;Kč
+    </p>
+    {control nakupForm}
+  </div>
+
+  <div class="col-md-5">
+      <img n:if="$cd->foto" class="media-object pull-left" src="{$basePath}/img/data/cd/{$cd->foto}" width="400px" height="400px">
   </div>
 </div>
-
-<h2>
-  Objednávkový formulář
-</h2>
-
-{control nakupForm}
 
 <style type="text/css">
 table { display: none; }

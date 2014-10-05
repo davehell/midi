@@ -20,7 +20,9 @@
 
 {foreach $seznamCd as $cd}
   <div class="media">
-    <img n:if="$cd->foto" class="media-object pull-left" src="{$basePath}/img/data/cd/{$cd->foto}" width="100px" height="100px">
+    <a class="media-object pull-left" href="{$basePath}/img/data/cd/{$cd->foto}" data-lightbox="group{$cd->id}">
+      <img n:if="$cd->foto"  src="{$basePath}/img/data/cd/thumb-{$cd->foto}" width="100px" height="100px">
+    </a>
     <div class="media-body">
       <h3 class="media-heading">{$cd->nazev}</h3>
       <p>
