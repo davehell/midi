@@ -20,6 +20,13 @@ class ProdejCdPresenter extends BasePresenter
 
     $form->addHidden('id');
 
+    $platba = array(
+        'dobirka' => 'Dobírkou',
+        'prevod' => 'Převodem na účet',
+    );
+    $form->addRadioList('platba', 'Platba:', $platba)
+         ->setRequired('Prosím vyberte způsob platby.');
+
     $form->addText('pocet', 'Počet kusů:')
       ->setRequired('Prosím zadejte počet kusů.')
       ->addRule(Form::INTEGER, 'Počet kusů musí být číslo')
@@ -64,6 +71,7 @@ class ProdejCdPresenter extends BasePresenter
 
     $text = "Název: " . $cd->nazev . "\n";
     $text .= "Cena za kus: " . $cd->cena . " Kč\n\n";
+    $text .= "Platba: " . ($values['platba'] == "dobirka" ? "dobírkou" : "převodem") . "\n";
     $text .= "Počet kusů: " . $values['pocet'] . "\n";
     $text .= "Adresa:\n" . $values['adresa'] . "\n";
     $text .= "Telefon: " . $values['tel'] . "\n";

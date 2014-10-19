@@ -133,6 +133,13 @@ form label.required {
 form label.required:after {
   content: "*";
 }
+/* u label radiobuttonku neni treba zvyrazneni povinnych polozek */
+form .radio label.required {
+  color: #000;
+}
+form .radio label.required:after {
+  content: "";
+}
 
 #frm-inzeratForm-text, /* bazar */
 #frm-nakupForm-adresa, /* karaoke na dvd, vydavatelstvi, halfplayback  */
