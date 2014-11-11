@@ -6,6 +6,13 @@
 </ol>
 {/block}
 
+{block scripts}
+<script>
+  $( "input[name='antiSpam']" ).closest( "div.form-group" ).css( "display", "none" );
+  $( "input[name='antiSpam']" ).val("6");
+</script>
+{/block}
+
 {block content}
 <h1 n:block=title>CD &bdquo;{$cd->nazev}&ldquo;</h1>
 
