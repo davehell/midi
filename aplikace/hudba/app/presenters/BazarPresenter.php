@@ -96,6 +96,7 @@ class BazarPresenter extends BasePresenter
     unset($values['foto1']);
     unset($values['foto2']);
     unset($values['foto3']);
+    unset($values['antiSpam']);
 
     if($inzeratId) { //editace
       try {
