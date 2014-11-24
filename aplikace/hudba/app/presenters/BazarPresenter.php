@@ -54,6 +54,11 @@ class BazarPresenter extends BasePresenter
       ->addCondition(Form::FILLED)
       ->addRule(Form::IMAGE, 'Foto musí být JPEG, PNG nebo GIF.');
 
+    $form->addText('antiSpam', 'Ochrana proti spamu:  Kolik je dvakrát tři? (výsledek napište číslem)', 30)
+      ->setRequired('Vyplňte ochranu proti spamu.')
+      ->addRule(Form::INTEGER, 'Špatně vyplněná ochrana proti spamu')
+      ->addRule(Form::RANGE, 'Špatně vyplněná ochrana proti spamu', array(6, 6));
+
     $form->addSubmit('send', 'Uložit');
 
     $form->onSuccess[] = $this->inzeratFormSucceeded;

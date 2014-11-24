@@ -88,6 +88,11 @@ class VydavatelstviPresenter extends BasePresenter
     $form->addText('pozn', 'Poznámka:')
       ->addRule(Form::MAX_LENGTH, 'Poznámka musí mít maximálně %d znaků', 300);
 
+    $form->addText('antiSpam', 'Ochrana proti spamu:  Kolik je dvakrát tři? (výsledek napište číslem)', 30)
+      ->setRequired('Vyplňte ochranu proti spamu.')
+      ->addRule(Form::INTEGER, 'Špatně vyplněná ochrana proti spamu')
+      ->addRule(Form::RANGE, 'Špatně vyplněná ochrana proti spamu', array(6, 6));
+
     $form->addSubmit('send', 'Odeslat objednávku');
 
     $form->onSuccess[] = $this->nakupFormSucceeded;

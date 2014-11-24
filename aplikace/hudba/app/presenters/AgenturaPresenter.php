@@ -39,6 +39,10 @@ class AgenturaPresenter extends BasePresenter
 
     $form->addRadioList('zastupovat', 'Požadujete zastupování:', array('1'=>'ano','0'=>'ne'));
 
+    $form->addText('antiSpam', 'Ochrana proti spamu:  Kolik je dvakrát tři? (výsledek napište číslem)', 30)
+      ->setRequired('Vyplňte ochranu proti spamu.')
+      ->addRule(Form::INTEGER, 'Špatně vyplněná ochrana proti spamu')
+      ->addRule(Form::RANGE, 'Špatně vyplněná ochrana proti spamu', array(6, 6));
 
     $form->addSubmit('send', 'Odeslat');
 
