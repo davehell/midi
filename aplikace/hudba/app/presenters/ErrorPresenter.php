@@ -1,8 +1,6 @@
 <?php
 
-use Nette,
-	Model,
-	Nette\Diagnostics\Debugger;
+use Nette\Diagnostics\Debugger;
 
 
 /**

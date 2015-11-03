@@ -90,6 +90,11 @@ class UcetPresenter extends BasePresenter
       ->addRule(Form::EMAIL, 'Zadejte platnou e-mailovou adresu')
       ->addRule(Form::MAX_LENGTH, 'E-mail musí mít maximálně %d znaků', 100);
 
+    $form->addText('antiSpam', 'Ochrana proti spamu:  Kolik je dvakrát tři? (výsledek napište číslem)', 30)
+      ->setRequired('Vyplňte ochranu proti spamu.')
+      ->addRule(Form::INTEGER, 'Špatně vyplněná ochrana proti spamu')
+      ->addRule(Form::RANGE, 'Špatně vyplněná ochrana proti spamu', array(6, 6));
+
     $form->addSubmit('send', 'Dokončení registrace');
 
     $form->onSuccess[] = $this->uzivatelFormSucceeded;
@@ -166,6 +171,7 @@ class UcetPresenter extends BasePresenter
   {
     $values = $form->getValues();
     $uzivId = $this->getParameter('id');
+    unset($values['antiSpam']);
 
     if($uzivId) {
       unset($values['login']);
