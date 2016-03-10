@@ -18,15 +18,23 @@
   <dd>{$transakce->datum|date:'%d.%m.%Y'}</dd>
   <dt>částka:</dt>
   <dd>{$transakce->castka}&nbsp;Kč</dd>
-  <dt>číslo účtu:</dt>
+  <dt>číslo účtu (CZK):</dt>
   <dd>{$cisloUctu}</dd>
+  <dt>číslo účtu (EUR):</dt>
+  <dd>
+    2000958904/20100
+    <ul>
+      <li>IBAN: CZ4120100000002000958904</li>
+      <li>SWIFT: FIOBCZPPXXX</li>
+      <li>Název účtu: Ing. Lubomír Piskoř</li>
+    </ul>
+  </dd>
   <dt>variabilní symbol:</dt>
   <dd>{$transakce->vs}</dd>
 </dl>
- 
 
 <p>
- Peníze je možné zasílat dvěma způsoby:
+ Peníze je možné zasílat těmito způsoby:
 </p>
 
 <ul>
