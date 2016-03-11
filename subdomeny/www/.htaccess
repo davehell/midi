@@ -7,8 +7,11 @@
 # enable cool URL
 
 	RewriteEngine On
-  #na localu zakomentovat
-  #RewriteBase /
+	RewriteCond %{HTTP_HOST} ^premiermusic.cz
+	RewriteRule (.*) http://www.premiermusic.cz/$1 [R=301,QSA,L]
+
+	#na localu zakomentovat
+	#RewriteBase /
 
 	# prevents files starting with dot to be viewed by browser
 	RewriteRule /\.|^\. - [F]
