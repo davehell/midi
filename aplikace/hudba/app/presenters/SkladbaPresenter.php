@@ -27,8 +27,10 @@ class SkladbaPresenter extends BasePresenter
 
 	/** @var Skladba @inject*/
 	public $skladby;
-	/** @var Uzivatel @inject*/
-	public $uzivatele;
+  /** @var Uzivatel @inject*/
+  public $uzivatele;
+  /** @var Kurz @inject*/
+  public $kurzy;
 
   protected function beforeRender()
   {
@@ -231,6 +233,9 @@ class SkladbaPresenter extends BasePresenter
     $this->template->soubory = $this->skladby->formatySkladby($id);
     $this->template->maZakoupeno = $this->uzivatele->maZakoupeno($this->user->id, $id);
 
+    $kurzEur = $this->kurzy->eur();
+    $this->template->cenaEur = $skladba->cena / floatval($kurzEur->kurz);
+
     if($this->user->isInRole('admin')) {
       $this['skladbaForm']->setDefaults($skladba->toArray());
     }
@@ -326,4 +331,32 @@ class SkladbaPresenter extends BasePresenter
     $this->flashMessage('Sklaba byla smazána.', 'success');
     $this->redirect('Skladba:katalog');
 	}
+
+  public function actionKurzyMen()
+  {
+    $url = 'https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt';
+    $i = 0;
+    $datum = '';
+    $kurz = '';
+
+    /* příklad odpovědi:
+    15.03.2016 #52
+    EMU|euro|1|EUR|27,045
+    */
+    if ($stream = fopen($url, 'r')) {
+      while (($line = fgets($stream)) !== false) {
+        if(++$i == 1) {
+          $tmp = explode(' ', $line);
+          $datum = trim($tmp[0]);
+        }
+        if(strpos($line, 'EUR') !== false) {
+          $tmp = explode('|', $line);
+          $kurz = str_replace(',', '.', trim($tmp[4]));
+        }
+      }
+      fclose($stream);
+    }
+    $this->kurzy->updateEur($datum, $kurz);
+    $this->terminate();
+  }
 }

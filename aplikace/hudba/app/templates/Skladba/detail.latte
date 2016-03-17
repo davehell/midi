@@ -65,7 +65,7 @@
       <dt>Cena</dt>
       <dd>
         <p>
-          <strong>{$skladba->cena}&nbsp;Kč</strong><br />včetně poplatků pro OSA
+          <strong>{$skladba->cena}&nbsp;Kč</strong> ({$cenaEur|number:2:',':' '}&nbsp;&euro;) <br />včetně poplatků pro OSA
         </p>
         <p>
           <a id="koupit" class="btn btn-success btn-lg {if !$user->loggedIn}disabled{/if}" n:href="Skladba:nakup, $skladba->id"><span class="glyphicon glyphicon-shopping-cart"></span> Koupit skladbu</a>
